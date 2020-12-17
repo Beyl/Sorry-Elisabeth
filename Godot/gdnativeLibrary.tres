@@ -1,0 +1,5 @@
+[gd_resource type="GDNativeLibrary" format=2]
+
+[resource]
+entry/Windows.64 = "res://Lib-Sorry_Elisabeth_VS_Project-x64-Debug.dll"
+dependency/Windows.64 = [  ]
