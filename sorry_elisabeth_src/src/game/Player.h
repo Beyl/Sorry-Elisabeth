@@ -7,8 +7,15 @@
 #include "../utils/Utils.h"
 #include "Direction.h"
 
+/**
+ * Represent the player in the game
+ * 
+ * Can moove according to a direction and a destination on the X axis
+ * Animated when standing and mooving
+ */
 class Player : public godot::KinematicBody2D {
 
+	//To make godot able to use this class
 	GODOT_CLASS(Player, godot::KinematicBody2D);
 
 public:
