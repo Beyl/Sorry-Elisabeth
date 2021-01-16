@@ -3,8 +3,10 @@
  */
 
 #include "game/Player.h"
+#include "game/MainScene.h"
 
 #include "../tests/game/PlayerTest.h"
+#include "../tests/game/CameraTest.h"
 #include "../tests/utils/UtilsTest.h"
 
 using namespace godot;
@@ -16,9 +18,12 @@ extern "C" void GDN_EXPORT godot_gdnative_terminate(godot_gdnative_terminate_opt
 extern "C" void GDN_EXPORT godot_nativescript_init(void* handle) {
 	Godot::nativescript_init(handle);
 
+	register_class<MainScene>();
 	register_class<Player>();
+	register_class<Camera>();
 
 	//Tests
 	register_class<PlayerTest>();
+	register_class<CameraTest>();
 	register_class<UtilsTest>();
 }

@@ -56,7 +56,7 @@ public:
 	void _ready();
 
 	/**
-	 * Called every frame.
+	 * Called every tic (60 times per seconds).
 	 * 
 	 */
 	void _physics_process();

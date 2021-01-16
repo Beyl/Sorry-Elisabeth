@@ -32,32 +32,24 @@ void PlayerTest::changeDirectionTest()
 	Direction directionAfterChange;
 
 	Godot::print("Test when the player is looking to the right, then change it's direction to the left");
-
 	directionAfterChange = Direction::LEFT;
 	m_player->changeDirection(Direction::LEFT);
 	ASSERT_EQ(directionAfterChange, m_player->getDirection());
-	Godot::print("Test passed");
 
 	Godot::print("Test when the player is looking to the left, then change it's direction to the right");
-
 	directionAfterChange = Direction::RIGHT;
 	m_player->changeDirection(Direction::RIGHT);
 	ASSERT_EQ(directionAfterChange, m_player->getDirection());
-	Godot::print("Test passed");
 
 	Godot::print("Test when the player is looking to the right, then change it's direction to the right");
-
 	directionAfterChange = Direction::RIGHT;
 	m_player->changeDirection(Direction::RIGHT);
 	ASSERT_EQ(directionAfterChange, m_player->getDirection());
-	Godot::print("Test passed");
 
 	Godot::print("Test when the player is looking to the left, then change it's direction to the left");
-
 	directionAfterChange = Direction::LEFT;
 	m_player->changeDirection(Direction::LEFT);
 	ASSERT_EQ(directionAfterChange, m_player->getDirection());
-	Godot::print("Test passed");
 }
 
 PlayerTest::PlayerTest()

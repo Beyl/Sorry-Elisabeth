@@ -85,7 +85,7 @@ void Player::changeDirection(Direction newDirection)
 		switch (newDirection)
 		{
 		case Direction::RIGHT:
-			m_animSprite->set_flip_h(true);
+			m_animSprite->set_flip_h(false);
 			break;
 		case Direction::FRONT:
 			break;
