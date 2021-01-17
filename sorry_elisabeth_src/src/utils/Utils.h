@@ -39,7 +39,7 @@ public:
 	static const int PLAYER_START_Y = 100;
 
 	//ROOM
-	static const int ROOM_HEIGHT_BEGINNING = 48;
+	static const int ROOM_HEIGHT_BEGINNING = 30;
 	static const int ROOM_HEIGHT_ENDING = 180;
 	static const int ROOM_WIDTH_BEGINNING = -40;
 	static const int ROOM_WIDTH_ENDING = 660;
@@ -66,4 +66,11 @@ public:
 	static const int NO_DESTINATION = -500;	// Set when the player doesn't need to move
 
 	static const int NOT_MOOVING_RANGE = 10;	// The range around the player where he does not moove
+
+	//DIALOGBOX
+	static const int MIN_TEXT_DISPLAY_DURATION = 1;
+	static const int MIN_TRANSITION_DISPLAY_DURATION = 1;
+
+	//EXAMINE INTERACTION
+	static const int MAX_LETTERS_DISPLAY = 110;
 };

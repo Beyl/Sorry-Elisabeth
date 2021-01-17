@@ -4,6 +4,7 @@
 
 #include "game/Player.h"
 #include "game/MainScene.h"
+#include "ui/dialog_box/DialogBox.h"
 
 #include "../tests/game/PlayerTest.h"
 #include "../tests/game/CameraTest.h"
@@ -21,6 +22,7 @@ extern "C" void GDN_EXPORT godot_nativescript_init(void* handle) {
 	register_class<MainScene>();
 	register_class<Player>();
 	register_class<Camera>();
+	register_class<DialogBox>();
 
 	//Tests
 	register_class<PlayerTest>();

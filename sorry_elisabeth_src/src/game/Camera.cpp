@@ -93,7 +93,7 @@ void Camera::changeRoom(bool changeToCellar)
 	//Do a linear interpolation with a tiny bounce at the end between to the new camera's position
 	if (changeToCellar) {
 		m_tween->interpolate_property(this, "position", get_position(), m_cellarCamPosition,
-			m_interpolationDuration, 10, 1);
+			m_interpolationDuration, Tween::TRANS_BACK, Tween::EASE_OUT);
 		m_tween->start();
 	}
 	else {
