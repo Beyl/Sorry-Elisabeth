@@ -8,48 +8,74 @@
 
 #include "../../utils/Utils.h"
 
+/**
+ * Represents a box that displays text on the screen.
+ */
 class DialogBox : public godot::TextureRect {
 
-	GODOT_CLASS(DialogBox, godot::TextureRect);
+	GODOT_CLASS(DialogBox, godot::TextureRect);	//To make godot able to use this class
 
 public:
-	/* CONSTRUCTOR & DESTRUCTOR */
 
-	/**
-	 * Constructor of the class, create the class and avoid warnings.
-	 *		The real initialisation takes place in the "_ready" method.
-	 */
 	DialogBox();
-
-	/**
-	 * Destructor of the class, not usefull here, godot manages the memory itself. 
-	 */
 	~DialogBox();
 
-	/* METHODS */
-
 	/**
-	 * Register the methods that godot is directly going to call.
+	 * Register the methods and properties that godot is directly going to call and use
 	 */
 	static void _register_methods();
 
-	/**
-	 * Needed by godot to create the class, not usefull here.
-	 */
-	void _init();
+	void _init();	//Needed by godot
 
 	/**
-	 * Initalise the class and the godot scene.
+	 * Initalise the class and the scene.
 	 */
 	void _ready();
 
-	/**
+	/*
 	 * Display the dialog box on the screen with a smooth animation
 	 */
 	void display();
 
 	/**
-	 * Display the text inside the box with a smooth linear animation
+	 * Set the text that will be displayed in the rich label text
+	 */
+	void setDisplayedText(godot::String displayedText);
+
+	godot::Vector2 getDisplayPosition();
+
+	/* SIGNALS */
+
+	/**
+	 * Hide the dialog box
+	 */
+	void on_beforeHideTimer_timeout();
+
+	/**
+	 * Start the beforeHide timer
+	 */
+	void on_textDisplayed();
+
+	/**
+	 * Display the text
+	 */
+	void on_displayAnimation_completed();
+
+	/* PROPERTIES */
+
+	double m_textDisplayDuration;
+	void setTextDisplayDuration(double newDuration);
+	double getTextDisplayDuration();
+
+
+	double m_transitionDisplayDuration;
+	void setTransitionDisplayDuration(double newDuration);
+	double getTransitionDisplayDuration();
+
+private:
+
+	/**
+	 * Display the text inside the box with a smooth animation
 	 */
 	void displayText();
 
@@ -57,55 +83,11 @@ public:
 	 * Hide the dialog box with a smooth animation
 	 */
 	void hide();
+	
 
-	//SIGNALS
 
-	/**
-	 * Called when the timer reach 0
-	 */
-	void on_beforeHideTimer_timeout();
+	/* MEMBER VARIABLES */
 
-	/**
-	 * Called when the text has been entirely displayed.
-	 *		Start the beforeHide timer.
-	 */
-	void on_textDisplayed();
-
-	/* PROPERTIES */
-
-	double m_textDisplayDuration;
-
-	/**
-	 * Set the text display duration.
-	 * 
-	 * @param newDuration the new display duration
-	 */
-	void setTextDisplayDuration(double newDuration);
-
-	/**
-	 * Set the text display duration.
-	 *
-	 * @return the text display duration
-	 */
-	double getTextDisplayDuration();
-
-	double m_transitionDisplayDuration;
-
-	/**
-	 * Set the transition display duration.
-	 *
-	 * @param newDuration the new transition duration
-	 */
-	void setTransitionDisplayDuration(double newDuration);
-
-	/**
-	 * Set the transition display duration.
-	 *
-	 * @return the transition duration
-	 */
-	double getTransitionDisplayDuration();
-
-private:
 	//Children nodes
 	godot::RichTextLabel* m_textLabel;
 	godot::Timer* m_beforeHideTimer;
@@ -114,4 +96,11 @@ private:
 
 	godot::Vector2 m_displayPosition;
 	godot::Vector2 m_hidePosition;
+
+
+	/* CONSTANTS */
+	static const int MIN_TEXT_DISPLAY_DURATION = 1;
+	static const int MIN_TRANSITION_DISPLAY_DURATION = 1;
+	static const int X_DISPLAY_POSITION = 20;
+	static const int Y_DISPLAY_POSITION = 145;
 };

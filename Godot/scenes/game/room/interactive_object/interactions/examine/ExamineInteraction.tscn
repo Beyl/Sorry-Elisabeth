@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scenes/game/room/interactive_object/interactions/Interaction.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/game/room/interactive_object/interactions/examine/ExamineInteraction.gdns" type="Script" id=2]
+[ext_resource path="res://scenes/ui/dialogbox/DialogBox.tscn" type="PackedScene" id=3]
+
+[node name="ExamineInteraction" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+"Hiding duration" = 0.5
+"Interaction name" = "Examine"
+"Examine text" = "Insert text here"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." index="2"]
+
+[node name="DialogBox" parent="CanvasLayer" index="0" instance=ExtResource( 3 )]
+margin_top = -199.0
+margin_bottom = -174.0

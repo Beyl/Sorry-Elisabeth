@@ -15,106 +15,67 @@
  */
 class Player : public godot::KinematicBody2D {
 
-	//To make godot able to use this class
-	GODOT_CLASS(Player, godot::KinematicBody2D);
+	GODOT_CLASS(Player, godot::KinematicBody2D);	//To make godot able to use this class
 
 public:
-	/* CONSTRUCTOR && DESTRUCTOR */
 
-	/**
-	 * Constructor, usefull only to create the class and avoid warnings,
-	 *		the real initialisation is done in the "_ready" method.
-	 */
 	Player();
-
-	/**
-	 * Destructor, usefull only to create the class and avoid warnings,
-	 *		godot deallocates the memory itself.
-	 */
 	~Player();
 
-	/* METHODS */
-
-	//Needed by godot
-
 	/**
-	 * Register the methods godot is directly going to call
+	 * Register the methods and properties godot is directly going to call
 	 */
 	static void _register_methods();
-	/**
-	 * Needed by godot to create the class, not usefull here
-	 *		the initialisation is done in the "_ready" method called after
-	 * 
-	 */
-	void _init();
+	void _init();	//Needed by godot
 
 	/**
-	 * Initilisation of the class and the scene
-	 *		called after the parent node and all its children entenred a scene.
-	 * 
+	 * Initilisation of the class and the scene.
 	 */
 	void _ready();
 
 	/**
-	 * Called every tic (60 times per seconds).
-	 * 
+	 * Called every tic (60 times per seconds), manage player movements and animations.
 	 */
 	void _physics_process();
 
-	/**
-	 * Moove the player to the x position given in parameter if it's contained in the room height and width
-	 * 
-	 * @param xDestination, define the x position where the player will go
-	 */
 	void mooveTo(int xDestination);
-	/**
-	 * Change the player's direction
-	 * 
-	 * @param newDirection, the new direction the player will look at
-	 */
-	void changeDirection(Direction newDirection);
-	/**
-	 * Stop the player's movement
-	 */
-	void stopMooving();
+
+
 
 	/* PROPERTIES */
 
 	int m_speed;
-	/**
-	 * Set the player's speed
-	 * 
-	 * @param newSpeed, the new speed to set to the player restricted between SPEED_MIN and SPEED_MAX
-	 */
 	void setSpeed(int newSpeed);
-
-	/**
-	 * Return the player's speed
-	 * 
-	 * @return the player's speed
-	 */
 	int getSpeed();
+
+
 
 	/* ACCESSORS & MUTATORS */
 
-	/**
-	 * Return the player's direction
-	 *
-	 * @return the player's direction
-	 */
 	Direction getDirection();
-
-	/**
-	 * Return the player's x destination
-	 *
-	 * @return the player's x destination
-	 */
 	int getXDestination();
 
-private:
+protected:
+
+	void changeDirection(Direction newDirection);
+	void stopMooving();
+
+
+
+	/* MEMBER VARIABLES */
+
 	//Child nodes
 	godot::AnimatedSprite* m_animSprite;
 
 	Direction m_direction;	// Define where the player is looking
 	int m_xDestination;	// Define where the player is going
+
+
+
+	/* CONSTANTS */
+
+	static const int MIN_SPEED = 5;
+	static const int MAX_SPEED = 500;
+	static const int NO_DESTINATION = -500;	// Set when the player doesn't need to move
+	static const int NOT_MOOVING_RANGE = 10;	// The range around the player where he does not moove
 };

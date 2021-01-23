@@ -2,13 +2,12 @@
  * Register the classes to be abble to use them in godot
  */
 
-#include "game/Player.h"
 #include "game/MainScene.h"
-#include "ui/dialog_box/DialogBox.h"
+#include "game/ExamineInteraction.h"
 
+#include "../tests/utils/UtilsTest.h"
 #include "../tests/game/PlayerTest.h"
 #include "../tests/game/CameraTest.h"
-#include "../tests/utils/UtilsTest.h"
 
 using namespace godot;
 
@@ -19,13 +18,15 @@ extern "C" void GDN_EXPORT godot_gdnative_terminate(godot_gdnative_terminate_opt
 extern "C" void GDN_EXPORT godot_nativescript_init(void* handle) {
 	Godot::nativescript_init(handle);
 
+	//Main scene game classes
 	register_class<MainScene>();
 	register_class<Player>();
 	register_class<Camera>();
+	register_class<ExamineInteraction>();
 	register_class<DialogBox>();
 
-	//Tests
+	//Test classes
+	register_class<UtilsTest>();
 	register_class<PlayerTest>();
 	register_class<CameraTest>();
-	register_class<UtilsTest>();
 }

@@ -12,65 +12,57 @@
 /**
  * Represent the main scene in the game
  * 
- * Gather the player, the camera, the rooms and the GUI and connect them
+ * Gather the player, the camera, the rooms and the GUI to connect them
  */
 class MainScene : public godot::Node2D {
 
-	//To make godot able to use this class
-	GODOT_CLASS(MainScene, godot::Node2D);
+	GODOT_CLASS(MainScene, godot::Node2D);	//To make godot able to use this class
 
 public:
-	/* CONSTRUCTOR && DESTRUCTOR */
 
-	/**
-	 * Constructor, usefull only to create the class and avoid warnings,
-	 *		the real initialisation is done in the "_ready" method.
-	 */
 	MainScene();
-
-	/**
-	 * Destructor, usefull only to create the class and avoid warnings,
-	 *		godot deallocates the memory itself.
-	 */
 	~MainScene();
 
-	/* METHODS */
-
-	//Needed by godot
-
 	/**
-	 * Register the methods godot is directly going to call
+	 * Register the methods and properties godot is directly going to call and use
 	 */
 	static void _register_methods();
-	/**
-	 * Needed by godot to create the class, not usefull here
-	 *		the initialisation is done in the "_ready" method called after
-	 * 
-	 */
-	void _init();
+	void _init();	//Needed by godot
 
 	/**
-	 * Initilisation of the class and the scene here.
-	 *		Called after the parent node and all its children entenred a scene.
+	 * Initilisation of the class and the scene
 	 */
 	void _ready();
 
 	/**
-	 * Called every tic (60 times per secondes).
+	 * Called every tic (60 times per secondes)
+	 *		Manage user's inputs
 	 */
 	void _physics_process();
+
+private:
 
 	/**
 	 * Send the player's informations to the camera
 	 */
 	void sendPlayerInfoToCam();
 
-private:
+
+
+	/* MEMBER VARIABLES */
+
 	//Child nodes
 	Player* m_player;
 	Camera* m_camera;
 
 	bool m_gameSceneActive;
 
-	godot::Input* m_inputManager;	//To interact with inputs
+	godot::Input* m_inputManager;	//To manage inputs
+
+
+
+	/* CONSTANTS */
+
+	static const int PLAYER_START_X = 25;
+	static const int PLAYER_START_Y = 100;
 };

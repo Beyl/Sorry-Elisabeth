@@ -19,7 +19,7 @@ void MainScene::_ready()
 	m_camera = get_node("Camera")->cast_to<Camera>(get_node("Camera"));
 
 	//Scene initialisation
-	m_player->set_position(Vector2(real_t(Utils::PLAYER_START_X), real_t(Utils::PLAYER_START_Y)));
+	m_player->set_position(Vector2(real_t(PLAYER_START_X), real_t(PLAYER_START_Y)));
 }
 
 void MainScene::_physics_process()

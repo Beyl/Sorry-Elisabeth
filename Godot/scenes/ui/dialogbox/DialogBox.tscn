@@ -1,11 +1,10 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://resources/fonts/dynamic_fonts/dialogFont.tres" type="DynamicFont" id=1]
-[ext_resource path="res://assets/textures/icon.png" type="Texture" id=2]
+[ext_resource path="res://assets/textures/interactions/intercation.png" type="Texture" id=2]
 [ext_resource path="res://scenes/ui/dialogbox/DialogBox.gdns" type="Script" id=3]
 
 [node name="DialogBox" type="TextureRect"]
-self_modulate = Color( 0, 0, 0, 1 )
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -14,6 +13,7 @@ margin_left = -140.0
 margin_top = -35.0
 margin_right = 140.0
 margin_bottom = -10.0
+grow_vertical = 0
 rect_min_size = Vector2( 280, 25 )
 texture = ExtResource( 2 )
 expand = true
@@ -21,8 +21,8 @@ script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-"Text display duration" = 3.0
-"Transition display duation" = 1.1
+"Text display duration" = 0.5
+"Transition display duation" = 1.0
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 anchor_left = 0.5
@@ -30,13 +30,16 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -130.0
-margin_top = -10.0
+margin_top = -9.5
 margin_right = 130.0
-margin_bottom = 10.0
+margin_bottom = 10.5
+grow_vertical = 0
 rect_min_size = Vector2( 260, 20 )
 custom_fonts/normal_font = ExtResource( 1 )
 bbcode_enabled = true
+fit_content_height = true
 scroll_active = false
+scroll_following = true
 __meta__ = {
 "_edit_use_anchors_": false
 }

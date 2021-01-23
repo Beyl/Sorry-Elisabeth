@@ -10,21 +10,16 @@ void Camera::_register_methods()
 
 	//Porperties
 	register_property<Camera, Vector2>("Cellar position",
-		&Camera::setCellarCamPosition, &Camera::getCellarCamPosition,
-		Vector2(Utils::CELLAR_POSITION_X, 0));
+		&Camera::setCellarCamPosition, &Camera::getCellarCamPosition, Vector2(CELLAR_POSITION_X, 0));
 	register_property<Camera, Vector2>("Living room position",
-		&Camera::setLivingRoomCamPosition, &Camera::getLivingRoomCamPosition,
-		Vector2(Utils::LIVING_ROOM_POSITION_X, 0));
-
-	register_property<Camera, double>("Interpolation Duration",
-		&Camera::setInterpolationDuration, &Camera::getInterpolationDuration, 0.1);
+		&Camera::setLivingRoomCamPosition, &Camera::getLivingRoomCamPosition,Vector2(LIVING_ROOM_POSITION_X, 0));
+	register_property<Camera, double>("Interpolation Duration", &Camera::setInterpolationDuration,
+		&Camera::getInterpolationDuration, 0.1);
 
 	register_property<Camera, int>("Follow player left X position",
-		&Camera::setStartFollowPlayerLeft, &Camera::getStartFollowPlayerLeft,
-		Utils::START_FOLLOW_PLAYER_LEFT_MIN);
+		&Camera::setStartFollowPlayerLeft, &Camera::getStartFollowPlayerLeft, START_FOLLOW_PLAYER_LEFT_MIN);
 	register_property<Camera, int>("Follow player right X position",
-		&Camera::setStartFollowPlayerRight, &Camera::getStartFollowPlayerRight,
-		Utils::START_FOLLOW_PLAYER_RIGHT_MIN);
+		&Camera::setStartFollowPlayerRight, &Camera::getStartFollowPlayerRight, START_FOLLOW_PLAYER_RIGHT_MIN);
 }
 
 void Camera::_ready()
@@ -73,13 +68,13 @@ int Camera::isPlayerInsideChangeRoomRange()
 	int isInside = 0;
 
 	if (m_playerIsInCellar) {
-		if (m_playerPosition.x > Utils::LIVING_ROOM_POSITION_X - Utils::CHANGE_ROOM_RANGE
-			&& m_playerPosition.x < Utils::LIVING_ROOM_POSITION_X)
+		if (m_playerPosition.x > LIVING_ROOM_POSITION_X - CHANGE_ROOM_RANGE
+			&& m_playerPosition.x < LIVING_ROOM_POSITION_X)
 			isInside = 1;
 	}
 	else {
-		if (m_playerPosition.x < Utils::LIVING_ROOM_POSITION_X + Utils::CHANGE_ROOM_RANGE
-			&& m_playerPosition.x > Utils::LIVING_ROOM_POSITION_X)
+		if (m_playerPosition.x < LIVING_ROOM_POSITION_X + CHANGE_ROOM_RANGE
+			&& m_playerPosition.x > LIVING_ROOM_POSITION_X)
 			isInside = 2;
 	}
 
@@ -93,12 +88,12 @@ void Camera::changeRoom(bool changeToCellar)
 	//Do a linear interpolation with a tiny bounce at the end between to the new camera's position
 	if (changeToCellar) {
 		m_tween->interpolate_property(this, "position", get_position(), m_cellarCamPosition,
-			m_interpolationDuration, Tween::TRANS_BACK, Tween::EASE_OUT);
+			real_t(m_interpolationDuration), Tween::TRANS_BACK, Tween::EASE_OUT);
 		m_tween->start();
 	}
 	else {
 		m_tween->interpolate_property(this, "position", get_position(), m_livingRoomCamPosition,
-			m_interpolationDuration, 10, 1);
+			real_t(m_interpolationDuration), 10, 1);
 		m_tween->start();
 	}
 }
@@ -157,10 +152,10 @@ double Camera::getInterpolationDuration()
 
 void Camera::setStartFollowPlayerLeft(int newPosition)
 {
-	if (newPosition < Utils::START_FOLLOW_PLAYER_LEFT_MIN)
-		m_startFollowPlayerLeft = Utils::START_FOLLOW_PLAYER_LEFT_MIN;
-	else if (newPosition > Utils::START_FOLLOW_PLAYER_LEFT_MAX)
-		m_startFollowPlayerLeft = Utils::START_FOLLOW_PLAYER_LEFT_MAX;
+	if (newPosition < START_FOLLOW_PLAYER_LEFT_MIN)
+		m_startFollowPlayerLeft = START_FOLLOW_PLAYER_LEFT_MIN;
+	else if (newPosition > START_FOLLOW_PLAYER_LEFT_MAX)
+		m_startFollowPlayerLeft = START_FOLLOW_PLAYER_LEFT_MAX;
 	else
 		m_startFollowPlayerLeft = newPosition;
 }
@@ -172,10 +167,10 @@ int Camera::getStartFollowPlayerLeft()
 
 void Camera::setStartFollowPlayerRight(int newPosition)
 {
-	if (newPosition < Utils::START_FOLLOW_PLAYER_RIGHT_MIN)
-		m_startFollowPlayerRight = Utils::START_FOLLOW_PLAYER_RIGHT_MIN;
-	else if (newPosition > Utils::START_FOLLOW_PLAYER_RIGHT_MAX)
-		m_startFollowPlayerRight = Utils::START_FOLLOW_PLAYER_RIGHT_MAX;
+	if (newPosition < START_FOLLOW_PLAYER_RIGHT_MIN)
+		m_startFollowPlayerRight = START_FOLLOW_PLAYER_RIGHT_MIN;
+	else if (newPosition > START_FOLLOW_PLAYER_RIGHT_MAX)
+		m_startFollowPlayerRight = START_FOLLOW_PLAYER_RIGHT_MAX;
 	else
 		m_startFollowPlayerRight = newPosition;
 }
