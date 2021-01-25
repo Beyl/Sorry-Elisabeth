@@ -4,6 +4,7 @@
 #include <TextureButton.hpp>
 #include <Label.hpp>
 #include <Tween.hpp>
+#include <AudioStreamPlayer2D.hpp>
 
 #include "../utils/Utils.h"
 
@@ -31,21 +32,22 @@ public:
 	virtual void play() = 0;
 	
 	/**
-	 * Hide the parent (an interaction table)
+	 * Hide the parent (an interaction table) by interpolate it's scaling to 0
 	 */
 	void on_button_released();
 
 
-
 	/* PROPERTIES */
 
-	double m_hidingDuration;
-	void setHidingDuration(double newDuration);
-	double getHidingDuration();
+	real_t m_hidingDuration;
+	void setHidingDuration(real_t newDuration);
+	real_t getHidingDuration();
 
 	godot::String m_interactionName;
 	void setInteractionName(godot::String newName);
 	godot::String getInteractionName();
+
+
 	
 protected:
 
@@ -55,13 +57,12 @@ protected:
 	void hideParent();
 
 
-
 	/* MEMBER VARIABLES */
 
 	//Child nodes
 	godot::Tween* m_tween;
 	godot::Label* m_label;
-
+	godot::AudioStreamPlayer2D* m_interactionSoundPlayer;
 
 
 	/* CONSTANTS */

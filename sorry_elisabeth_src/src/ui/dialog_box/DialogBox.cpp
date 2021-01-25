@@ -9,10 +9,12 @@ void DialogBox::_register_methods()
 	register_method("on_textDisplayed", &DialogBox::on_textDisplayed);
 	register_method("on_displayAnimation_completed", &DialogBox::on_displayAnimation_completed);
 
-	register_property<DialogBox, double>("Text display duration",
+	register_property<DialogBox, real_t>("Text display duration",
 		&DialogBox::setTextDisplayDuration, &DialogBox::getTextDisplayDuration, MIN_TEXT_DISPLAY_DURATION);
-	register_property<DialogBox, double>("Transition display duation",
+	register_property<DialogBox, real_t>("Transition display duation",
 		&DialogBox::setTransitionDisplayDuration, &DialogBox::getTransitionDisplayDuration, MIN_TRANSITION_DISPLAY_DURATION);
+	register_property<DialogBox, real_t>("Time before hiding", &DialogBox::setBeforeHidingDuration,
+		&DialogBox::getBeforeHidingDuration, MIN_BEFORE_HIDING_DURATION);
 }
 
 void DialogBox::_ready()
@@ -28,22 +30,26 @@ void DialogBox::_ready()
 	m_displayPosition = Vector2(X_DISPLAY_POSITION, Y_DISPLAY_POSITION);
 	m_hidePosition = Vector2(get_position().x, Utils::ROOM_HEIGHT_ENDING + 50);
 	set_position(m_hidePosition);
+	m_beforeHideTimer->set_wait_time(m_beforeHidingDuration);
 
 	//Signals connection
 	m_beforeHideTimer->connect("timeout", this, "on_beforeHideTimer_timeout");
 	m_textTween->connect("tween_all_completed", this, "on_textDisplayed");
-	m_boxTween->connect("tween_all_completed", this, "on_displayAnimation_completed");
-
-	//Tween interpolation initialisation
-	m_textTween->interpolate_property(m_textLabel, "percent_visible", 0, 1,
-		real_t(m_textDisplayDuration), Tween::TRANS_LINEAR);
-	m_boxTween->interpolate_property(this, "rect_position", get_position(), m_displayPosition,
-		real_t(m_transitionDisplayDuration), Tween::TRANS_BOUNCE, Tween::EASE_OUT);
 }
 
-void DialogBox::on_beforeHideTimer_timeout()
+void DialogBox::display()
 {
-	hide();
+	m_boxTween->interpolate_property(this, "rect_position", get_position(), m_displayPosition,
+		m_transitionDisplayDuration, Tween::TRANS_BOUNCE, Tween::EASE_OUT);
+	m_boxTween->connect("tween_all_completed", this, "on_displayAnimation_completed");
+	m_boxTween->start();
+}
+
+void DialogBox::on_displayAnimation_completed()
+{
+	m_textTween->interpolate_property(m_textLabel, "percent_visible", 0, 1,
+		m_textDisplayDuration, Tween::TRANS_LINEAR);
+	m_textTween->start();
 }
 
 void DialogBox::on_textDisplayed()
@@ -51,15 +57,19 @@ void DialogBox::on_textDisplayed()
 	m_beforeHideTimer->start();
 }
 
-void DialogBox::on_displayAnimation_completed()
+void DialogBox::on_beforeHideTimer_timeout()
 {
-	displayText();
+	hide();
 }
 
-void DialogBox::display()
+void DialogBox::hide()
 {
+	m_boxTween->disconnect("tween_all_completed", this, "on_displayAnimation_completed");
+	m_boxTween->interpolate_property(this, "rect_position", m_displayPosition, m_hidePosition,
+		m_transitionDisplayDuration, Tween::TRANS_LINEAR, Tween::EASE_IN);
 	m_boxTween->start();
 }
+
 
 void DialogBox::setDisplayedText(godot::String displayedText)
 {
@@ -71,49 +81,51 @@ godot::Vector2 DialogBox::getDisplayPosition()
 	return m_displayPosition;
 }
 
-void DialogBox::displayText()
-{
-	m_textTween->start();
-}
-
-void DialogBox::hide()
-{
-	m_boxTween->interpolate_property(this, "rect_position", m_displayPosition, m_hidePosition,
-		real_t(m_transitionDisplayDuration), Tween::TRANS_LINEAR, Tween::EASE_IN);
-	m_boxTween->start();
-}
-
-void DialogBox::setTextDisplayDuration(double newDuration)
+void DialogBox::setTextDisplayDuration(real_t newDuration)
 {
 	if (newDuration < MIN_TEXT_DISPLAY_DURATION)
-		m_textDisplayDuration = double(MIN_TEXT_DISPLAY_DURATION);
+		m_textDisplayDuration = MIN_TEXT_DISPLAY_DURATION;
 	else
 		m_textDisplayDuration = newDuration;
 }
 
-double DialogBox::getTextDisplayDuration()
+real_t DialogBox::getTextDisplayDuration()
 {
 	return m_textDisplayDuration;
 }
 
-void DialogBox::setTransitionDisplayDuration(double newDuration)
+void DialogBox::setTransitionDisplayDuration(real_t newDuration)
 {
 	if (newDuration < MIN_TRANSITION_DISPLAY_DURATION)
-		m_transitionDisplayDuration = double(MIN_TRANSITION_DISPLAY_DURATION);
+		m_transitionDisplayDuration = MIN_TRANSITION_DISPLAY_DURATION;
 	else
 		m_transitionDisplayDuration = newDuration;
 }
 
-double DialogBox::getTransitionDisplayDuration()
+real_t DialogBox::getTransitionDisplayDuration()
 {
 	return m_transitionDisplayDuration;
 }
 
+void DialogBox::setBeforeHidingDuration(real_t newDuration)
+{
+	if (newDuration < MIN_BEFORE_HIDING_DURATION)
+		m_beforeHidingDuration = MIN_BEFORE_HIDING_DURATION;
+	else
+		m_beforeHidingDuration = newDuration;
+}
 
-DialogBox::DialogBox()
+real_t DialogBox::getBeforeHidingDuration()
+{
+	return m_beforeHidingDuration;
+}
+
+
+DialogBox::DialogBox()	
 {
 	m_textDisplayDuration = MIN_TEXT_DISPLAY_DURATION;
 	m_transitionDisplayDuration = MIN_TRANSITION_DISPLAY_DURATION;
+	m_beforeHidingDuration = MIN_BEFORE_HIDING_DURATION;
 
 	m_boxTween = 0;
 	m_textTween = 0;

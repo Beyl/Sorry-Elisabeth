@@ -22,7 +22,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 "Text display duration" = 0.5
-"Transition display duation" = 1.0
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 anchor_left = 0.5
@@ -49,5 +48,4 @@ __meta__ = {
 [node name="TweenDialog" type="Tween" parent="."]
 
 [node name="BeforeHiding" type="Timer" parent="."]
-wait_time = 2.0
 one_shot = true

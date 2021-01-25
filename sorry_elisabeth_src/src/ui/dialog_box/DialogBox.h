@@ -61,29 +61,29 @@ public:
 	 */
 	void on_displayAnimation_completed();
 
+
 	/* PROPERTIES */
 
-	double m_textDisplayDuration;
-	void setTextDisplayDuration(double newDuration);
-	double getTextDisplayDuration();
+	real_t m_textDisplayDuration;
+	void setTextDisplayDuration(real_t newDuration);
+	real_t getTextDisplayDuration();
 
 
-	double m_transitionDisplayDuration;
-	void setTransitionDisplayDuration(double newDuration);
-	double getTransitionDisplayDuration();
+	real_t m_transitionDisplayDuration;
+	void setTransitionDisplayDuration(real_t newDuration);
+	real_t getTransitionDisplayDuration();
+
+	//Time in second before starting the hiding duration, after the text has been displayed
+	real_t m_beforeHidingDuration;
+	void setBeforeHidingDuration(real_t newDuration);
+	real_t getBeforeHidingDuration();
 
 private:
-
-	/**
-	 * Display the text inside the box with a smooth animation
-	 */
-	void displayText();
 
 	/**
 	 * Hide the dialog box with a smooth animation
 	 */
 	void hide();
-	
 
 
 	/* MEMBER VARIABLES */
@@ -101,6 +101,7 @@ private:
 	/* CONSTANTS */
 	static const int MIN_TEXT_DISPLAY_DURATION = 1;
 	static const int MIN_TRANSITION_DISPLAY_DURATION = 1;
+	static const int MIN_BEFORE_HIDING_DURATION = 1;
 	static const int X_DISPLAY_POSITION = 20;
 	static const int Y_DISPLAY_POSITION = 145;
 };

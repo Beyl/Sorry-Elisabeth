@@ -1,6 +1,9 @@
 #include "Interaction.h"
 #include "../ui/dialog_box/DialogBox.h"
 
+#include <AudioStreamPlayer.hpp>
+#include <AudioStream.hpp>
+
 /**
  * The interaction type : "Examine"
  *		Display a dialog box and play the sound (voice) associated with it
@@ -36,7 +39,6 @@ public:
 	void on_button_released();
 
 
-
 	/* PROPERTIES */
 
 	godot::String m_examineText;	//Text that will be displayed in the dialog box
@@ -44,5 +46,7 @@ public:
 	godot::String getExamineText();
 
 protected:
+	//Child nodes
 	DialogBox* m_dialogBox;
+	godot::AudioStreamPlayer* m_examinationSoundPlayer;
 };
