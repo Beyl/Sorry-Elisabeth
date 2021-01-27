@@ -1,8 +1,6 @@
+#pragma once
+
 #include "../pch.h"
-
-#include <Godot.hpp>
-#include <Node2D.hpp>
-
 #include "../../src/game/Player.h"
 
 /**
@@ -17,26 +15,16 @@ public:
 	PlayerTest();
 	~PlayerTest();
 
-
-
-	/**
-	 * Register the methods godot is directly going to call
-	 */
+	// Register the methods godot is directly going to call
 	static void _register_methods();
 	void _init(); //Needed by godot
 
-	/**
-	 * Initilisation of the class and the scene.
-	 */
+	// Run all the test methods
 	void _ready();
 
 private:
 
-	/* TESTS */
-
-	/**
-	 * Initialise the player for testing
-	 */
+	// Initialise the player attributes before testing
 	void playerTestInit();
 	void runAllTests();
 	void changeDirectionTest();

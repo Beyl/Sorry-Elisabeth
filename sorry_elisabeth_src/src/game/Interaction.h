@@ -5,6 +5,7 @@
 #include <Label.hpp>
 #include <Tween.hpp>
 #include <AudioStreamPlayer2D.hpp>
+#include <AudioStreamSample.hpp>
 
 #include "../utils/Utils.h"
 
@@ -21,51 +22,34 @@ public:
 	Interaction();
 	~Interaction();
 
-	/**
-	 * Initilisation of the class and the scene.
-	 */
+	// Initilisation of the class and the godot scene
 	void _ready();
 
-	/**
-	 * Play the interaction (no specific function to do here, that's why it is a pure virtual method)
-	 */
+	// Play the interaction (no specific function to do here, that's why it is a pure virtual method)
 	virtual void play() = 0;
 	
-	/**
-	 * Hide the parent (an interaction table) by interpolate it's scaling to 0
-	 */
+	// Play the object sound if there's one setted
 	void on_button_released();
 
 
 	/* PROPERTIES */
 
-	real_t m_hidingDuration;
-	void setHidingDuration(real_t newDuration);
-	real_t getHidingDuration();
-
+	// The text that will be displayed representing the interaction's name
 	godot::String m_interactionName;
 	void setInteractionName(godot::String newName);
 	godot::String getInteractionName();
 
-
+	// The possible sound associated with the interaction
+	godot::Ref<godot::AudioStreamSample> m_objectSound;
+	void setObjectSound(godot::Ref<godot::AudioStreamSample> newSound);
+	godot::Ref<godot::AudioStreamSample> getObjectSound();
 	
 protected:
-
-	/**
-	 * Hide the parent (interaction table) with a smooth animation
-	 */
-	void hideParent();
-
-
-	/* MEMBER VARIABLES */
 
 	//Child nodes
 	godot::Tween* m_tween;
 	godot::Label* m_label;
-	godot::AudioStreamPlayer2D* m_interactionSoundPlayer;
-
-
-	/* CONSTANTS */
+	godot::AudioStreamPlayer2D* m_objectSoundPlayer;
 
 	static const int MAX_NAME_CHAR = 18;
 };

@@ -2,7 +2,6 @@
 
 #include "../pch.h"
 
-#include <Godot.hpp>
 #include <Node2D.hpp>
 
 #include "../../src/utils/Utils.h"
@@ -19,24 +18,17 @@ public:
 	UtilsTest();
 	~UtilsTest();
 
-	
-
-	/**
-	 * Register the methods godot is directly going to call
-	 */
+	// Register the methods godot is directly going to call
 	static void _register_methods();
 
-	/**
-	 * Run all tests at the scene initialisation
-	 */
+	// Run all tests
 	void _init();	//Needed by godot
 
 private:
-
-	/* TESTS */
 
 	void runAllTests();
 	void testIsInsideRoom();
 	void testIsInsideRoomX();
 	void testIsInsideRoomY();
+	void testGetCenteredPosition();
 };

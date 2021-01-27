@@ -16,3 +16,8 @@ bool const Utils::isInsideRoomY(const int eltYPosition)
 {
     return(eltYPosition >= ROOM_HEIGHT_BEGINNING && eltYPosition <= ROOM_HEIGHT_ENDING);
 }
+
+godot::Vector2 Utils::getCenteredPosition(godot::Vector2 objectSize)
+{
+    return Vector2(real_t(int(SCREEN_WIDTH / 2 - objectSize.x / 2)), real_t(int(SCREEN_HEIGHT / 2 - objectSize.y / 2)));
+}

@@ -28,18 +28,14 @@ public:
 	static void _register_methods();
 	void _init();	//Needed by godot
 
-	/**
-	 * Initilisation of the class and the scene.
-	 */
+	//Initialise the class and the godot scene
 	void _ready();
 
-	/**
-	 * Called every tic (60 times per seconds), manage player movements and animations.
-	 */
+	//Called every tic (60 times per seconds), manage player movements and animations
 	void _physics_process();
 
+	//Moove the player on the X axis to a given position
 	void mooveTo(int xDestination);
-
 
 
 	/* PROPERTIES */
@@ -47,7 +43,6 @@ public:
 	int m_speed;
 	void setSpeed(int newSpeed);
 	int getSpeed();
-
 
 
 	/* ACCESSORS & MUTATORS */
@@ -61,7 +56,6 @@ protected:
 	void stopMooving();
 
 
-
 	/* MEMBER VARIABLES */
 
 	//Child nodes
@@ -69,7 +63,6 @@ protected:
 
 	Direction m_direction;	// Define where the player is looking
 	int m_xDestination;	// Define where the player is going
-
 
 
 	/* CONSTANTS */

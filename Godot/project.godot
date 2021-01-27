@@ -22,10 +22,6 @@ Currently in development
 By Sparton Alexandre, Dijoux Clément and Pascal Arthur"
 config/icon="res://assets/textures/icon.png"
 
-[debug]
-
-settings/stdout/print_fps=true
-
 [display]
 
 window/size/width=320

@@ -1,0 +1,88 @@
+#include "FadeBackground.h"
+
+using namespace godot;
+
+void FadeBackground::_register_methods()
+{
+	register_method("_ready", &FadeBackground::_ready);
+
+	register_property<FadeBackground, float>("Display opacity", &FadeBackground::setDisplayOpacity,
+		&FadeBackground::getDisplayOpacity, 0);
+	register_property<FadeBackground, real_t>("Fade duration", &FadeBackground::setFadeDuration,
+		&FadeBackground::getFadeDuration, real_t(0.1));
+}
+
+void FadeBackground::_ready()
+{
+	//Get children
+	m_tween = get_node("Tween")->cast_to<Tween>(get_node("Tween"));
+
+	//Scene initialisation
+	m_hideColor = Color(0, 0, 0, 0);
+	m_displayColor = Color(0, 0, 0, m_displayOpacity);
+	set_frame_color(m_hideColor);
+}
+
+void FadeBackground::fadeIn()
+{
+	m_tween->interpolate_property(this, "color", m_hideColor, m_displayColor, m_fadeDuration,
+		Tween::TRANS_LINEAR, Tween::EASE_IN_OUT);
+	m_tween->start();
+}
+
+void FadeBackground::fadeOut()
+{
+	m_tween->interpolate_property(this, "color", m_displayColor, m_hideColor, m_fadeDuration,
+		Tween::TRANS_LINEAR, Tween::EASE_IN_OUT);
+	m_tween->start();
+}
+
+bool FadeBackground::isDisplayed()
+{
+	return get_frame_color() == m_displayColor;
+}
+
+void FadeBackground::setDisplayOpacity(float newOpacity)
+{
+	if (newOpacity <= MIN_DISPLAY_OPACITY)
+		m_displayOpacity = float(MIN_DISPLAY_OPACITY);
+	else if (newOpacity > MAX_DISPLAY_OPACITY)
+		m_displayOpacity = float(MAX_DISPLAY_OPACITY);
+	else
+		m_displayOpacity = newOpacity;
+}
+
+float FadeBackground::getDisplayOpacity()
+{
+	return m_displayOpacity;
+}
+
+void FadeBackground::setFadeDuration(real_t newDuration)
+{
+	if (newDuration <= real_t(MIN_FADE_DURATION))
+		m_fadeDuration = real_t(MIN_FADE_DURATION);
+	else
+		m_fadeDuration = newDuration;
+}
+
+real_t FadeBackground::getFadeDuration()
+{
+	return m_fadeDuration;
+}
+
+FadeBackground::FadeBackground()
+{
+	m_tween = 0;
+	m_displayOpacity = 0.0;
+	m_fadeDuration = 0;
+	m_hideColor = Color(0, 0, 0);
+	m_displayColor = Color(0, 0, 0);
+}
+
+FadeBackground::~FadeBackground()
+{
+}
+
+void FadeBackground::_init()
+{
+}

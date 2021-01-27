@@ -33,7 +33,19 @@ public:
 	 */
 	static bool const isInsideRoomY(const int eltYPosition);
 
+	/**
+	 * Define the screen centered position of an object
+	 *
+	 * @param objectSize, the size of the object
+	 * @return the screen centered position of an object
+	 */
+	static godot::Vector2 getCenteredPosition(godot::Vector2 objectSize);
+
 	/*CONSTANTS (Coordinates & positions are setted pixels) */
+
+	//SCREEN
+	static const int SCREEN_WIDTH = 320;
+	static const int SCREEN_HEIGHT = 180;
 
 	//ROOM
 	static const int ROOM_HEIGHT_BEGINNING = 30;

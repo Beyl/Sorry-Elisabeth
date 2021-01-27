@@ -12,6 +12,7 @@ void UtilsTest::runAllTests()
 	testIsInsideRoom();
 	testIsInsideRoomX();
 	testIsInsideRoomY();
+	testGetCenteredPosition();
 }
 
 void UtilsTest::testIsInsideRoom()
@@ -142,6 +143,77 @@ void UtilsTest::testIsInsideRoomY()
 	ASSERT_FALSE(Utils::isInsideRoomY(yCoord));
 	yCoord = 181;
 	ASSERT_FALSE(Utils::isInsideRoomY(yCoord));
+}
+
+void UtilsTest::testGetCenteredPosition()
+{
+	Vector2 testSize, centeredPosition;
+
+	Godot::print("Test with size.x and size.y % 2 = 0");
+
+	Godot::print("Test with a squared object");
+	testSize = Vector2(10, 10);
+	centeredPosition = Vector2(155, 85);
+	ASSERT_EQ(centeredPosition, Utils::getCenteredPosition(testSize));
+	Godot::print("Test passed");
+	testSize = Vector2(150, 150);
+	centeredPosition = Vector2(85, 15);
+	ASSERT_EQ(centeredPosition, Utils::getCenteredPosition(testSize));
+	Godot::print("Test passed");
+
+	Godot::print("Test with rectangled objects");
+	testSize = Vector2(10, 6);
+	centeredPosition = Vector2(155, 87);
+	ASSERT_EQ(centeredPosition, Utils::getCenteredPosition(testSize));
+	Godot::print("Test passed");
+	testSize = Vector2(6, 10);
+	centeredPosition = Vector2(157, 85);
+	ASSERT_EQ(centeredPosition, Utils::getCenteredPosition(testSize));
+	Godot::print("Test passed");
+	testSize = Vector2(126, 72);
+	centeredPosition = Vector2(97, 54);
+	ASSERT_EQ(centeredPosition, Utils::getCenteredPosition(testSize));
+	Godot::print("Test passed");
+	testSize = Vector2(72, 126);
+	centeredPosition = Vector2(124, 27);
+	ASSERT_EQ(centeredPosition, Utils::getCenteredPosition(testSize));
+	Godot::print("Test passed");
+
+	Godot::print("Test with size.x and size.y % 2 = 1");
+
+	Godot::print("Test with a squared object");
+	testSize = Vector2(9, 9);
+	centeredPosition = Vector2(155, 85);
+	ASSERT_EQ(centeredPosition.x, Utils::getCenteredPosition(testSize).x);
+	ASSERT_EQ(centeredPosition.y, Utils::getCenteredPosition(testSize).y);
+	Godot::print("Test passed");
+	testSize = Vector2(172, 172);
+	centeredPosition = Vector2(74, 4);
+	ASSERT_EQ(centeredPosition.x, Utils::getCenteredPosition(testSize).x);
+	ASSERT_EQ(centeredPosition.y, Utils::getCenteredPosition(testSize).y);
+	Godot::print("Test passed");
+
+	Godot::print("Test with rectangled objects");
+	testSize = Vector2(11, 7);
+	centeredPosition = Vector2(154, 86);
+	ASSERT_EQ(centeredPosition.x, Utils::getCenteredPosition(testSize).x);
+	ASSERT_EQ(centeredPosition.y, Utils::getCenteredPosition(testSize).y);
+	Godot::print("Test passed");
+	testSize = Vector2(7, 11);
+	centeredPosition = Vector2(156, 84);
+	ASSERT_EQ(centeredPosition.x, Utils::getCenteredPosition(testSize).x);
+	ASSERT_EQ(centeredPosition.y, Utils::getCenteredPosition(testSize).y);
+	Godot::print("Test passed");
+	testSize = Vector2(149, 115);
+	centeredPosition = Vector2(85, 32);
+	ASSERT_EQ(centeredPosition.x, Utils::getCenteredPosition(testSize).x);
+	ASSERT_EQ(centeredPosition.y, Utils::getCenteredPosition(testSize).y);
+	Godot::print("Test passed");
+	testSize = Vector2(57, 165);
+	centeredPosition = Vector2(131, 7);
+	ASSERT_EQ(centeredPosition.x, Utils::getCenteredPosition(testSize).x);
+	ASSERT_EQ(centeredPosition.y, Utils::getCenteredPosition(testSize).y);
+	Godot::print("Test passed");
 }
 
 void UtilsTest::_register_methods()

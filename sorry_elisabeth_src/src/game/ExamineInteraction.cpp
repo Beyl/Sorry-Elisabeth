@@ -7,12 +7,15 @@ void ExamineInteraction::_register_methods()
 	register_method("_ready", &ExamineInteraction::_ready);
 	register_method("on_button_released", &ExamineInteraction::on_button_released);
 
-	register_property<ExamineInteraction, real_t>("Hiding duration", &Interaction::setHidingDuration,
-		&Interaction::getHidingDuration, 0);
-	register_property<ExamineInteraction, godot::String>("Interaction name", &Interaction::setInteractionName,
+	register_property<ExamineInteraction, String>("Interaction name", &Interaction::setInteractionName,
 		&Interaction::getInteractionName, "Interaction");
+	register_property<ExamineInteraction, Ref<AudioStreamSample>>("Object Sound", &Interaction::setObjectSound,
+		&Interaction::getObjectSound, 0);
+
 	register_property<ExamineInteraction, String>("Examine text", &ExamineInteraction::setExamineText,
 		&ExamineInteraction::getExamineText, "Insert texte here");
+	register_property<ExamineInteraction, Ref<AudioStreamSample>>("Examination Sound", &ExamineInteraction::setExaminationSound,
+		&ExamineInteraction::getExaminationSound, 0);
 }
 
 void ExamineInteraction::_ready()
@@ -25,14 +28,24 @@ void ExamineInteraction::_ready()
 		(get_node("ExaminationSoundPlayer"));
 
 	//Scene initialisation
+	if (m_examinationSound != 0) {
+		m_examinationSoundPlayer->set_stream(m_examinationSound);
+	}
+
+	m_dialogBox->set_visible(false);
 	m_dialogBox->setDisplayedText(m_examineText);
 	m_dialogBox->setTextDisplayDuration(m_examinationSoundPlayer->get_stream()->get_length() / 2);
 }
 
 void ExamineInteraction::play()
 {
-	m_dialogBox->display();
-	m_examinationSoundPlayer->play();
+	if (!m_examineText.empty()) {
+		m_dialogBox->set_visible(true);
+		m_dialogBox->display();
+	}
+
+	if (m_examinationSound != 0)
+		m_examinationSoundPlayer->play();
 }
 
 void ExamineInteraction::on_button_released()
@@ -49,6 +62,16 @@ void ExamineInteraction::setExamineText(godot::String newText)
 godot::String ExamineInteraction::getExamineText()
 {
 	return m_examineText;
+}
+
+void ExamineInteraction::setExaminationSound(Ref<AudioStreamSample> newSound)
+{
+	m_examinationSound = newSound;
+}
+
+Ref<AudioStreamSample> ExamineInteraction::getExaminationSound()
+{
+	return m_examinationSound;
 }
 
 ExamineInteraction::ExamineInteraction()

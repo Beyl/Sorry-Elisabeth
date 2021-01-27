@@ -23,15 +23,11 @@ public:
 	MainScene();
 	~MainScene();
 
-	/**
-	 * Register the methods and properties godot is directly going to call and use
-	 */
+	// Register the methods and properties that godot is directly going to call and use
 	static void _register_methods();
 	void _init();	//Needed by godot
 
-	/**
-	 * Initilisation of the class and the scene
-	 */
+	// Initialise the class and the godot scene
 	void _ready();
 
 	/**
@@ -42,11 +38,8 @@ public:
 
 private:
 
-	/**
-	 * Send the player's informations to the camera
-	 */
+	// Send the player's informations to the camera
 	void sendPlayerInfoToCam();
-
 
 
 	/* MEMBER VARIABLES */
@@ -58,7 +51,6 @@ private:
 	bool m_gameSceneActive;
 
 	godot::Input* m_inputManager;	//To manage inputs
-
 
 
 	/* CONSTANTS */

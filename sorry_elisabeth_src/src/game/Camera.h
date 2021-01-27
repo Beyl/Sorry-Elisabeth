@@ -22,22 +22,15 @@ public:
 	Camera();
 	~Camera();
 
-	/**
-	 * Register the methods godot is directly going to call
-	 */
+	// Register the methods and properties that godot is directly going to call and use
 	static void _register_methods();
 	void _init();	//Needed by godot
 
-	/**
-	 * Initilisation of the class and the scene.
-	 */
+	// Initialise the class and the godot scene
 	void _ready();
 
-	/**
-	 * Called every frame, manage the camera position
-	 */
+	// Called every frame, manage the camera position
 	void _process();
-
 
 
 	/* PROPERTIES */
@@ -55,18 +48,15 @@ public:
 	void setInterpolationDuration(double newDuration);
 	double getInterpolationDuration();
 
-	/*Represents the x position from where the camera starts to follow the player
-		on the left side of the room*/
+	// Represents the x position from where the camera starts to follow the player on the left side of the room
 	int m_startFollowPlayerLeft;
 	void setStartFollowPlayerLeft(int newPosition);
 	int getStartFollowPlayerLeft();
 
-	/*Represents the x position from where the camera starts to follow the player
-		on the right side of the room*/
+	// Represents the x position from where the camera starts to follow the player on the right side of the room
 	int m_startFollowPlayerRight;
 	void setStartFollowPlayerRight(int newPosition);
 	int getStartFollowPlayerRight();
-
 
 
 	/* ACCESSORS & MUTATORS */
@@ -76,6 +66,7 @@ public:
 
 protected:
 
+	// Determine if the player is curently entering a new room
 	bool isPlayerEnteringNewRoom();
 
 	/**
@@ -94,11 +85,8 @@ protected:
 	 */
 	void changeRoom(bool changeToCellar);
 
-	/**
-	 * Make the camera follow the player
-	 */
+	// Make the camera follow the player
 	void follow_player();
-
 
 
 	/* MEMBER VARIABLES */
@@ -109,7 +97,6 @@ protected:
 	godot::Vector2 m_playerPosition;
 	Direction m_playerDirection;
 	bool m_playerIsInCellar;	//True if the player is in the cellar, false otherwise
-	
 
 
 	/* CONSTANTS */
