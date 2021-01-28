@@ -44,12 +44,13 @@ public:
 	void setObjectSound(godot::Ref<godot::AudioStreamSample> newSound);
 	godot::Ref<godot::AudioStreamSample> getObjectSound();
 	
+
+	/* CONSTANTS */
+	static const int MAX_NAME_CHAR = 18;
+
 protected:
 
 	//Child nodes
-	godot::Tween* m_tween;
 	godot::Label* m_label;
 	godot::AudioStreamPlayer2D* m_objectSoundPlayer;
-
-	static const int MAX_NAME_CHAR = 18;
 };

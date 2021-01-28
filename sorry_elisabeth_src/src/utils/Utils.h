@@ -41,15 +41,18 @@ public:
 	 */
 	static godot::Vector2 getCenteredPosition(godot::Vector2 objectSize);
 
-	/*CONSTANTS (Coordinates & positions are setted pixels) */
+	/* CONSTANTS (Coordinates & positions are setted pixels) */
 
-	//SCREEN
+	// SCREEN
 	static const int SCREEN_WIDTH = 320;
 	static const int SCREEN_HEIGHT = 180;
 
-	//ROOM
+	// ROOM
 	static const int ROOM_HEIGHT_BEGINNING = 30;
 	static const int ROOM_HEIGHT_ENDING = 180;
 	static const int ROOM_WIDTH_BEGINNING = -40;
 	static const int ROOM_WIDTH_ENDING = 660;
+
+	// INTERACTIONS
+	static const int MAX_INTERACTIONS_NUMBER = 3;
 };

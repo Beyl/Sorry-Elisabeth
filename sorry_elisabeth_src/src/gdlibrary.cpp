@@ -4,11 +4,14 @@
 
 #include "game/MainScene.h"
 #include "game/OpenInteraction.h"
-#include "game/InteractionTable.h"
+#include "game/SpecialInteraction.h"
 
 #include "../tests/utils/UtilsTest.h"
 #include "../tests/game/PlayerTest.h"
 #include "../tests/game/CameraTest.h"
+#include "../tests/game/InteractiveObjectTest.h"
+#include "../tests/game/InteractionTableTest.h"
+#include "../tests/game/InteractButtonTest.h"
 #include "../tests/game/DialogBoxTest.h"
 #include "../tests/game/FadeBackgroundTest.h"
 
@@ -23,12 +26,15 @@ extern "C" void GDN_EXPORT godot_nativescript_init(void* handle) {
 
 	//Main scene game classes
 	register_class<MainScene>();
-		register_class<Player>();
-		register_class<Camera>();
-			register_class<InteractionTable>();
-				register_class<ExamineInteraction>();
-				register_class<OpenInteraction>();
-					register_class<SearchPlace>();
+	register_class<Player>();
+	register_class<Camera>();
+	register_class<InteractiveObject>();
+	register_class<InteractButton>();
+	register_class<InteractionTable>();
+	register_class<ExamineInteraction>();
+	register_class<SpecialInteraction>();
+	register_class<OpenInteraction>();
+	register_class<SearchPlace>();
 	
 	register_class<DialogBox>();
 	register_class<FadeBackground>();
@@ -37,6 +43,9 @@ extern "C" void GDN_EXPORT godot_nativescript_init(void* handle) {
 	register_class<UtilsTest>();
 	register_class<PlayerTest>();
 	register_class<CameraTest>();
+	register_class<InteractiveObjectTest>();
+	register_class<InteractButtonTest>();
+	register_class<InteractionTableTest>();
 	register_class<FadeBackgroundTest>();
 	register_class<DialogBoxTest>();
 }

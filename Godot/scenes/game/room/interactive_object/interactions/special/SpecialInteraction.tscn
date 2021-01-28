@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scenes/game/room/interactive_object/interactions/examine/ExamineInteraction.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/game/game_ui/fade_background/FadeBackground.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/game/room/interactive_object/interactions/special/SpecialInteraction.gdns" type="Script" id=3]
+
+[node name="SpecialInteraction" instance=ExtResource( 1 )]
+script = ExtResource( 3 )
+"Next state interactions" = [ null, null, null ]
+"Interaction name" = "Special"
+
+[node name="FadeBackground" parent="CanvasLayer" index="1" instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 320.0
+margin_bottom = 180.0
+rect_min_size = Vector2( 320, 180 )
+"Display opacity" = 1.0
+"Fade duration" = 0.2
+
+[node name="ObjectSpecialSoundPlayer" type="AudioStreamPlayer" parent="." index="4"]

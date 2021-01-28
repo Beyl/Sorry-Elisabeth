@@ -16,7 +16,7 @@
  */
 class MainScene : public godot::Node2D {
 
-	GODOT_CLASS(MainScene, godot::Node2D);	//To make godot able to use this class
+	GODOT_CLASS(MainScene, godot::Node2D);	// Needed by godot to be able to use this class
 
 public:
 
@@ -25,7 +25,7 @@ public:
 
 	// Register the methods and properties that godot is directly going to call and use
 	static void _register_methods();
-	void _init();	//Needed by godot
+	void _init();	// Needed by godot
 
 	// Initialise the class and the godot scene
 	void _ready();
@@ -36,6 +36,12 @@ public:
 	 */
 	void _physics_process();
 
+
+	/* CONSTANTS */
+
+	static const int PLAYER_START_X = 25;
+	static const int PLAYER_START_Y = 100;
+
 private:
 
 	// Send the player's informations to the camera
@@ -44,17 +50,10 @@ private:
 
 	/* MEMBER VARIABLES */
 
-	//Child nodes
+	// Child nodes
 	Player* m_player;
 	Camera* m_camera;
 
 	bool m_gameSceneActive;
-
-	godot::Input* m_inputManager;	//To manage inputs
-
-
-	/* CONSTANTS */
-
-	static const int PLAYER_START_X = 25;
-	static const int PLAYER_START_Y = 100;
+	godot::Input* m_inputManager;	// To manage inputs
 };

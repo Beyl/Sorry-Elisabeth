@@ -51,6 +51,9 @@ public:
 	// Display the text
 	void on_displayAnimation_completed();
 
+	// Emit finished signal
+	void on_hideAnimation_completed();
+
 
 	/* PROPERTIES */
 
@@ -67,6 +70,15 @@ public:
 	void setBeforeHidingDuration(real_t newDuration);
 	real_t getBeforeHidingDuration();
 
+
+	/* CONSTANTS */
+
+	static const int MIN_TEXT_DISPLAY_DURATION = 1;
+	static const int MIN_TRANSITION_DISPLAY_DURATION = 1;
+	static const int MIN_BEFORE_HIDING_DURATION = 1;
+	static const int X_DISPLAY_POSITION = 20;
+	static const int Y_DISPLAY_POSITION = 145;
+
 protected:
 
 	//Children nodes
@@ -77,12 +89,4 @@ protected:
 
 	godot::Vector2 m_displayPosition;
 	godot::Vector2 m_hidePosition;
-
-
-	/* CONSTANTS */
-	static const int MIN_TEXT_DISPLAY_DURATION = 1;
-	static const int MIN_TRANSITION_DISPLAY_DURATION = 1;
-	static const int MIN_BEFORE_HIDING_DURATION = 1;
-	static const int X_DISPLAY_POSITION = 20;
-	static const int Y_DISPLAY_POSITION = 145;
 };

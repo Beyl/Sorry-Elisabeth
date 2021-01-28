@@ -15,7 +15,7 @@
  */
 class Camera : public godot::Camera2D {
 
-	GODOT_CLASS(Camera, godot::Camera2D);	//To make godot able to use this class
+	GODOT_CLASS(Camera, godot::Camera2D);	// Needed by godot to be able to use this class
 
 public:
 	
@@ -24,7 +24,7 @@ public:
 
 	// Register the methods and properties that godot is directly going to call and use
 	static void _register_methods();
-	void _init();	//Needed by godot
+	void _init();	// Needed by godot
 
 	// Initialise the class and the godot scene
 	void _ready();
@@ -43,7 +43,7 @@ public:
 	void setLivingRoomCamPosition(godot::Vector2 newPosition);
 	godot::Vector2 getLivingRoomCamPosition();
 
-	//Represents the duration in s of the change room transition
+	// Represents the duration in s of the change room transition
 	double m_interpolationDuration;
 	void setInterpolationDuration(double newDuration);
 	double getInterpolationDuration();

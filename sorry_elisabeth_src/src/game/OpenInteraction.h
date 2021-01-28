@@ -13,7 +13,7 @@
  */
 class OpenInteraction : public ExamineInteraction {
 
-	GODOT_SUBCLASS(OpenInteraction, ExamineInteraction);	//To make godot able to use this class
+	GODOT_SUBCLASS(OpenInteraction, ExamineInteraction);	// Needed by godot to be able to use this class
 
 public:
 
@@ -22,13 +22,16 @@ public:
 
 	// Register the methods and properties that godot is directly going to call and use
 	static void _register_methods();
-	void _init();	//Needed by godot
+	void _init();	// Needed by godot
 
 	// Initialise the class and the godot scene
 	void _ready();
 	
 	// Play the examine interaction and display the search area
 	virtual void play();
+
+
+	/* SIGNALS */
 
 	// Fade out the background
 	void on_searchPlaceCloseButton_released();

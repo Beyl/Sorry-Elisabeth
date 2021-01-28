@@ -22,7 +22,7 @@ public:
 	static void _register_methods();
 
 	// Run all tests
-	void _init();	//Needed by godot
+	void _init();	// Needed by godot
 
 private:
 

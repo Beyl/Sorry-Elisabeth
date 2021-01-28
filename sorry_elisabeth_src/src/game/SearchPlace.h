@@ -14,7 +14,7 @@
  */
 class SearchPlace : public godot::TextureRect {
 
-	GODOT_CLASS(SearchPlace, godot::TextureRect);	//Needed by godot to be able to use this class
+	GODOT_CLASS(SearchPlace, godot::TextureRect);	// Needed by godot to be able to use this class
 
 public:
 
@@ -23,7 +23,7 @@ public:
 	
 	//  Register all methods and properties that godot is directyl going to call or use
 	static void _register_methods();
-	void _init(); //Needed by godot
+	void _init(); // Needed by godot
 	
 	// Initialise the class and the godot scene
 	void _ready();

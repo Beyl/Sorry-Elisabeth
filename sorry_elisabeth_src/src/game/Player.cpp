@@ -12,12 +12,12 @@ void Player::_register_methods()
 
 void Player::_ready()
 {
-	//Get the children nodes
+	// Get the children nodes
 	m_animSprite = get_node("AnimatedSprite")->cast_to<AnimatedSprite>(get_node("AnimatedSprite"));
 
-	//Initialisation of the scene
+	// Initialisation of the scene
 	m_direction = Direction::RIGHT;
-	stopMooving();	//The player doesn't moove when entering a scene
+	stopMooving();	// The player doesn't moove when entering a scene
 }
 
 void Player::_physics_process()
@@ -69,10 +69,6 @@ void Player::changeDirection(Direction newDirection)
 		case Direction::LEFT:
 			m_animSprite->set_flip_h(true);
 			break;
-		case Direction::FRONT:
-			break;
-		case Direction::BACK:
-			break;
 		default:
 			break;
 		}
@@ -85,21 +81,9 @@ void Player::changeDirection(Direction newDirection)
 		case Direction::RIGHT:
 			m_animSprite->set_flip_h(false);
 			break;
-		case Direction::FRONT:
-			break;
-		case Direction::BACK:
-			break;
 		default:
 			break;
 		}
-		m_direction = newDirection;
-		break;
-
-	case Direction::FRONT:
-		m_direction = newDirection;
-		break;
-
-	case Direction::BACK:
 		m_direction = newDirection;
 		break;
 

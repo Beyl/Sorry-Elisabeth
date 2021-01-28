@@ -6,6 +6,7 @@ void ExamineInteraction::_register_methods()
 {
 	register_method("_ready", &ExamineInteraction::_ready);
 	register_method("on_button_released", &ExamineInteraction::on_button_released);
+	register_method("on_dialogBox_just_hided", &ExamineInteraction::on_dialogBox_just_hided);
 
 	register_property<ExamineInteraction, String>("Interaction name", &Interaction::setInteractionName,
 		&Interaction::getInteractionName, "Interaction");
@@ -35,6 +36,7 @@ void ExamineInteraction::_ready()
 	m_dialogBox->set_visible(false);
 	m_dialogBox->setDisplayedText(m_examineText);
 	m_dialogBox->setTextDisplayDuration(m_examinationSoundPlayer->get_stream()->get_length() / 2);
+	m_dialogBox->connect("just_hided", this, "on_dialogBox_just_hided");
 }
 
 void ExamineInteraction::play()
@@ -52,6 +54,11 @@ void ExamineInteraction::on_button_released()
 {
 	Interaction::on_button_released();
 	play();
+}
+
+void ExamineInteraction::on_dialogBox_just_hided()
+{
+	emit_signal("interaction_finished");
 }
 
 void ExamineInteraction::setExamineText(godot::String newText)

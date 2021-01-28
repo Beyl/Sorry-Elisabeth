@@ -4,16 +4,17 @@ using namespace godot;
 
 void Interaction::_ready()
 {
-	//Get children
-	m_tween = get_node("Tween")->cast_to<Tween>(get_node("Tween"));
+	// Get children
 	m_label = get_node("Label")->cast_to<Label>(get_node("Label"));
-	m_objectSoundPlayer = get_node("InteractionSoundPlayer")->cast_to<AudioStreamPlayer2D>
-		(get_node("InteractionSoundPlayer"));
+	m_objectSoundPlayer = get_node("ObjectSoundPlayer")->cast_to<AudioStreamPlayer2D>
+		(get_node("ObjectSoundPlayer"));
 
-	//Signal connection
+	// Signals initialisation
 	connect("button_up", this, "on_button_released");
+	add_user_signal("interaction_just_played");
+	add_user_signal("interaction_finished");
 
-	//Scene initialisation
+	// Scene initialisation
 	set_disabled(false);
 	m_label->set_text(m_interactionName);
 
@@ -27,6 +28,7 @@ void Interaction::on_button_released()
 	if (m_objectSound != 0) {
 		m_objectSoundPlayer->play();
 	}
+	emit_signal("interaction_just_played");
 }
 
 void Interaction::setInteractionName(godot::String newName)
@@ -60,7 +62,6 @@ godot::Ref<godot::AudioStreamSample> Interaction::getObjectSound()
 
 Interaction::Interaction()
 {
-	m_tween = 0;
 	m_label = 0;
 	m_objectSoundPlayer = 0;
 	m_interactionName = String();

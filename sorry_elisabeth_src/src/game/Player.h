@@ -15,7 +15,7 @@
  */
 class Player : public godot::KinematicBody2D {
 
-	GODOT_CLASS(Player, godot::KinematicBody2D);	//To make godot able to use this class
+	GODOT_CLASS(Player, godot::KinematicBody2D);	// To make godot able to use this class
 
 public:
 
@@ -26,15 +26,15 @@ public:
 	 * Register the methods and properties godot is directly going to call
 	 */
 	static void _register_methods();
-	void _init();	//Needed by godot
+	void _init();	// Needed by godot
 
-	//Initialise the class and the godot scene
+	// Initialise the class and the godot scene
 	void _ready();
 
-	//Called every tic (60 times per seconds), manage player movements and animations
+	// Called every tic (60 times per seconds), manage player movements and animations
 	void _physics_process();
 
-	//Moove the player on the X axis to a given position
+	// Moove the player on the X axis to a given position
 	void mooveTo(int xDestination);
 
 
@@ -50,6 +50,14 @@ public:
 	Direction getDirection();
 	int getXDestination();
 
+
+	/* CONSTANTS */
+
+	static const int MIN_SPEED = 5;
+	static const int MAX_SPEED = 500;
+	static const int NO_DESTINATION = -500;	// Set when the player doesn't need to move
+	static const int NOT_MOOVING_RANGE = 10;	// The range around the player where he does not moove
+
 protected:
 
 	void changeDirection(Direction newDirection);
@@ -63,12 +71,4 @@ protected:
 
 	Direction m_direction;	// Define where the player is looking
 	int m_xDestination;	// Define where the player is going
-
-
-	/* CONSTANTS */
-
-	static const int MIN_SPEED = 5;
-	static const int MAX_SPEED = 500;
-	static const int NO_DESTINATION = -500;	// Set when the player doesn't need to move
-	static const int NOT_MOOVING_RANGE = 10;	// The range around the player where he does not moove
 };

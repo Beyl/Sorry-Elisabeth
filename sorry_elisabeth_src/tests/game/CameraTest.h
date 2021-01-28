@@ -17,7 +17,7 @@ public:
 
 	// Register the methods godot is directly going to call
 	static void _register_methods();
-	void _init();	//Needed by godot
+	void _init();	// Needed by godot
 
 	// Run all the test methods
 	void _ready();

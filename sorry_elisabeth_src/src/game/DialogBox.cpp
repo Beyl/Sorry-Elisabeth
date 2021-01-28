@@ -8,6 +8,7 @@ void DialogBox::_register_methods()
 	register_method("on_beforeHideTimer_timeout", &DialogBox::on_beforeHideTimer_timeout);
 	register_method("on_textDisplayed", &DialogBox::on_textDisplayed);
 	register_method("on_displayAnimation_completed", &DialogBox::on_displayAnimation_completed);
+	register_method("on_hideAnimation_completed", &DialogBox::on_hideAnimation_completed);
 
 	register_property<DialogBox, real_t>("Text display duration",
 		&DialogBox::setTextDisplayDuration, &DialogBox::getTextDisplayDuration, MIN_TEXT_DISPLAY_DURATION);
@@ -19,22 +20,23 @@ void DialogBox::_register_methods()
 
 void DialogBox::_ready()
 {
-	//Get children
+	// Get children
 	m_textLabel = get_node("RichTextLabel")->cast_to<RichTextLabel>(get_node("RichTextLabel"));
 	m_boxTween = get_node("TweenDialog")->cast_to<Tween>(get_node("TweenDialog"));
 	m_textTween = get_node("RichTextLabel/TweenText")->cast_to<Tween>(get_node("RichTextLabel/TweenText"));
 	m_beforeHideTimer = get_node("BeforeHiding")->cast_to<Timer>(get_node("BeforeHiding"));
 
-	//Scene initilisation
+	// Scene initilisation
 	m_textLabel->set_percent_visible(0);
 	m_displayPosition = Vector2(X_DISPLAY_POSITION, Y_DISPLAY_POSITION);
 	m_hidePosition = Vector2(get_position().x, Utils::ROOM_HEIGHT_ENDING + 50);
 	set_position(m_hidePosition);
 	m_beforeHideTimer->set_wait_time(m_beforeHidingDuration);
 
-	//Signals connections
+	// Signals initialisation
 	m_beforeHideTimer->connect("timeout", this, "on_beforeHideTimer_timeout");
 	m_textTween->connect("tween_all_completed", this, "on_textDisplayed");
+	add_user_signal("just_hided");
 }
 
 void DialogBox::display()
@@ -68,9 +70,15 @@ void DialogBox::on_beforeHideTimer_timeout()
 void DialogBox::hide()
 {
 	m_boxTween->disconnect("tween_all_completed", this, "on_displayAnimation_completed");
+	m_boxTween->connect("tween_all_completed", this, "on_hideAnimation_completed");
 	m_boxTween->interpolate_property(this, "rect_position", m_displayPosition, m_hidePosition,
 		m_transitionDisplayDuration, Tween::TRANS_LINEAR, Tween::EASE_IN);
 	m_boxTween->start();
+}
+
+void DialogBox::on_hideAnimation_completed()
+{
+	emit_signal("just_hided");
 }
 
 bool DialogBox::isHided()

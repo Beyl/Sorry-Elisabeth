@@ -31,8 +31,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Tween" type="Tween" parent="."]
-
-[node name="InteractionSoundPlayer" type="AudioStreamPlayer2D" parent="."]
+[node name="ObjectSoundPlayer" type="AudioStreamPlayer2D" parent="."]
 position = Vector2( 50, 0 )
 max_distance = 200.0

@@ -10,21 +10,21 @@ void SearchPlace::_register_methods()
 
 void SearchPlace::_ready()
 {
-	//Get children
+	// Get children
 	m_tween = get_node("Tween")->cast_to<Tween>(get_node("Tween"));
 	m_closeButton = get_node("CloseButton")->cast_to<TextureButton>(get_node("CloseButton"));
 
-	//Scene intialisation
+	// Scene intialisation
 
-	//Set hiding and display position
+	// Set hiding and display position
 	Vector2 searchPlaceSize = get_rect().get_size();
 	m_displayPosition = Utils::getCenteredPosition(searchPlaceSize);
 	m_hidingPosition = Vector2(m_displayPosition.x,
 		m_displayPosition.y + Utils::SCREEN_HEIGHT / 2 + searchPlaceSize.y / 2 + m_closeButton->get_size().y / 2);
 
-	//Entering a scene, a search place is always hided
+	// Entering a scene, a search place is always hided
 	set_position(m_hidingPosition);
-	m_tweenAnimationDuration = real_t(0.5);	//The duration of the dislpay and hide interpolation
+	m_tweenAnimationDuration = real_t(0.5);	// The duration of the dislpay and hide interpolation
 	m_closeButton->connect("button_up", this, "on_closeButton_released");
 }
 
