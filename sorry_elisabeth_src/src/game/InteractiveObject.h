@@ -24,23 +24,19 @@ public:
 	// Initialise the class and the godot scene
 	void _ready();
 
-	// Calculate the table position depending on the number of interactions in it
-	void setInteractionTablePosition();
-
 	void displayInteractButton();
 
 	// Hide the interact button AND the interaction table
 	void hideAll();
 	
 	// Determine if the interactive object is still offering interactions
-	bool offerInteractions();
+	bool offerInteractions() const;
 
 	// Set the next animation and the new interactions going with it
 	void increaseState(godot::Array nextInteractions, Interaction* increaseTypeInteraction);
 
 
 	/* SIGNALS */
-
 	// Display the interaction table
 	void on_interactButton_released();
 
@@ -49,26 +45,24 @@ public:
 
 
 	/* PROPERTIES */
+	void setObjectStateNumber(const int stateNumber);
+	int getObjectStateNumber() const;
 
-	int m_objectStateNumber;
-	void setObjectStateNumber(int stateNumber);
-	int getObjectStateNumber();
-
-	godot::Vector2 m_objectSize;
-	void setObjectSize(godot::Vector2 newSize);
-	godot::Vector2 getObjectSize();
-
-
-	/* CONSTANTS */
-
-	// 49 on ascii table is equal to "1"
-	const int ASCII_CONVERSION_1 = 49;
+	void setObjectSize(const godot::Vector2 newSize);
+	godot::Vector2 getObjectSize() const;
 
 protected:
+
+	// Calculate the table position depending on the number of interactions in it
+	void setInteractionTablePosition();
 
 	// Child nodes
 	InteractButton* m_interactButton;
 	InteractionTable* m_interactionTable;
 
 	int m_state;
+
+	// Properties
+	int m_objectStateNumber;
+	godot::Vector2 m_objectSize;
 };

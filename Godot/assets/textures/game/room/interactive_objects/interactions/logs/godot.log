@@ -1,5 +1,0 @@
-Godot Engine v3.2.3.stable.official - https://godotengine.org
-OpenGL ES 3.0 Renderer: GeForce GTX 1650/PCIe/SSE2
- 
-**ERROR**: Condition "default_certs != __null" is true.
-   At: modules/mbedtls/crypto_mbedtls.cpp:201:load_default_certificates() - Condition "default_certs != __null" is true.

@@ -29,19 +29,18 @@ public:
 
 	void display();
 	void hide();
-	bool isHided();
+	bool isHided() const;
 
 	// Set the text that will be displayed in the box
-	void setDisplayedText(godot::String displayedText);
+	void setDisplayedText(const godot::String displayedText);
 
 
 	/* ACCESSORS */
-	godot::Vector2 getDisplayPosition();
-	godot::Timer* getBeforeHideTimer();
+	godot::Vector2 getDisplayPosition() const;
+	godot::Timer* getBeforeHideTimer() const;
 
 
 	/* SIGNALS */
-
 	// Hide the dialog box
 	void on_beforeHideTimer_timeout();
 
@@ -56,19 +55,14 @@ public:
 
 
 	/* PROPERTIES */
+	void setTextDisplayDuration(const real_t newDuration);
+	real_t getTextDisplayDuration() const;
 
-	real_t m_textDisplayDuration;
-	void setTextDisplayDuration(real_t newDuration);
-	real_t getTextDisplayDuration();
+	void setTransitionDisplayDuration(const real_t newDuration);
+	real_t getTransitionDisplayDuration() const;
 
-	real_t m_transitionDisplayDuration;
-	void setTransitionDisplayDuration(real_t newDuration);
-	real_t getTransitionDisplayDuration();
-
-	//Time in second before starting the hiding duration, after the text has been displayed
-	real_t m_beforeHidingDuration;
-	void setBeforeHidingDuration(real_t newDuration);
-	real_t getBeforeHidingDuration();
+	void setBeforeHidingDuration(const real_t newDuration);
+	real_t getBeforeHidingDuration() const;
 
 
 	/* CONSTANTS */
@@ -81,7 +75,7 @@ public:
 
 protected:
 
-	//Children nodes
+	// Children nodes
 	godot::RichTextLabel* m_textLabel;
 	godot::Timer* m_beforeHideTimer;
 	godot::Tween* m_boxTween;
@@ -89,4 +83,9 @@ protected:
 
 	godot::Vector2 m_displayPosition;
 	godot::Vector2 m_hidePosition;
+
+	// Properties
+	real_t m_textDisplayDuration;
+	real_t m_transitionDisplayDuration;
+	real_t m_beforeHidingDuration;	//Time in second before starting the hiding duration, after the text has been displayed
 };

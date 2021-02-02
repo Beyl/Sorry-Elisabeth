@@ -81,7 +81,7 @@ void DialogBox::on_hideAnimation_completed()
 	emit_signal("just_hided");
 }
 
-bool DialogBox::isHided()
+bool DialogBox::isHided() const
 {
 	return get_position() == m_hidePosition;
 }
@@ -92,17 +92,17 @@ void DialogBox::setDisplayedText(godot::String displayedText)
 	m_textLabel->set_bbcode("[center]" + displayedText + "[/center]");
 }
 
-godot::Vector2 DialogBox::getDisplayPosition()
+godot::Vector2 DialogBox::getDisplayPosition() const
 {
 	return m_displayPosition;
 }
 
-godot::Timer* DialogBox::getBeforeHideTimer()
+godot::Timer* DialogBox::getBeforeHideTimer() const
 {
 	return m_beforeHideTimer;
 }
 
-void DialogBox::setTextDisplayDuration(real_t newDuration)
+void DialogBox::setTextDisplayDuration(const real_t newDuration)
 {
 	if (newDuration < MIN_TEXT_DISPLAY_DURATION)
 		m_textDisplayDuration = MIN_TEXT_DISPLAY_DURATION;
@@ -110,12 +110,12 @@ void DialogBox::setTextDisplayDuration(real_t newDuration)
 		m_textDisplayDuration = newDuration;
 }
 
-real_t DialogBox::getTextDisplayDuration()
+real_t DialogBox::getTextDisplayDuration() const
 {
 	return m_textDisplayDuration;
 }
 
-void DialogBox::setTransitionDisplayDuration(real_t newDuration)
+void DialogBox::setTransitionDisplayDuration(const real_t newDuration)
 {
 	if (newDuration < MIN_TRANSITION_DISPLAY_DURATION)
 		m_transitionDisplayDuration = MIN_TRANSITION_DISPLAY_DURATION;
@@ -123,12 +123,12 @@ void DialogBox::setTransitionDisplayDuration(real_t newDuration)
 		m_transitionDisplayDuration = newDuration;
 }
 
-real_t DialogBox::getTransitionDisplayDuration()
+real_t DialogBox::getTransitionDisplayDuration() const
 {
 	return m_transitionDisplayDuration;
 }
 
-void DialogBox::setBeforeHidingDuration(real_t newDuration)
+void DialogBox::setBeforeHidingDuration(const real_t newDuration)
 {
 	if (newDuration < MIN_BEFORE_HIDING_DURATION)
 		m_beforeHidingDuration = MIN_BEFORE_HIDING_DURATION;
@@ -136,7 +136,7 @@ void DialogBox::setBeforeHidingDuration(real_t newDuration)
 		m_beforeHidingDuration = newDuration;
 }
 
-real_t DialogBox::getBeforeHidingDuration()
+real_t DialogBox::getBeforeHidingDuration() const
 {
 	return m_beforeHidingDuration;
 }

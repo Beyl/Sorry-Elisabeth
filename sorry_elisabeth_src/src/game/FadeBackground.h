@@ -26,39 +26,40 @@ public:
 	void fadeIn();
 	void fadeOut();
 
-	bool isDisplayed();
+	bool isDisplayed() const;
+	bool isHided() const;
+
 	
 	/* SIGNALS */
-
 	// Emit the signal associated
 	void on_fadeIn_finished();
 
 	// Emit the signal associated
 	void on_fadeOut_finished();
 
+
 	/* PROPERTIES */
+	void setDisplayOpacity(const float newOpacity);
+	float getDisplayOpacity() const;
 
-	// The final opacity of the background when it's fully displayed
-	float m_displayOpacity;
-	void setDisplayOpacity(float newOpacity);
-	float getDisplayOpacity();
-
-	real_t m_fadeDuration;
-	void setFadeDuration(real_t newDuration);
-	real_t getFadeDuration();
+	void setFadeDuration(const real_t newDuration);
+	real_t getFadeDuration() const;
 
 
 	/* CONSTANTS */
 	const int MAX_DISPLAY_OPACITY = 1;
 	const int MIN_DISPLAY_OPACITY = 0;
-
 	const double MIN_FADE_DURATION = 0.1;
+	const godot::Color HIDE_COLOR = godot::Color(0, 0, 0, 0);
 
 protected:
 
 	//Children nodes
 	godot::Tween* m_tween;
 
-	godot::Color m_hideColor;
 	godot::Color m_displayColor;
+
+	// Properties
+	float m_displayOpacity;	// The final opacity of the background when it's fully displayed
+	real_t m_fadeDuration;
 };

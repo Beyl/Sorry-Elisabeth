@@ -66,7 +66,7 @@ void ExamineInteraction::setExamineText(godot::String newText)
 	m_examineText = newText;
 }
 
-godot::String ExamineInteraction::getExamineText()
+godot::String ExamineInteraction::getExamineText() const
 {
 	return m_examineText;
 }
@@ -76,7 +76,7 @@ void ExamineInteraction::setExaminationSound(Ref<AudioStreamSample> newSound)
 	m_examinationSound = newSound;
 }
 
-Ref<AudioStreamSample> ExamineInteraction::getExaminationSound()
+Ref<AudioStreamSample> ExamineInteraction::getExaminationSound() const
 {
 	return m_examinationSound;
 }

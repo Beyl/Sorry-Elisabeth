@@ -46,10 +46,10 @@ void Camera::_process()
 		follow_player();
 }
 
-bool Camera::isPlayerEnteringNewRoom()
+const bool Camera::isPlayerEnteringNewRoom()
 {
 	bool hasChanged = false;
-	int isInsideRoomRange = isPlayerInsideChangeRoomRange();
+	const int isInsideRoomRange = isPlayerInsideChangeRoomRange();
 
 	if (isInsideRoomRange == 1) {	// If the player is inside the cellar change room range
 		if (m_playerDirection == Direction::RIGHT)
@@ -63,7 +63,7 @@ bool Camera::isPlayerEnteringNewRoom()
 	return hasChanged;
 }
 
-int Camera::isPlayerInsideChangeRoomRange()
+const int Camera::isPlayerInsideChangeRoomRange()
 {
 	int isInside = 0;
 
@@ -81,7 +81,7 @@ int Camera::isPlayerInsideChangeRoomRange()
 	return isInside;
 }
 
-void Camera::changeRoom(bool changeToCellar)
+void Camera::changeRoom(const bool changeToCellar)
 {
 	m_playerIsInCellar = changeToCellar;
 
@@ -115,27 +115,27 @@ void Camera::follow_player()
 	align();	// Align the camera position with the player position (more fluid)
 }
 
-void Camera::setCellarCamPosition(godot::Vector2 newPosition)
+void Camera::setCellarCamPosition(const godot::Vector2 newPosition)
 {
 	m_cellarCamPosition = newPosition;
 }
 
-Vector2 Camera::getCellarCamPosition()
+Vector2 Camera::getCellarCamPosition() const
 {
 	return m_cellarCamPosition;
 }
 
-void Camera::setLivingRoomCamPosition(godot::Vector2 newPosition)
+void Camera::setLivingRoomCamPosition(const godot::Vector2 newPosition)
 {
 	m_livingRoomCamPosition = newPosition;
 }
 
-Vector2 Camera::getLivingRoomCamPosition()
+Vector2 Camera::getLivingRoomCamPosition() const
 {
 	return m_livingRoomCamPosition;
 }
 
-void Camera::setInterpolationDuration(double newDuration)
+void Camera::setInterpolationDuration(const double newDuration)
 {
 	if (newDuration < 0.2)
 		m_interpolationDuration = 0.2;
@@ -145,12 +145,12 @@ void Camera::setInterpolationDuration(double newDuration)
 		m_interpolationDuration = newDuration;
 }
 
-double Camera::getInterpolationDuration()
+double Camera::getInterpolationDuration() const
 {
 	return m_interpolationDuration;
 }
 
-void Camera::setStartFollowPlayerLeft(int newPosition)
+void Camera::setStartFollowPlayerLeft(const int newPosition)
 {
 	if (newPosition < START_FOLLOW_PLAYER_LEFT_MIN)
 		m_startFollowPlayerLeft = START_FOLLOW_PLAYER_LEFT_MIN;
@@ -160,12 +160,12 @@ void Camera::setStartFollowPlayerLeft(int newPosition)
 		m_startFollowPlayerLeft = newPosition;
 }
 
-int Camera::getStartFollowPlayerLeft()
+int Camera::getStartFollowPlayerLeft() const
 {
 	return m_startFollowPlayerLeft;
 }
 
-void Camera::setStartFollowPlayerRight(int newPosition)
+void Camera::setStartFollowPlayerRight(const int newPosition)
 {
 	if (newPosition < START_FOLLOW_PLAYER_RIGHT_MIN)
 		m_startFollowPlayerRight = START_FOLLOW_PLAYER_RIGHT_MIN;
@@ -175,17 +175,17 @@ void Camera::setStartFollowPlayerRight(int newPosition)
 		m_startFollowPlayerRight = newPosition;
 }
 
-int Camera::getStartFollowPlayerRight()
+int Camera::getStartFollowPlayerRight() const
 {
 	return m_startFollowPlayerRight;
 }
 
-void Camera::setPlayerPosition(Vector2 playerPosition)
+void Camera::setPlayerPosition(const Vector2 playerPosition)
 {
 	m_playerPosition = playerPosition;
 }
 
-void Camera::setPlayerDirection(Direction newDirection)
+void Camera::setPlayerDirection(const Direction newDirection)
 {
 	m_playerDirection = newDirection;
 }

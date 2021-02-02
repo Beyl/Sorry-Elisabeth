@@ -5,9 +5,10 @@
 #include <Node2D.hpp>
 
 #include "../../src/utils/Utils.h"
+#include "../../src/game/Inventory.h"
 
 /**
- * Test the Player class's methods using godot and gtest
+ * Test the Utils class's methods AND other static methods using godot and gtest
  */
 class UtilsTest : public godot::Node2D {
 

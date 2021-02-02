@@ -35,24 +35,20 @@ public:
 	void _physics_process();
 
 	// Moove the player on the X axis to a given position
-	void mooveTo(int xDestination);
+	void mooveTo(const int xDestination);
+
+
+	/* ACCESSORS */
+	const Direction getDirection();
+	const int getXDestination();
 
 
 	/* PROPERTIES */
-
-	int m_speed;
-	void setSpeed(int newSpeed);
-	int getSpeed();
-
-
-	/* ACCESSORS & MUTATORS */
-
-	Direction getDirection();
-	int getXDestination();
+	void setSpeed(const int newSpeed);
+	int getSpeed() const;
 
 
 	/* CONSTANTS */
-
 	static const int MIN_SPEED = 5;
 	static const int MAX_SPEED = 500;
 	static const int NO_DESTINATION = -500;	// Set when the player doesn't need to move
@@ -60,15 +56,17 @@ public:
 
 protected:
 
-	void changeDirection(Direction newDirection);
+	void changeDirection(const Direction newDirection);
 	void stopMooving();
 
 
 	/* MEMBER VARIABLES */
-
 	//Child nodes
 	godot::AnimatedSprite* m_animSprite;
 
 	Direction m_direction;	// Define where the player is looking
 	int m_xDestination;	// Define where the player is going
+
+	//Properties
+	int m_speed;
 };

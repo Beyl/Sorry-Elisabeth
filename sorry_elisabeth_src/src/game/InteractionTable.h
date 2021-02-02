@@ -29,9 +29,10 @@ public:
 
 	void display();
 	void hide();
-	bool isDisplayed();
+	bool isDisplayed() const;
+	bool isHided() const;
 
-	int getInteractionsNumber();
+	int getInteractionsNumber() const;
 
 	/**
 	 * Add the interactions inside the interactions array (if there's at least one) as the VBOX's children,
@@ -44,10 +45,8 @@ public:
 
 
 	/* PROPERTIES */
-
-	godot::Array m_interactions{};
-	void setInteractions(godot::Array newInteractions);
-	godot::Array getInteractions();
+	void setInteractions(const godot::Array newInteractions);
+	godot::Array getInteractions() const;
 
 
 	/* CONSTANTS */
@@ -65,4 +64,7 @@ protected:
 
 	real_t m_animationDuration;
 	godot::Vector2 m_full_scale;
+
+	// Properties
+	godot::Array m_interactions{};
 };

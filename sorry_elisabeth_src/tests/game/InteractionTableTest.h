@@ -26,4 +26,5 @@ private:
 
 	// Initialise the player attributes before testing
 	void testGetInteractionsNumber();
+	void testSetTableSize();
 };

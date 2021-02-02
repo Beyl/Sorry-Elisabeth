@@ -31,7 +31,7 @@ void Interaction::on_button_released()
 	emit_signal("interaction_just_played");
 }
 
-void Interaction::setInteractionName(godot::String newName)
+void Interaction::setInteractionName(const godot::String newName)
 {
 	if (newName.length() > MAX_NAME_CHAR) {
 		m_interactionName = "Interaction";
@@ -45,17 +45,17 @@ void Interaction::setInteractionName(godot::String newName)
 		m_interactionName = newName;
 }
 
-godot::String Interaction::getInteractionName()
+godot::String Interaction::getInteractionName() const
 {
 	return m_interactionName;
 }
 
-void Interaction::setObjectSound(godot::Ref<godot::AudioStreamSample> newSound)
+void Interaction::setObjectSound(const godot::Ref<godot::AudioStreamSample> newSound)
 {
 	m_objectSound = newSound;
 }
 
-godot::Ref<godot::AudioStreamSample> Interaction::getObjectSound()
+godot::Ref<godot::AudioStreamSample> Interaction::getObjectSound() const
 {
 	return m_objectSound;
 }

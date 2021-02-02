@@ -24,7 +24,7 @@ void OpenInteraction::_ready()
 
 	//Get the specific search place packed scene
 	get_node("CanvasLayer")->add_child(m_searchPlaceScene->instance());
-	NodePath pathToSearchPlace = NodePath("CanvasLayer/" + m_searchPlaceSceneName);
+	const NodePath pathToSearchPlace = NodePath("CanvasLayer/" + m_searchPlaceSceneName);
 	m_searchPlace = get_node(pathToSearchPlace)->cast_to<SearchPlace>(get_node(pathToSearchPlace));
 
 	m_searchPlaceBackground->setFadeDuration(m_searchPlace->getAnimationDuration());
@@ -55,22 +55,22 @@ void OpenInteraction::on_dialogBoxHiding()
 	m_searchPlace->getCloseButton()->set_disabled(false);
 }
 
-void OpenInteraction::setSearchPlaceScene(godot::Ref<godot::PackedScene> newSearchPlaceScene)
+void OpenInteraction::setSearchPlaceScene(const godot::Ref<godot::PackedScene> newSearchPlaceScene)
 {
 	m_searchPlaceScene = newSearchPlaceScene;
 }
 
-godot::Ref<godot::PackedScene> OpenInteraction::getSearchPlaceScene()
+godot::Ref<godot::PackedScene> OpenInteraction::getSearchPlaceScene() const
 {
 	return m_searchPlaceScene;
 }
 
-void OpenInteraction::setSearchPlaceSceneName(godot::String newName)
+void OpenInteraction::setSearchPlaceSceneName(const godot::String newName)
 {
 	m_searchPlaceSceneName = newName;
 }
 
-godot::String OpenInteraction::getSearchPlaceSceneName()
+godot::String OpenInteraction::getSearchPlaceSceneName() const
 {
 	return m_searchPlaceSceneName;
 }

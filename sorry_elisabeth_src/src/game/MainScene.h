@@ -38,7 +38,6 @@ public:
 
 
 	/* CONSTANTS */
-
 	static const int PLAYER_START_X = 25;
 	static const int PLAYER_START_Y = 100;
 
@@ -49,11 +48,10 @@ private:
 
 
 	/* MEMBER VARIABLES */
-
 	// Child nodes
 	Player* m_player;
 	Camera* m_camera;
 
 	bool m_gameSceneActive;
-	godot::Input* m_inputManager;	// To manage inputs
+	const godot::Input* m_inputManager;	// To manage inputs
 };

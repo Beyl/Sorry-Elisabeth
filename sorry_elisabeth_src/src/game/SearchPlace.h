@@ -36,8 +36,8 @@ public:
 
 
 	/* ACCESSORS */
-	real_t getAnimationDuration();
-	godot::TextureButton* getCloseButton();
+	real_t getAnimationDuration() const;
+	godot::TextureButton* getCloseButton() const;
 
 protected:
 
@@ -47,5 +47,5 @@ protected:
 
 	godot::Vector2 m_displayPosition;
 	godot::Vector2 m_hidingPosition;
-	real_t m_tweenAnimationDuration;
+	const real_t TWEEN_ANIMATION_DURATION = real_t(0.5);
 };

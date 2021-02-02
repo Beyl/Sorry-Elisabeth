@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://scenes/game/room/interactive_objects/interactions/open/OpenInteraction.gdns" type="Script" id=1]
+[ext_resource path="res://scenes/game/room/interactive_objects/interactions/examine/ExamineInteraction.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/game/room/interactive_objects/interactions/open/search_place/SearchPlace.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/game/game_ui/fade_background/FadeBackground.tscn" type="PackedScene" id=4]
+
+
+[node name="OpenInteraction" instance=ExtResource( 2 )]
+script = ExtResource( 1 )
+"Search place scene" = ExtResource( 3 )
+"Search place scene's name" = "SearchPlace"
+"Interaction name" = "Open"
+
+[node name="Label" parent="." index="0"]
+margin_right = -3.8147e-06
+
+[node name="FadeBackground" parent="CanvasLayer" index="0" instance=ExtResource( 4 )]
+"Display opacity" = 0.5

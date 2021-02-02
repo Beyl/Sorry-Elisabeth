@@ -1,0 +1,38 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://scenes/game/game_ui/Inventory/Inventory.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/game/game_ui/fade_background/FadeBackground.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/game/game_ui/Inventory/InventoryButton/InventoryButton.gdns" type="Script" id=3]
+[ext_resource path="res://assets/textures/game/game_ui/cell_selected.png" type="Texture" id=4]
+[ext_resource path="res://assets/textures/game/game_ui/cell.png" type="Texture" id=5]
+[ext_resource path="res://scenes/game/room/interactive_objects/item/Item2.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/game/room/interactive_objects/item/Item.tscn" type="PackedScene" id=7]
+
+[node name="InventoryButton" type="TextureButton"]
+margin_right = 20.0
+margin_bottom = 20.0
+texture_normal = ExtResource( 5 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 4 )
+expand = true
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FadeBackground" parent="." instance=ExtResource( 2 )]
+show_behind_parent = true
+"Display opacity" = 0.5
+
+[node name="Inventory" parent="." instance=ExtResource( 1 )]
+visible = false
+margin_left = 44.3354
+margin_top = 188.359
+margin_right = 280.335
+margin_bottom = 248.359
+mouse_filter = 0
+
+[node name="Item" parent="." instance=ExtResource( 7 )]
+position = Vector2( 99.4703, 27.2812 )
+
+[node name="Item2" parent="." instance=ExtResource( 6 )]

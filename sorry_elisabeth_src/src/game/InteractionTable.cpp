@@ -22,8 +22,11 @@ void InteractionTable::_ready()
 	addInteractionsToScene();
 
 	m_animationDuration = real_t(0.5);
-	//Vector2 parentScale = get_parent()->cast_to<Node2D>(get_parent())->get_scale();
-	//m_full_scale = Vector2(1 / parentScale.x, 1 / parentScale.y);
+	set_modulate(HIDE_MODULATE);
+
+	// Scale initialisation
+	const Vector2 parentScale = get_parent()->cast_to<Node2D>(get_parent())->get_scale();
+	m_full_scale = Vector2(1 / parentScale.x, 1 / parentScale.y);
 	set_pivot_offset(Vector2(get_size().x / 2, get_size().y / 2));
 	set_scale(NO_SCALE);
 }
@@ -50,12 +53,17 @@ void InteractionTable::hide()
 	m_tween->start();
 }
 
-bool InteractionTable::isDisplayed()
+bool InteractionTable::isDisplayed() const
 {
-	return get_modulate() == DISPLAY_MODULATE;
+	return get_scale() == m_full_scale;
 }
 
-int InteractionTable::getInteractionsNumber()
+bool InteractionTable::isHided() const
+{
+	return get_modulate() == HIDE_MODULATE;
+}
+
+int InteractionTable::getInteractionsNumber() const
 {
 	return int(m_vBox->get_child_count());
 }
@@ -87,12 +95,12 @@ void InteractionTable::setTableSize()
 
 
 
-void InteractionTable::setInteractions(godot::Array newInteractions)
+void InteractionTable::setInteractions(const godot::Array newInteractions)
 {
 	m_interactions = newInteractions;
 }
 
-godot::Array InteractionTable::getInteractions()
+godot::Array InteractionTable::getInteractions() const
 {
 	return m_interactions;
 }

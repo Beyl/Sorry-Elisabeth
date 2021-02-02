@@ -81,7 +81,7 @@ void UtilsTest::testIsInsideRoom()
 
 void UtilsTest::testIsInsideRoomX()
 {
-	int xCoord;
+	real_t xCoord;
 
 	/* X coordinate > 0 */
 	Godot::print("Test for X coordinate contained in the room range");
@@ -117,7 +117,7 @@ void UtilsTest::testIsInsideRoomX()
 
 void UtilsTest::testIsInsideRoomY()
 {
-	int yCoord;
+	real_t yCoord;
 
 	Godot::print("Test for Y coordinate contained in the room range");
 	yCoord = 81;

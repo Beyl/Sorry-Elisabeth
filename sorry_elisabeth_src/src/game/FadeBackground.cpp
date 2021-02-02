@@ -20,9 +20,8 @@ void FadeBackground::_ready()
 	m_tween = get_node("Tween")->cast_to<Tween>(get_node("Tween"));
 
 	// Scene initialisation
-	m_hideColor = Color(0, 0, 0, 0);
 	m_displayColor = Color(0, 0, 0, m_displayOpacity);
-	set_frame_color(m_hideColor);
+	set_frame_color(HIDE_COLOR);
 
 	// Signal initialisation
 	add_user_signal("fadeIn_finished");
@@ -33,7 +32,7 @@ void FadeBackground::fadeIn()
 {
 	m_tween->connect("tween_all_completed", this, "on_fadeIn_finished");
 
-	m_tween->interpolate_property(this, "color", m_hideColor, m_displayColor, m_fadeDuration,
+	m_tween->interpolate_property(this, "color", HIDE_COLOR, m_displayColor, m_fadeDuration,
 		Tween::TRANS_LINEAR, Tween::EASE_IN_OUT);
 	m_tween->start();
 }
@@ -42,14 +41,19 @@ void FadeBackground::fadeOut()
 {
 	m_tween->connect("tween_all_completed", this, "on_fadeOut_finished");
 
-	m_tween->interpolate_property(this, "color", m_displayColor, m_hideColor, m_fadeDuration,
+	m_tween->interpolate_property(this, "color", m_displayColor, HIDE_COLOR, m_fadeDuration,
 		Tween::TRANS_LINEAR, Tween::EASE_IN_OUT);
 	m_tween->start();
 }
 
-bool FadeBackground::isDisplayed()
+bool FadeBackground::isDisplayed() const
 {
 	return get_frame_color() == m_displayColor;
+}
+
+bool FadeBackground::isHided() const
+{
+	return get_frame_color() == HIDE_COLOR;
 }
 
 void FadeBackground::on_fadeIn_finished()
@@ -64,7 +68,7 @@ void FadeBackground::on_fadeOut_finished()
 	emit_signal("fadeOut_finished");
 }
 
-void FadeBackground::setDisplayOpacity(float newOpacity)
+void FadeBackground::setDisplayOpacity(const float newOpacity)
 {
 	if (newOpacity <= MIN_DISPLAY_OPACITY)
 		m_displayOpacity = float(MIN_DISPLAY_OPACITY);
@@ -74,12 +78,12 @@ void FadeBackground::setDisplayOpacity(float newOpacity)
 		m_displayOpacity = newOpacity;
 }
 
-float FadeBackground::getDisplayOpacity()
+float FadeBackground::getDisplayOpacity() const
 {
 	return m_displayOpacity;
 }
 
-void FadeBackground::setFadeDuration(real_t newDuration)
+void FadeBackground::setFadeDuration(const real_t newDuration)
 {
 	if (newDuration <= real_t(MIN_FADE_DURATION))
 		m_fadeDuration = real_t(MIN_FADE_DURATION);
@@ -87,7 +91,7 @@ void FadeBackground::setFadeDuration(real_t newDuration)
 		m_fadeDuration = newDuration;
 }
 
-real_t FadeBackground::getFadeDuration()
+real_t FadeBackground::getFadeDuration() const
 {
 	return m_fadeDuration;
 }
@@ -97,7 +101,6 @@ FadeBackground::FadeBackground()
 	m_tween = 0;
 	m_displayOpacity = 0.0;
 	m_fadeDuration = 0;
-	m_hideColor = Color(0, 0, 0);
 	m_displayColor = Color(0, 0, 0);
 }
 

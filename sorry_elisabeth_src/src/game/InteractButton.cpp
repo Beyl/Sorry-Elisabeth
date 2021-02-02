@@ -5,6 +5,7 @@ using namespace godot;
 void InteractButton::_register_methods()
 {
 	register_method("_ready", &InteractButton::_ready);
+	register_method("on_displayAnimation_finished", &InteractButton::on_displayAnimation_finished);
 
 	register_property<InteractButton, Vector2>("Hide position", &InteractButton::setHidePosition,
 		&InteractButton::getHidePosition, Vector2());
@@ -21,6 +22,7 @@ void InteractButton::_ready()
 	m_animationPlayer = get_node("AnimationPlayer")->cast_to<AnimationPlayer>(get_node("AnimationPlayer"));
 
 	// Scene initialisation
+	set_position(m_hidePosition);
 	set_modulate(NO_OPACITY);
 	set_draw_behind_parent(true);
 	set_pivot_offset(get_size() / 2);
@@ -29,9 +31,13 @@ void InteractButton::_ready()
 
 void InteractButton::display()
 {
+	set_visible(true);
+
 	m_tween->interpolate_property(this, "rect_position", m_hidePosition, m_displayPosition, m_animationDuration,
 		Tween::TRANS_BOUNCE, Tween::EASE_OUT);
 	m_tween->start();
+	
+	m_tween->connect("tween_all_completed", this, "on_displayAnimation_finished");
 
 	m_tween->interpolate_property(this, "modulate", NO_OPACITY, FULL_OPACITY, m_animationDuration,
 		Tween::TRANS_LINEAR, Tween::EASE_IN);
@@ -42,6 +48,8 @@ void InteractButton::display()
 
 void InteractButton::hide()
 {
+	set_mouse_filter(Control::MOUSE_FILTER_IGNORE);
+
 	m_tween->interpolate_property(this, "rect_position", m_displayPosition, m_hidePosition, m_animationDuration,
 		Tween::TRANS_LINEAR, Tween::EASE_OUT);
 	m_tween->start();
@@ -53,32 +61,43 @@ void InteractButton::hide()
 	m_animationPlayer->play_backwards("turn_around");
 }
 
-bool InteractButton::isDisplayed()
+bool InteractButton::isDisplayed() const
 {
-	return get_modulate() == FULL_OPACITY;
+	return get_position() == m_displayPosition;
 }
 
-void InteractButton::setHidePosition(godot::Vector2 newPosition)
+bool InteractButton::isHided() const
+{
+	return get_position() == getHidePosition();
+}
+
+void InteractButton::on_displayAnimation_finished()
+{
+	m_tween->disconnect("tween_all_completed", this, "on_displayAnimation_finished");
+	set_mouse_filter(Control::MOUSE_FILTER_STOP);
+}
+
+void InteractButton::setHidePosition(const godot::Vector2 newPosition)
 {
 	m_hidePosition = newPosition;
 }
 
-godot::Vector2 InteractButton::getHidePosition()
+godot::Vector2 InteractButton::getHidePosition() const
 {
 	return m_hidePosition;
 }
 
-void InteractButton::setDisplayPosition(godot::Vector2 newPosition)
+void InteractButton::setDisplayPosition(const godot::Vector2 newPosition)
 {
 	m_displayPosition = newPosition;
 }
 
-godot::Vector2 InteractButton::getDisplayPosition()
+godot::Vector2 InteractButton::getDisplayPosition() const
 {
 	return m_displayPosition;
 }
 
-void InteractButton::setAnimationDuration(real_t newDuration)
+void InteractButton::setAnimationDuration(const real_t newDuration)
 {
 	if (newDuration <= MIN_ANIMATION_DURATION)
 		m_animationDuration = MIN_ANIMATION_DURATION;
@@ -86,7 +105,7 @@ void InteractButton::setAnimationDuration(real_t newDuration)
 		m_animationDuration = newDuration;
 }
 
-real_t InteractButton::getAnimationDuation()
+real_t InteractButton::getAnimationDuation() const
 {
 	return m_animationDuration;
 }

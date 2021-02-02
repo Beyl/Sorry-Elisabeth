@@ -41,20 +41,19 @@ public:
 
 
 	/* PROPERTIES */
-
-	//The specific search place the open interaction is going to open
-	godot::Ref<godot::PackedScene> m_searchPlaceScene;
-	void setSearchPlaceScene(godot::Ref<godot::PackedScene> newSearchPlaceScene);
-	godot::Ref<godot::PackedScene> getSearchPlaceScene();
+	void setSearchPlaceScene(const godot::Ref<godot::PackedScene> newSearchPlaceScene);
+	godot::Ref<godot::PackedScene> getSearchPlaceScene() const;
 	
-	//Its node name
-	godot::String m_searchPlaceSceneName;
-	void setSearchPlaceSceneName(godot::String newName);
-	godot::String getSearchPlaceSceneName();
+	void setSearchPlaceSceneName(const godot::String newName);
+	godot::String getSearchPlaceSceneName() const;
 
 protected:
 
 	//Children nodes
 	SearchPlace* m_searchPlace;
 	FadeBackground* m_searchPlaceBackground;
+
+	// Properties
+	godot::Ref<godot::PackedScene> m_searchPlaceScene;	//The specific search place the open interaction is going to open
+	godot::String m_searchPlaceSceneName;	// Its node name
 };

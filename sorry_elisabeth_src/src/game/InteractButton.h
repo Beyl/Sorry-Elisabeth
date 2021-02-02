@@ -25,26 +25,25 @@ public:
 
 	void display();
 	void hide();
-	bool isDisplayed();
+	bool isDisplayed() const;
+	bool isHided() const;
+
+	// Set mouse filter to STOP
+	void on_displayAnimation_finished();
 
 
 	/* PROPERTIES */
+	void setHidePosition(const godot::Vector2 newPosition);
+	godot::Vector2 getHidePosition() const;
 
-	godot::Vector2 m_hidePosition;
-	void setHidePosition(godot::Vector2 newPosition);
-	godot::Vector2 getHidePosition();
+	void setDisplayPosition(const godot::Vector2 newPosition);
+	godot::Vector2 getDisplayPosition() const;
 
-	godot::Vector2 m_displayPosition;
-	void setDisplayPosition(godot::Vector2 newPosition);
-	godot::Vector2 getDisplayPosition();
-
-	real_t m_animationDuration;
-	void setAnimationDuration(real_t newDuration);
-	real_t getAnimationDuation();
+	void setAnimationDuration(const real_t newDuration);
+	real_t getAnimationDuation() const;
 
 
 	/* CONSTANTS */
-
 	const int DISPLAY_MARGIN = 1;	// The margin between the parent and the interact button
 	const real_t MIN_ANIMATION_DURATION = real_t(0.2);
 
@@ -59,4 +58,9 @@ protected:
 	// Children nodes
 	godot::Tween* m_tween;
 	godot::AnimationPlayer* m_animationPlayer;
+
+	// Properties
+	godot::Vector2 m_hidePosition;
+	godot::Vector2 m_displayPosition;
+	real_t m_animationDuration;
 };

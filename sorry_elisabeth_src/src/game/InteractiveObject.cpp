@@ -11,7 +11,7 @@ void InteractiveObject::_register_methods()
 	register_property<InteractiveObject, int>("Number of state", &InteractiveObject::setObjectStateNumber,
 		&InteractiveObject::getObjectStateNumber, 0);
 	register_property<InteractiveObject, Vector2>("Object size", &InteractiveObject::setObjectSize,
-		&InteractiveObject::getObjectSize, Vector2());
+		&InteractiveObject::getObjectSize, Vector2());	
 }
 
 void InteractiveObject::_ready()
@@ -22,16 +22,16 @@ void InteractiveObject::_ready()
 
 	// Scene initialisation
 	setInteractionTablePosition();
-	m_state = ASCII_CONVERSION_1;
+	m_state = Utils::ASCII_CONVERSION_1;
+	m_interactButton->set_visible(false);
 	m_interactButton->connect("button_up", this, "on_interactButton_released");
-	displayInteractButton();
 }
 
 void InteractiveObject::setInteractionTablePosition()
 {
-	m_interactionTable->set_position(Vector2(m_interactionTable->get_position().x,
-		-m_objectSize.y / 2 - m_interactionTable->get_size().y / 2 -
-		(m_interactionTable->getInteractionsNumber() * (m_interactionTable->MIN_VBOX_SIZE + m_interactionTable->VBOX_MARGIN))));
+	const real_t yPosition = -m_objectSize.y / 2 - m_interactionTable->get_size().y - Utils::INTERACT_BUTTON_MARGIN * 4;
+	const real_t xPosition = -m_interactionTable->get_size().x / 2;
+	m_interactionTable->set_position(Vector2(xPosition, yPosition));
 }
 
 void InteractiveObject::displayInteractButton()
@@ -60,14 +60,14 @@ void InteractiveObject::on_interactButton_released()
 	m_interactionTable->display();
 }
 
-bool InteractiveObject::offerInteractions()
+bool InteractiveObject::offerInteractions() const
 {
 	return m_interactionTable->getInteractionsNumber() > 0;
 }
 
 void InteractiveObject::increaseState(godot::Array nextInteractions, Interaction* increaseTypeInteraction)
 {
-	if (m_state <= m_objectStateNumber + ASCII_CONVERSION_1) {
+	if (m_state <= m_objectStateNumber + Utils::ASCII_CONVERSION_1) {
 		m_state++;
 
 		set_animation("state" + String(m_state));	// Set the next animation
@@ -83,22 +83,22 @@ void InteractiveObject::on_increaseTypeInteraction_finished()
 	m_interactionTable->addInteractionsToScene();
 }
 
-void InteractiveObject::setObjectStateNumber(int stateNumber)
+void InteractiveObject::setObjectStateNumber(const int stateNumber)
 {
 	m_objectStateNumber = stateNumber;
 }
 
-int InteractiveObject::getObjectStateNumber()
+int InteractiveObject::getObjectStateNumber() const
 {
 	return m_objectStateNumber;
 }
 
-void InteractiveObject::setObjectSize(godot::Vector2 newSize)
+void InteractiveObject::setObjectSize(const godot::Vector2 newSize)
 {
 	m_objectSize = newSize;
 }
 
-godot::Vector2 InteractiveObject::getObjectSize()
+godot::Vector2 InteractiveObject::getObjectSize() const
 {
 	return m_objectSize;
 }

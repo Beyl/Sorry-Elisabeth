@@ -44,14 +44,11 @@ public:
 
 
 	/* PROPERTIES */
+	void setSpecialSound(const godot::Ref<godot::AudioStreamSample> newSound);
+	godot::Ref<godot::AudioStreamSample> getSpecialSound() const;
 
-	godot::Ref<godot::AudioStreamSample> m_specialSound;
-	void setSpecialSound(godot::Ref<godot::AudioStreamSample> newSound);
-	godot::Ref<godot::AudioStreamSample> getSpecialSound();
-
-	godot::Array m_nextInteractions{};
-	void setNextInteractions(godot::Array newInteractions);
-	godot::Array getNextInteractions();
+	void setNextInteractions(const godot::Array newInteractions);
+	godot::Array getNextInteractions() const;
 
 	/* CONSTANTS */
 	const godot::NodePath PARENT_INTERACTIVE_OBJECT_PATH = "../../..";
@@ -61,4 +58,8 @@ protected:
 	// Children nodes
 	FadeBackground* m_fadeBackground;
 	godot::AudioStreamPlayer* m_specialSoundPlayer;
+
+	// Properties
+	godot::Ref<godot::AudioStreamSample> m_specialSound;
+	godot::Array m_nextInteractions{};
 };

@@ -32,7 +32,6 @@ public:
 
 
 	/* SIGNALS */
-
 	// Play the interaction
 	void on_button_released();
 
@@ -41,18 +40,19 @@ public:
 
 
 	/* PROPERTIES */
+	void setExamineText(const godot::String newText);
+	godot::String getExamineText() const;
 
-	godot::String m_examineText;	// Text that will be displayed in the dialog box
-	void setExamineText(godot::String newText);
-	godot::String getExamineText();
-
-	godot::Ref<godot::AudioStreamSample> m_examinationSound;
-	void setExaminationSound(godot::Ref<godot::AudioStreamSample> newSound);
-	godot::Ref<godot::AudioStreamSample> getExaminationSound();
+	void setExaminationSound(const godot::Ref<godot::AudioStreamSample> newSound);
+	godot::Ref<godot::AudioStreamSample> getExaminationSound() const;
 
 protected:
 
 	//Child nodes
 	DialogBox* m_dialogBox;
 	godot::AudioStreamPlayer* m_examinationSoundPlayer;
+
+	// Properties
+	godot::String m_examineText;	// Text that will be displayed in the dialog box
+	godot::Ref<godot::AudioStreamSample> m_examinationSound;
 };

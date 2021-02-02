@@ -40,9 +40,9 @@ void Player::_physics_process()
 	}
 }
 
-void Player::mooveTo(int xDestination)
+void Player::mooveTo(const int xDestination)
 {
-	Vector2 position = get_position();
+	const Vector2 position = get_position();
 
 	if (xDestination != position.x) {
 
@@ -59,7 +59,7 @@ void Player::mooveTo(int xDestination)
 	}
 }
 
-void Player::changeDirection(Direction newDirection)
+void Player::changeDirection(const Direction newDirection)
 {
 	switch (m_direction)
 	{
@@ -72,7 +72,6 @@ void Player::changeDirection(Direction newDirection)
 		default:
 			break;
 		}
-		m_direction = newDirection;
 		break;
 
 	case Direction::LEFT:
@@ -84,12 +83,13 @@ void Player::changeDirection(Direction newDirection)
 		default:
 			break;
 		}
-		m_direction = newDirection;
 		break;
 
 	default:
 		break;
 	}
+
+	m_direction = newDirection;
 }
 
 void Player::stopMooving()
@@ -99,7 +99,7 @@ void Player::stopMooving()
 	m_xDestination = NO_DESTINATION;
 }
 
-void Player::setSpeed(int newSpeed)
+void Player::setSpeed(const int newSpeed)
 {
 	if (newSpeed < MIN_SPEED)
 		m_speed = MIN_SPEED;
@@ -109,17 +109,17 @@ void Player::setSpeed(int newSpeed)
 		m_speed = newSpeed;
 }
 
-int Player::getSpeed()
+int Player::getSpeed() const
 {
 	return m_speed;
 }
 
-Direction Player::getDirection()
+const Direction Player::getDirection()
 {
 	return m_direction;
 }
 
-int Player::getXDestination()
+const int Player::getXDestination()
 {
 	return m_xDestination;
 }

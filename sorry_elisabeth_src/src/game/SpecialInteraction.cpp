@@ -59,22 +59,22 @@ void SpecialInteraction::on_fadeOut_finished()
 	ExamineInteraction::play();
 }
 
-void SpecialInteraction::setSpecialSound(godot::Ref<godot::AudioStreamSample> newSound)
+void SpecialInteraction::setSpecialSound(const godot::Ref<godot::AudioStreamSample> newSound)
 {
 	m_specialSound = newSound;
 }
 
-godot::Ref<godot::AudioStreamSample> SpecialInteraction::getSpecialSound()
+godot::Ref<godot::AudioStreamSample> SpecialInteraction::getSpecialSound() const
 {
 	return m_specialSound;
 }
 
-void SpecialInteraction::setNextInteractions(godot::Array newInteractions)
+void SpecialInteraction::setNextInteractions(const godot::Array newInteractions)
 {
 	m_nextInteractions = newInteractions;
 }
 
-godot::Array SpecialInteraction::getNextInteractions()
+godot::Array SpecialInteraction::getNextInteractions() const
 {
 	return m_nextInteractions;
 }

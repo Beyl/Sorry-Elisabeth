@@ -1,7 +1,0 @@
-[gd_scene load_steps=3 format=2]
-
-[ext_resource path="res://scenes/game/game_ui/fade_background/FadeBackground.tscn" type="PackedScene" id=1]
-[ext_resource path="res://tests/game/game_ui/fade_background_test/FadeBackgroundTest.gdns" type="Script" id=2]
-
-[node name="FadeBackgroundTest" instance=ExtResource( 1 )]
-script = ExtResource( 2 )

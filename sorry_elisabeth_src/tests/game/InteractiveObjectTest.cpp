@@ -19,7 +19,9 @@ void InteractiveObjectTest::testOfferInteractions()
 	Godot::print("Test passed");
 
 	Godot::print("Test with 0 interactions (so it does not offer)");
-	m_interactionTable->setInteractions(godot::Array());
+	Array testArray;
+	testArray.append(0);
+	m_interactionTable->setInteractions(testArray);
 	m_interactionTable->addInteractionsToScene();
 	ASSERT_FALSE(InteractiveObject::offerInteractions());
 	Godot::print("Test passed");

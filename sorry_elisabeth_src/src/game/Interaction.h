@@ -33,16 +33,11 @@ public:
 
 
 	/* PROPERTIES */
+	void setInteractionName(const godot::String newName);
+	godot::String getInteractionName() const;
 
-	// The text that will be displayed representing the interaction's name
-	godot::String m_interactionName;
-	void setInteractionName(godot::String newName);
-	godot::String getInteractionName();
-
-	// The possible sound associated with the interaction
-	godot::Ref<godot::AudioStreamSample> m_objectSound;
-	void setObjectSound(godot::Ref<godot::AudioStreamSample> newSound);
-	godot::Ref<godot::AudioStreamSample> getObjectSound();
+	void setObjectSound(const godot::Ref<godot::AudioStreamSample> newSound);
+	godot::Ref<godot::AudioStreamSample> getObjectSound() const;
 	
 
 	/* CONSTANTS */
@@ -50,7 +45,11 @@ public:
 
 protected:
 
-	//Child nodes
+	// Children nodes
 	godot::Label* m_label;
 	godot::AudioStreamPlayer2D* m_objectSoundPlayer;
+
+	// Properties
+	godot::Ref<godot::AudioStreamSample> m_objectSound;	// The possible sound associated with the interaction
+	godot::String m_interactionName;	// The text that will be displayed representing the interaction's name
 };

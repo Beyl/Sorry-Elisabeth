@@ -1,7 +1,0 @@
-[gd_scene load_steps=3 format=2]
-
-[ext_resource path="res://scenes/game/room/interactive_object/interact_button/InteractButton.tscn" type="PackedScene" id=1]
-[ext_resource path="res://tests/game/interact_button_test/InteractButtonTest.gdns" type="Script" id=2]
-
-[node name="InteractButtonTest" instance=ExtResource( 1 )]
-script = ExtResource( 2 )
