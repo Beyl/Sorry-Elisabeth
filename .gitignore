@@ -1,0 +1,17 @@
+# Visual studio files #
+#######################
+
+# Directories
+*x64/
+*.vs/
+*packages/
+
+# Files
+*.sln
+*.vcxproj
+*.filters
+*.user
+
+# Specific to the project and local configuration #
+###################################################
+*in_dev_assets/
