@@ -13,7 +13,7 @@
  */
 class DialogBox : public godot::TextureRect {
 
-	GODOT_CLASS(DialogBox, godot::TextureRect);	//To make godot able to use this class
+	GODOT_CLASS(DialogBox, godot::TextureRect);	// To make godot able to use this class
 
 public:
 
@@ -66,7 +66,6 @@ public:
 
 
 	/* CONSTANTS */
-
 	static const int MIN_TEXT_DISPLAY_DURATION = 1;
 	static const int MIN_TRANSITION_DISPLAY_DURATION = 1;
 	static const int MIN_BEFORE_HIDING_DURATION = 1;
@@ -87,5 +86,5 @@ protected:
 	// Properties
 	real_t m_textDisplayDuration;
 	real_t m_transitionDisplayDuration;
-	real_t m_beforeHidingDuration;	//Time in second before starting the hiding duration, after the text has been displayed
+	real_t m_beforeHidingDuration;	// Time in second before starting the hiding duration, after the text has been displayed
 };

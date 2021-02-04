@@ -1,10 +1,14 @@
 #pragma once
 
 #include <TextureButton.hpp>
+#include <AnimationPlayer.hpp>
 
 #include "Inventory.h"
 #include "FadeBackground.h"
 
+/**
+ * Represents the button that display or hide the player's inventory.
+ */
 class InventoryButton : public godot::TextureButton
 {
 	GODOT_CLASS(InventoryButton, godot::TextureButton);	// Needed by godot to be able to use this class
@@ -24,6 +28,9 @@ public:
 	// Display OR hide the inventory and the fade background
 	void on_button_released();
 
+	// Play the interation signal animation
+	void on_Inventory_interact();
+
 private:
 
 	void displayAll();
@@ -32,4 +39,5 @@ private:
 	// Children nodes
 	Inventory* m_inventory;
 	FadeBackground* m_fadeBackground;
+	godot::AnimationPlayer* m_animationPlayer;
 };

@@ -5,6 +5,10 @@
 
 #include "Item.h"
 
+/**
+ *	Represents a cell in the inventory.
+		Can contain an item.
+ */
 class Cell : public godot::TextureButton {
 
 	GODOT_CLASS(Cell, godot::TextureButton);	// Needed by godot to be able to use this class
@@ -33,12 +37,14 @@ public:
 
 
 	/* CONSTANTS */
+
 	static const int HIDE_INTERACT_BUTTON_MARGIN_X = 4;
 	static const int HIDE_INTERACT_BUTTON_MARGIN_Y = 16;
 
 protected:
 
 	// Children nodes
+
 	Item* m_item;
 	InteractionTable* m_itemInteractionTable;
 	InteractButton* m_itemInteractButton;

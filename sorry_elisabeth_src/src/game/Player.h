@@ -37,6 +37,8 @@ public:
 	// Moove the player on the X axis to a given position
 	void mooveTo(const int xDestination);
 
+	// Change the actual animated sprite animation with the handbag one
+	void takeHandbag();
 
 	/* ACCESSORS */
 	const Direction getDirection();
@@ -66,6 +68,7 @@ protected:
 
 	Direction m_direction;	// Define where the player is looking
 	int m_xDestination;	// Define where the player is going
+	godot::String m_animationSubName;
 
 	//Properties
 	int m_speed;

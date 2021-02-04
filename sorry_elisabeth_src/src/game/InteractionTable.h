@@ -9,7 +9,7 @@
 
 /**
  * Contain 1 to 3 interactions wich the player can interact with.
- *		The size of the table fits with the number of interactions inside.
+ 		The size of the table fits with the number of interactions inside.
  */
 class InteractionTable : public godot::TextureRect {
 

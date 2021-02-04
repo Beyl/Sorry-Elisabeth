@@ -6,6 +6,7 @@ void InventoryButton::_register_methods()
 {
 	register_method("_ready", &InventoryButton::_ready);
 	register_method("on_button_released", &InventoryButton::on_button_released);
+	register_method("on_Inventory_interact", &InventoryButton::on_Inventory_interact);
 }
 
 void InventoryButton::_ready()
@@ -13,19 +14,15 @@ void InventoryButton::_ready()
 	// Get children
 	m_fadeBackground = get_node("FadeBackground")->cast_to<FadeBackground>(get_node("FadeBackground"));
 	m_inventory = get_node("Inventory")->cast_to<Inventory>(get_node("Inventory"));
+	m_animationPlayer = get_node("AnimationPlayer")->cast_to<AnimationPlayer>(get_node("AnimationPlayer"));
 
 	// Scene intialisation
 	m_fadeBackground->set_global_position(Vector2(0, 0));
 	m_fadeBackground->set_size(Vector2(Utils::SCREEN_WIDTH, Utils::SCREEN_HEIGHT));
 
+	// Signal initialisation
 	connect("button_up", this, "on_button_released");
-
-	Item* item2 = get_node("Item2")->cast_to<Item>(get_node("Item2"));
-	Item* item = get_node("Item")->cast_to<Item>(get_node("Item"));
-
-	m_inventory->addItem(item2);
-	m_inventory->addItem(item);
-	m_inventory->removeItem(get_node("Inventory/TopBox/Cell0")->cast_to<Cell>(get_node("Inventory/TopBox/Cell0"))->getItem());
+	m_inventory->connect("interact", this, "on_Inventory_interact");
 }
 
 void InventoryButton::on_button_released()
@@ -36,6 +33,11 @@ void InventoryButton::on_button_released()
 		if (m_fadeBackground->isHided())
 			displayAll();
 	}
+}
+
+void InventoryButton::on_Inventory_interact()
+{
+	m_animationPlayer->play("interactionSignal");
 }
 
 void InventoryButton::displayAll()
@@ -54,6 +56,7 @@ InventoryButton::InventoryButton()
 {
 	m_fadeBackground = 0;
 	m_inventory = 0;
+	m_animationPlayer = 0;
 }
 
 InventoryButton::~InventoryButton()

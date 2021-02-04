@@ -31,6 +31,7 @@ public:
 
 	
 	/* SIGNALS */
+
 	// Emit the signal associated
 	void on_fadeIn_finished();
 
@@ -54,7 +55,7 @@ public:
 
 protected:
 
-	//Children nodes
+	//Child node
 	godot::Tween* m_tween;
 
 	godot::Color m_displayColor;

@@ -16,6 +16,7 @@ void Player::_ready()
 	m_animSprite = get_node("AnimatedSprite")->cast_to<AnimatedSprite>(get_node("AnimatedSprite"));
 
 	// Initialisation of the scene
+	m_animationSubName = "_normal";
 	m_direction = Direction::RIGHT;
 	stopMooving();	// The player doesn't moove when entering a scene
 }
@@ -53,10 +54,15 @@ void Player::mooveTo(const int xDestination)
 
 		if (xDestination > position.x + NOT_MOOVING_RANGE || xDestination < position.x - NOT_MOOVING_RANGE) {
 			m_xDestination = xDestination;
-			m_animSprite->set_animation("walk");
+			m_animSprite->set_animation("walk" + m_animationSubName);
 			m_animSprite->play();
 		}
 	}
+}
+
+void Player::takeHandbag()
+{
+	m_animationSubName = "_handbag";
 }
 
 void Player::changeDirection(const Direction newDirection)
@@ -94,7 +100,7 @@ void Player::changeDirection(const Direction newDirection)
 
 void Player::stopMooving()
 {
-	m_animSprite->set_animation("idle");
+	m_animSprite->set_animation(String("idle" + m_animationSubName));
 	m_animSprite->play();
 	m_xDestination = NO_DESTINATION;
 }
@@ -130,6 +136,7 @@ Player::Player()
 	m_direction = Direction::RIGHT;
 	m_xDestination = NO_DESTINATION;
 	m_speed = MIN_SPEED;
+	m_animationSubName = String();
 }
 
 Player::~Player()

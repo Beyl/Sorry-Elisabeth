@@ -4,7 +4,6 @@
 [ext_resource path="res://assets/textures/game/room/interactive_objects/interact_button.png" type="Texture" id=2]
 [ext_resource path="res://scenes/game/room/interactive_objects/interact_button/InteractButton.gdns" type="Script" id=3]
 
-
 [sub_resource type="Animation" id=1]
 resource_name = "turn_around"
 length = 0.5

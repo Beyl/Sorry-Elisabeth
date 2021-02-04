@@ -8,11 +8,11 @@
 #include "../utils/Utils.h"
 #include "Player.h"
 #include "Camera.h"
+#include "InventoryButton.h"
 
 /**
- * Represent the main scene in the game
- * 
- * Gather the player, the camera, the rooms and the GUI to connect them
+ * Represent the main scene in the game.
+		 Gather the player, the camera, the rooms and the GUI to connect them
  */
 class MainScene : public godot::Node2D {
 
@@ -34,7 +34,7 @@ public:
 	 * Called every tic (60 times per secondes)
 	 *		Manage user's inputs
 	 */
-	void _physics_process();
+	void _physics_process(); 
 
 
 	/* CONSTANTS */
@@ -51,6 +51,7 @@ private:
 	// Child nodes
 	Player* m_player;
 	Camera* m_camera;
+	Inventory* m_inventory;
 
 	bool m_gameSceneActive;
 	const godot::Input* m_inputManager;	// To manage inputs

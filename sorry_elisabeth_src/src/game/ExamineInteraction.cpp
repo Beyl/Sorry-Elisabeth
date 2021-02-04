@@ -12,7 +12,7 @@ void ExamineInteraction::_register_methods()
 		&Interaction::getInteractionName, "Interaction");
 	register_property<ExamineInteraction, Ref<AudioStreamSample>>("Object Sound", &Interaction::setObjectSound,
 		&Interaction::getObjectSound, 0);
-
+	
 	register_property<ExamineInteraction, String>("Examine text", &ExamineInteraction::setExamineText,
 		&ExamineInteraction::getExamineText, "Insert texte here");
 	register_property<ExamineInteraction, Ref<AudioStreamSample>>("Examination Sound", &ExamineInteraction::setExaminationSound,

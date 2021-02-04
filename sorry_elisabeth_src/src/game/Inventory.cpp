@@ -32,6 +32,9 @@ void Inventory::_ready()
 		Utils::INVENTORY_HEIGHT - m_bottomInventory->get_size().y));
 	m_bottomInventory->set_visible(false);
 	m_hasGrown = false;
+
+	// Signal initialisation
+	add_user_signal("interact");
 }
 
 void Inventory::display()
@@ -58,6 +61,7 @@ void Inventory::addItem(Item* newItem)
 		
 		newItem->queue_free();	// Remove the ancient item from the scene (will be added as a child of a cell in the inventory
 		updateInventory();
+		emit_signal("interact");
 	}
 }
 
@@ -99,6 +103,7 @@ void Inventory::grow()
 	m_bottomInventory->set_visible(true);
 	m_hasGrown = true;
 	m_currentInventorySize = Inventory::MAX_ITEM_NUMBER;
+	emit_signal("interact");
 }
 
 int Inventory::searchItemInArray(Item* itemsArray[], const int arraySize, const Item* pointer)

@@ -1,12 +1,26 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scenes/game/game_ui/Inventory/Inventory.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/game/game_ui/fade_background/FadeBackground.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/game/game_ui/Inventory/InventoryButton/InventoryButton.gdns" type="Script" id=3]
 [ext_resource path="res://assets/textures/game/game_ui/cell_selected.png" type="Texture" id=4]
 [ext_resource path="res://assets/textures/game/game_ui/cell.png" type="Texture" id=5]
-[ext_resource path="res://scenes/game/room/interactive_objects/item/Item2.tscn" type="PackedScene" id=6]
-[ext_resource path="res://scenes/game/room/interactive_objects/item/Item.tscn" type="PackedScene" id=7]
+
+[sub_resource type="Animation" id=1]
+resource_name = "interactionSignal"
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.25, 0.5, 0.76, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 0.866667, 0.505882, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 0.866667, 0.505882, 1 ), Color( 1, 1, 1, 1 ) ]
+}
 
 [node name="InventoryButton" type="TextureButton"]
 margin_right = 20.0
@@ -23,6 +37,7 @@ __meta__ = {
 [node name="FadeBackground" parent="." instance=ExtResource( 2 )]
 show_behind_parent = true
 "Display opacity" = 0.5
+"Fade duration" = 0.4
 
 [node name="Inventory" parent="." instance=ExtResource( 1 )]
 visible = false
@@ -32,7 +47,5 @@ margin_right = 280.335
 margin_bottom = 248.359
 mouse_filter = 0
 
-[node name="Item" parent="." instance=ExtResource( 7 )]
-position = Vector2( 99.4703, 27.2812 )
-
-[node name="Item2" parent="." instance=ExtResource( 6 )]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/interactionSignal = SubResource( 1 )

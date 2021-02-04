@@ -10,7 +10,7 @@
 
 /**
  * Represents the content of an open interaction.
- *		Contain OR NOT a list of inventory items
+ 		Contain OR NOT a list of inventory items
  */
 class SearchPlace : public godot::TextureRect {
 

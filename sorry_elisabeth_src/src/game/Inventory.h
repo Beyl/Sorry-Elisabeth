@@ -6,6 +6,10 @@
 #include "Cell.h"
 #include "../utils/Utils.h"
 
+/**
+ * Represents the player's inventory.
+		Contain 15 cells to keep and interact with diferent items.
+ */
 class Inventory : public godot::Container {
 
 	GODOT_CLASS(Inventory, godot::Container);	// Needed by godot to be able to use this class
@@ -62,9 +66,6 @@ private:
 
 
 	/* MEMBER VARIABLES */
-	// Singleton
-	static Inventory* m_instance;
-
 	// Children nodes
 	godot::HBoxContainer* m_topInventory;
 	godot::HBoxContainer* m_bottomInventory;

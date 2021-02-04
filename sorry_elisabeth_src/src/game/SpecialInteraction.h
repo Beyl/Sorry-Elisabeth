@@ -6,6 +6,9 @@
 
 #include <Timer.hpp>
 
+/**
+ * Represents a bunch of specific interactions that makes the interactive objects associated increase its state
+ */
 class SpecialInteraction : public ExamineInteraction {
 
 	GODOT_SUBCLASS(SpecialInteraction, ExamineInteraction);	// Needed by godot to be able to use this class
@@ -32,7 +35,6 @@ public:
 	
 
 	/* SIGNALS */
-
 	// Play the sound and increase it's parent interactive object state (next animation + next interactions)
 	void on_fadeIn_finished();
 	
@@ -49,9 +51,6 @@ public:
 
 	void setNextInteractions(const godot::Array newInteractions);
 	godot::Array getNextInteractions() const;
-
-	/* CONSTANTS */
-	const godot::NodePath PARENT_INTERACTIVE_OBJECT_PATH = "../../..";
 
 protected:
 

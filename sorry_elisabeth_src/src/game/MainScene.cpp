@@ -17,6 +17,7 @@ void MainScene::_ready()
 	// Get the children
 	m_player = get_node("Player")->cast_to<Player>(get_node("Player"));
 	m_camera = get_node("Camera")->cast_to<Camera>(get_node("Camera"));
+	m_inventory = get_node("InventoryButton/Inventory")->cast_to<Inventory>(get_node("InventoryButton/Inventory"));
 
 	// Scene initialisation
 	m_player->set_position(Vector2(real_t(PLAYER_START_X), real_t(PLAYER_START_Y)));
@@ -45,6 +46,7 @@ MainScene::MainScene()
 {
 	m_player = 0;
 	m_camera = 0;
+	m_inventory = 0;
 	m_gameSceneActive = true;
 	m_inputManager = 0;
 }

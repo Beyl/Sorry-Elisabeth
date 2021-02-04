@@ -8,6 +8,9 @@
 #include "ExamineInteraction.h"
 #include "../utils/Utils.h"
 
+/**
+ * Represents the objects wich the player will be able to interact with
+ */
 class InteractiveObject : public godot::AnimatedSprite {
 
 	GODOT_CLASS(InteractiveObject, godot::AnimatedSprite);	// Needed by godot to be able to use this class

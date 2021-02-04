@@ -2,6 +2,9 @@
 
 #include "InteractiveObject.h"
 
+/**
+ * Represents inventory's items wich the player will be able to interact with
+ */
 class Item : public InteractiveObject {
 
 	GODOT_SUBCLASS(Item, InteractiveObject);	// Needed by godot to be able to use this class

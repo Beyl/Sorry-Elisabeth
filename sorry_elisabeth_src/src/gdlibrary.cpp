@@ -6,6 +6,7 @@
 #include "game/InventoryButton.h"
 #include "game/OpenInteraction.h"
 #include "game/SpecialInteraction.h"
+#include "game/TakeHangbagInteraction.h"
 
 #include "../tests/utils/UtilsTest.h"
 #include "../tests/game/PlayerTest.h"
@@ -34,6 +35,7 @@ extern "C" void GDN_EXPORT godot_nativescript_init(void* handle) {
 	register_class<InteractButton>();
 	register_class<InteractionTable>();
 	register_class<ExamineInteraction>();
+	register_class<TakeHandbagInteraction>();
 	register_class<SpecialInteraction>();
 	register_class<OpenInteraction>();
 	register_class<SearchPlace>();
