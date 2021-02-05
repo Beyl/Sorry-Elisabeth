@@ -16,10 +16,6 @@ void InventoryButton::_ready()
 	m_inventory = get_node("Inventory")->cast_to<Inventory>(get_node("Inventory"));
 	m_animationPlayer = get_node("AnimationPlayer")->cast_to<AnimationPlayer>(get_node("AnimationPlayer"));
 
-	// Scene intialisation
-	m_fadeBackground->set_global_position(Vector2(0, 0));
-	m_fadeBackground->set_size(Vector2(Utils::SCREEN_WIDTH, Utils::SCREEN_HEIGHT));
-
 	// Signal initialisation
 	connect("button_up", this, "on_button_released");
 	m_inventory->connect("interact", this, "on_Inventory_interact");

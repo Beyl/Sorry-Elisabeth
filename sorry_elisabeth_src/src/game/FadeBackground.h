@@ -4,6 +4,8 @@
 #include <ColorRect.hpp>
 #include <Tween.hpp>
 
+#include "../utils/Utils.h"
+
 /**
  * Represents a background that fade in and out to a specific opacity
  */

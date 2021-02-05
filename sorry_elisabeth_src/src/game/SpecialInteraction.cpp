@@ -25,7 +25,6 @@ void SpecialInteraction::_ready()
 	if (m_specialSound != 0) {
 		m_specialSoundPlayer->set_stream(m_specialSound);
 	}
-	m_fadeBackground->set_global_position(Vector2(0, 0));
 
 	// Signal initialisation
 	m_specialSoundPlayer->connect("finished", this, "on_specialSound_played");

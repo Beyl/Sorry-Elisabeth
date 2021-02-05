@@ -22,6 +22,8 @@ void FadeBackground::_ready()
 	// Scene initialisation
 	m_displayColor = Color(0, 0, 0, m_displayOpacity);
 	set_frame_color(HIDE_COLOR);
+	set_global_position(Vector2(0, 0));
+	set_size(Vector2(Utils::SCREEN_WIDTH, Utils::SCREEN_HEIGHT));
 
 	// Signal initialisation
 	add_user_signal("fadeIn_finished");
