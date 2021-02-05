@@ -5,7 +5,4 @@
 
 [node name="TakeHandbagInteraction" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
-"Player's absolute path" = "/root/MainScene/Player"
-"Inventory's absolute path" = "/root/MainScene/UILayer/InventoryButton/Inventory"
 "Interaction name" = "Take"
-"Examine text" = "It could be usefull...."

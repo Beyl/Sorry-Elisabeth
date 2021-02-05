@@ -18,7 +18,6 @@ animations = [ {
 frames = SubResource( 1 )
 animation = "state"
 script = ExtResource( 3 )
-"Object size" = Vector2( 16, 16 )
 
 [node name="InteractionTable" parent="." instance=ExtResource( 1 )]
 visible = false

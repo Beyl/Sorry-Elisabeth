@@ -51,7 +51,6 @@ private:
 	// Child nodes
 	Player* m_player;
 	Camera* m_camera;
-	Inventory* m_inventory;
 
 	bool m_gameSceneActive;
 	const godot::Input* m_inputManager;	// To manage inputs
