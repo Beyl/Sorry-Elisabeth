@@ -11,9 +11,9 @@ script = ExtResource( 2 )
 "Interaction name" = "Examine"
 "Examine text" = "Instert text here"
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." index="2"]
+[node name="DialogBoxLayer" type="CanvasLayer" parent="." index="2"]
 
-[node name="DialogBox" parent="CanvasLayer" index="0" instance=ExtResource( 3 )]
+[node name="DialogBox" parent="DialogBoxLayer" index="0" instance=ExtResource( 3 )]
 visible = false
 margin_top = -199.0
 margin_bottom = -174.0

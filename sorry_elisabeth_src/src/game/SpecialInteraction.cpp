@@ -18,7 +18,8 @@ void SpecialInteraction::_register_methods()
 void SpecialInteraction::_ready()
 {
 	// Get children
-	m_fadeBackground = get_node("CanvasLayer/FadeBackground")->cast_to<FadeBackground>(get_node("CanvasLayer/FadeBackground"));
+	m_fadeBackground = get_node("FadeBackgroundLayer/FadeBackground")->cast_to<FadeBackground>
+		(get_node("FadeBackgroundLayer/FadeBackground"));
 	m_specialSoundPlayer = get_node("ObjectSpecialSoundPlayer")->cast_to<AudioStreamPlayer>(get_node("ObjectSpecialSoundPlayer"));
 
 	// Scene initialisation
@@ -34,6 +35,7 @@ void SpecialInteraction::_ready()
 
 void SpecialInteraction::play()
 {
+	m_fadeBackground->set_mouse_filter(Control::MOUSE_FILTER_STOP);
 	m_fadeBackground->fadeIn();
 }
 
@@ -55,6 +57,7 @@ void SpecialInteraction::on_specialSound_played()
 
 void SpecialInteraction::on_fadeOut_finished()
 {
+	m_fadeBackground->set_mouse_filter(Control::MOUSE_FILTER_IGNORE);
 	ExamineInteraction::play();
 }
 

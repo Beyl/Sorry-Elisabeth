@@ -19,6 +19,11 @@ animations = [ {
 "name": "walk_normal",
 "speed": 8.0
 }, {
+"frames": [ ExtResource( 10 ) ],
+"loop": true,
+"name": "walk_handbag",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 11 ) ],
 "loop": true,
 "name": "idle_handbag",
@@ -28,11 +33,6 @@ animations = [ {
 "loop": true,
 "name": "idle_normal",
 "speed": 8.0
-}, {
-"frames": [ ExtResource( 10 ) ],
-"loop": true,
-"name": "walk_handbag",
-"speed": 5.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=2]
@@ -47,5 +47,6 @@ frames = SubResource( 1 )
 animation = "idle_normal"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2( 0, 4 )
 shape = SubResource( 2 )

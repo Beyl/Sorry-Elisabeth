@@ -24,7 +24,7 @@ void ExamineInteraction::_ready()
 	Interaction::_ready();
 
 	//Get children
-	m_dialogBox = get_node("CanvasLayer/DialogBox")->cast_to<DialogBox>(get_node("CanvasLayer/DialogBox"));
+	m_dialogBox = get_node("DialogBoxLayer/DialogBox")->cast_to<DialogBox>(get_node("DialogBoxLayer/DialogBox"));
 	m_examinationSoundPlayer = get_node("ExaminationSoundPlayer")->cast_to<AudioStreamPlayer>
 		(get_node("ExaminationSoundPlayer"));
 

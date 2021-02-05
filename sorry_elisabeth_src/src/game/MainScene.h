@@ -38,8 +38,8 @@ public:
 
 
 	/* CONSTANTS */
-	static const int PLAYER_START_X = 25;
-	static const int PLAYER_START_Y = 100;
+	static const int PLAYER_START_X = 40;
+	static const int PLAYER_START_Y = 117;
 
 private:
 

@@ -12,7 +12,6 @@
 #include "../tests/game/PlayerTest.h"
 #include "../tests/game/CameraTest.h"
 #include "../tests/game/InteractionTableTest.h"
-#include "../tests/game/InteractiveObjectTest.h"
 
 using namespace godot;
 
@@ -47,5 +46,4 @@ extern "C" void GDN_EXPORT godot_nativescript_init(void* handle) {
 	register_class<PlayerTest>();
 	register_class<CameraTest>();
 	register_class<InteractionTableTest>();
-	register_class<InteractiveObjectTest>();
 }

@@ -36,7 +36,6 @@ void DialogBox::_ready()
 	// Signals initialisation
 	m_beforeHideTimer->connect("timeout", this, "on_beforeHideTimer_timeout");
 	m_textTween->connect("tween_all_completed", this, "on_textDisplayed");
-	m_boxTween->connect("tween_all_completed", this, "on_hideAnimation_completed");
 	add_user_signal("just_hided");
 }
 
@@ -71,6 +70,7 @@ void DialogBox::on_beforeHideTimer_timeout()
 void DialogBox::hide()
 {
 	m_boxTween->disconnect("tween_all_completed", this, "on_displayAnimation_completed");
+	m_boxTween->connect("tween_all_completed", this, "on_hideAnimation_completed");
 	m_boxTween->interpolate_property(this, "rect_position", m_displayPosition, m_hidePosition,
 		m_transitionDisplayDuration, Tween::TRANS_LINEAR, Tween::EASE_IN);
 	m_boxTween->start();
@@ -78,6 +78,7 @@ void DialogBox::hide()
 
 void DialogBox::on_hideAnimation_completed()
 {
+	m_boxTween->disconnect("tween_all_completed", this, "on_hideAnimation_completed");
 	emit_signal("just_hided");
 }
 
