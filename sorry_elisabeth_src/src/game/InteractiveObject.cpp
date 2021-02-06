@@ -25,8 +25,6 @@ void InteractiveObject::_ready()
 	m_state = Utils::ASCII_CONVERSION_1;
 	m_interactButton->set_visible(false);
 	m_interactButton->connect("button_up", this, "on_interactButton_released");
-
-	displayInteractButton();
 }
 
 void InteractiveObject::setInteractionTablePosition()

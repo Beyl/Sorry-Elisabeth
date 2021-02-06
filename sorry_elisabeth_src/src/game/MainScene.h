@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "Camera.h"
 #include "InventoryButton.h"
+#include "TakeHangbagInteraction.h"
 
 /**
  * Represent the main scene in the game.
@@ -46,11 +47,15 @@ private:
 	// Send the player's informations to the camera
 	void sendPlayerInfoToCam();
 
+	// Recursive method that sends the inventory's and player's pointer to the interaction wich need them
+	void sendInfoToInteractions(Node* currentNode);
+
 
 	/* MEMBER VARIABLES */
 	// Child nodes
 	Player* m_player;
 	Camera* m_camera;
+	Inventory* m_inventory;
 
 	bool m_gameSceneActive;
 	const godot::Input* m_inputManager;	// To manage inputs

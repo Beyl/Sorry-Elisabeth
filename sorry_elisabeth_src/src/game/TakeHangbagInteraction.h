@@ -1,7 +1,8 @@
 #pragma once
 
 #include "ExamineInteraction.h"
-#include "MainScene.h"
+#include "Player.h"
+#include "Inventory.h"
 
 /**
  * Represents a unique interaction in the game, when the player takes up the handbag.
@@ -9,35 +10,28 @@
  */
 class TakeHandbagInteraction : public ExamineInteraction {
 
-	GODOT_SUBCLASS(TakeHandbagInteraction, ExamineInteraction);
+	GODOT_SUBCLASS(TakeHandbagInteraction, ExamineInteraction);	// Needed by godot to be able to use this class
 
 public:
 
 	TakeHandbagInteraction();
 	~TakeHandbagInteraction();
 
+	// Register all methods and properties that godot is directly going to call and use
 	static void _register_methods();
+	// Manage groups
 	void _init();
 
-	void _ready();
-
 	// Grow up the inventory, change player's sprite animations, remove the handbag and play the examine interaction going with it
-	void play();
+	virtual void play();
 
 
-	/* PROPERTIES */
-	void setPlayerAbsolutePath(const godot::String newPath);
-	godot::String getPlayerAbsolutePath() const;
-
-	void setInventoryAboslutePath(const godot::String newPath);
-	godot::String getInventoryAboslutePath() const;
+	/* MUTATORS */
+	void setPlayer(Player* newPlayer);
+	void setInventory(Inventory* newInventory);
 
 private:
 
 	Player* m_player;
 	Inventory* m_inventory;
-
-	// Properties
-	godot::String m_playerAbsolutePath;
-	godot::String m_inventoryAbsolutePath;
 };

@@ -17,9 +17,12 @@ void MainScene::_ready()
 	// Get the children
 	m_player = get_node("Player")->cast_to<Player>(get_node("Player"));
 	m_camera = get_node("Camera")->cast_to<Camera>(get_node("Camera"));
+	m_inventory = get_node("UILayer/InventoryButton/Inventory")->cast_to<Inventory>
+		(get_node("UILayer/InventoryButton/Inventory"));
 
 	// Scene initialisation
 	m_player->set_position(Vector2(real_t(PLAYER_START_X), real_t(PLAYER_START_Y)));
+	sendInfoToInteractions(this);
 }
 
 void MainScene::_physics_process()
@@ -41,10 +44,29 @@ void MainScene::sendPlayerInfoToCam()
 	m_camera->setPlayerDirection(m_player->getDirection());
 }
 
+void MainScene::sendInfoToInteractions(Node* currentNode)
+{
+	bool hasBeenSet = false;
+
+	Godot::print(currentNode->get_name());
+
+	if (currentNode->get_name() == "TakeHandbagInteraction") {
+		currentNode->cast_to<TakeHandbagInteraction>(currentNode)->setPlayer(m_player);
+		currentNode->cast_to<TakeHandbagInteraction>(currentNode)->setInventory(m_inventory);
+		hasBeenSet = true;
+	}
+
+	if (!hasBeenSet) {
+		for (int i = 0; i < currentNode->get_child_count(); i++)
+			sendInfoToInteractions(currentNode->get_child(i));
+	}
+}
+
 MainScene::MainScene()
 {
 	m_player = 0;
 	m_camera = 0;
+	m_inventory = 0;
 	m_gameSceneActive = true;
 	m_inputManager = 0;
 }
