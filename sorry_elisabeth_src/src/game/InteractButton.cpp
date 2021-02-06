@@ -33,11 +33,11 @@ void InteractButton::display()
 {
 	set_visible(true);
 
+	m_tween->connect("tween_all_completed", this, "on_displayAnimation_finished");
+
 	m_tween->interpolate_property(this, "rect_position", m_hidePosition, m_displayPosition, m_animationDuration,
 		Tween::TRANS_BOUNCE, Tween::EASE_OUT);
 	m_tween->start();
-	
-	m_tween->connect("tween_all_completed", this, "on_displayAnimation_finished");
 
 	m_tween->interpolate_property(this, "modulate", NO_OPACITY, FULL_OPACITY, m_animationDuration,
 		Tween::TRANS_LINEAR, Tween::EASE_IN);

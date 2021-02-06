@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scenes/game/room/interactive_objects/interactions/take/TakeInteraction.gdns" type="Script" id=1]
+[ext_resource path="res://scenes/game/room/interactive_objects/interactions/examine/ExamineInteraction.tscn" type="PackedScene" id=3]
+
+[node name="TakeInteraction" instance=ExtResource( 3 )]
+script = ExtResource( 1 )
+"Interaction name" = "Take"
+"Examine text" = "It could be usefull..."

@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/game/MainScene.gdns" type="Script" id=1]
 [ext_resource path="res://scenes/game/camera/Camera.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/game/player/player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/game/game_ui/Inventory/InventoryButton/InventoryButton.tscn" type="PackedScene" id=4]
 
 [node name="MainScene" type="Node2D"]
 script = ExtResource( 1 )
@@ -17,3 +18,11 @@ Speed = 100
 "Interpolation Duration" = 0.8
 "Follow player left X position" = 40
 "Follow player right X position" = 580
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+
+[node name="InventoryButton" parent="UILayer" instance=ExtResource( 4 )]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 25.0
+margin_bottom = 25.0

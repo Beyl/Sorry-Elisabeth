@@ -10,6 +10,7 @@
 #include "Camera.h"
 #include "InventoryButton.h"
 #include "TakeHangbagInteraction.h"
+#include "TakeInteraction.h"
 
 /**
  * Represent the main scene in the game.
@@ -41,6 +42,8 @@ public:
 	/* CONSTANTS */
 	static const int PLAYER_START_X = 40;
 	static const int PLAYER_START_Y = 117;
+	const godot::String TAKE_HANDBAG_INTERACTION_NODE_NAME = "TakeHandbagInteraction";
+	const godot::String TAKE_INTERACTION_NODE_NAME = "TakeInteraction";
 
 private:
 

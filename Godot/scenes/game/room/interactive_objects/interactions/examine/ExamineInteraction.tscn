@@ -12,6 +12,7 @@ script = ExtResource( 2 )
 "Examine text" = "Instert text here"
 
 [node name="DialogBoxLayer" type="CanvasLayer" parent="." index="2"]
+layer = 2
 
 [node name="DialogBox" parent="DialogBoxLayer" index="0" instance=ExtResource( 3 )]
 visible = false

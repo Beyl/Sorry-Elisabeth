@@ -48,12 +48,13 @@ void MainScene::sendInfoToInteractions(Node* currentNode)
 {
 	bool hasBeenSet = false;
 
-	Godot::print(currentNode->get_name());
-
-	if (currentNode->get_name() == "TakeHandbagInteraction") {
+	if (currentNode->get_name() == TAKE_HANDBAG_INTERACTION_NODE_NAME) {
 		currentNode->cast_to<TakeHandbagInteraction>(currentNode)->setPlayer(m_player);
 		currentNode->cast_to<TakeHandbagInteraction>(currentNode)->setInventory(m_inventory);
 		hasBeenSet = true;
+	}
+	else if (currentNode->get_name() == TAKE_INTERACTION_NODE_NAME) {
+		currentNode->cast_to<TakeInteraction>(currentNode)->setInventory(m_inventory);
 	}
 
 	if (!hasBeenSet) {
