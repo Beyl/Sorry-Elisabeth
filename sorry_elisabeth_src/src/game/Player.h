@@ -1,6 +1,5 @@
 #pragma once
 
-#include <Godot.hpp>
 #include <KinematicBody2D.hpp>
 #include <AnimatedSprite.hpp>
 

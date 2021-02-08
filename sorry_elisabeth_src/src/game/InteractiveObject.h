@@ -1,12 +1,8 @@
 #pragma once
 
-#include <Godot.hpp>
-#include <AnimatedSprite.hpp>
-
 #include "InteractionTable.h"
 #include "InteractButton.h"
-#include "ExamineInteraction.h"
-#include "../utils/Utils.h"
+#include "Interaction.h"
 
 /**
  * Represents the objects wich the player will be able to interact with
@@ -54,6 +50,9 @@ public:
 	void setObjectSize(const godot::Vector2 newSize);
 	godot::Vector2 getObjectSize() const;
 
+	void setUseItemName(const godot::String newItemName);
+	godot::String getUseItemName() const;
+
 protected:
 
 	// Calculate the table position depending on the number of interactions in it
@@ -64,6 +63,7 @@ protected:
 	InteractionTable* m_interactionTable;
 
 	int m_state;
+	godot::String m_useItemName;
 
 	// Properties
 	int m_objectStateNumber;

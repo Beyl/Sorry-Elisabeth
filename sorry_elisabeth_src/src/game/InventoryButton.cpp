@@ -5,6 +5,7 @@ using namespace godot;
 void InventoryButton::_register_methods()
 {
 	register_method("_ready", &InventoryButton::_ready);
+	register_method("_process", &InventoryButton::_process);
 	register_method("on_button_released", &InventoryButton::on_button_released);
 	register_method("on_Inventory_interact", &InventoryButton::on_Inventory_interact);
 }
@@ -19,6 +20,18 @@ void InventoryButton::_ready()
 	// Signal initialisation
 	connect("button_up", this, "on_button_released");
 	m_inventory->connect("interact", this, "on_Inventory_interact");
+}
+
+void InventoryButton::_process(float delta)
+{
+	if (m_fadeBackground->isDisplayed()) {
+		Vector2 mousePosition = get_global_mouse_position();
+
+		if (Utils::isInsideObject(mousePosition, get_global_position(), get_size()))
+			m_fadeBackground->set_mouse_filter(Control::MOUSE_FILTER_IGNORE);
+		else
+			m_fadeBackground->set_mouse_filter(Control::MOUSE_FILTER_STOP);
+	}
 }
 
 void InventoryButton::on_button_released()
@@ -40,12 +53,14 @@ void InventoryButton::displayAll()
 {
 	m_inventory->display();
 	m_fadeBackground->fadeIn();
+	m_fadeBackground->set_mouse_filter(Control::MOUSE_FILTER_STOP);
 }
 
 void InventoryButton::hideAll()
 {
 	m_inventory->hide();
 	m_fadeBackground->fadeOut();
+	m_fadeBackground->set_mouse_filter(Control::MOUSE_FILTER_IGNORE);
 }
 
 InventoryButton::InventoryButton()

@@ -1,10 +1,11 @@
 #pragma once
 
-#include <TextureButton.hpp>
 #include <AnimationPlayer.hpp>
 
 #include "Inventory.h"
 #include "FadeBackground.h"
+
+class Inventory;
 
 /**
  * Represents the button that display or hide the player's inventory.
@@ -24,6 +25,9 @@ public:
 
 	// Initialise the class and the godot scene
 	void _ready();
+	
+	// Manage mouse filter
+	void _process(float delta);
 
 	// Display OR hide the inventory and the fade background
 	void on_button_released();

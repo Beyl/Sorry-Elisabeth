@@ -2,7 +2,6 @@
 
 #include "ExamineInteraction.h"
 #include "Inventory.h"
-#include "Item.h"
 
 class TakeInteraction : public ExamineInteraction {
 

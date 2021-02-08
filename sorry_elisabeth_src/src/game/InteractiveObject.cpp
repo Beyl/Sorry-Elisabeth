@@ -12,6 +12,8 @@ void InteractiveObject::_register_methods()
 		&InteractiveObject::getObjectStateNumber, 0);
 	register_property<InteractiveObject, Vector2>("Object size", &InteractiveObject::setObjectSize,
 		&InteractiveObject::getObjectSize, Vector2());	
+	register_property<InteractiveObject, String>("Use item name", &InteractiveObject::setUseItemName,
+		&InteractiveObject::getUseItemName, "Insert use item name");
 }
 
 void InteractiveObject::_ready()
@@ -101,6 +103,16 @@ void InteractiveObject::setObjectSize(const godot::Vector2 newSize)
 godot::Vector2 InteractiveObject::getObjectSize() const
 {
 	return m_objectSize;
+}
+
+void InteractiveObject::setUseItemName(const godot::String newItemName)
+{
+	m_useItemName = newItemName;
+}
+
+godot::String InteractiveObject::getUseItemName() const
+{
+	return m_useItemName;
 }
 
 

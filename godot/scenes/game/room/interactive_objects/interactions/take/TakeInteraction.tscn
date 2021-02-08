@@ -6,4 +6,3 @@
 [node name="TakeInteraction" instance=ExtResource( 3 )]
 script = ExtResource( 1 )
 "Interaction name" = "Take"
-"Examine text" = "It could be usefull..."

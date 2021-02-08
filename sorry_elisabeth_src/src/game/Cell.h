@@ -1,8 +1,5 @@
 #pragma once
 
-#include <Godot.hpp>
-#include <TextureButton.hpp>
-
 #include "Item.h"
 
 /**
@@ -26,7 +23,7 @@ public:
 	void _ready();
 
 	// Called every frame, manage user actions
-	void _process();
+	void _process(float delta);
 
 	// Set the new item and remove the ex one
 	void setItem(Item* newItem);
@@ -35,6 +32,14 @@ public:
 	// Determine if the cell contain an item or not
 	bool containItem() const;
 
+	// Disable the display and the use of the interact button and the interaction table
+	void enableUseMode();
+	// Enable the display and the use of the interact button and of the interaction table
+	void disableUseMode();
+
+
+	/* SIGNALS */
+	void on_button_up();
 
 	/* CONSTANTS */
 
@@ -44,8 +49,9 @@ public:
 protected:
 
 	// Children nodes
-
 	Item* m_item;
 	InteractionTable* m_itemInteractionTable;
 	InteractButton* m_itemInteractButton;
+
+	bool m_isInUseMode;
 };

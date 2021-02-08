@@ -56,6 +56,9 @@ void MainScene::sendInfoToInteractions(Node* currentNode)
 	else if (currentNode->get_name() == TAKE_INTERACTION_NODE_NAME) {
 		currentNode->cast_to<TakeInteraction>(currentNode)->setInventory(m_inventory);
 	}
+	else if (currentNode->get_name() == USE_INTERACTION_NODE_NAME) {
+		currentNode->cast_to<UseInteraction>(currentNode)->setInventory(m_inventory);
+	}
 
 	if (!hasBeenSet) {
 		for (int i = 0; i < currentNode->get_child_count(); i++)

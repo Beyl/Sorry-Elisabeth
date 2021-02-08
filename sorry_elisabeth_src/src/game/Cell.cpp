@@ -6,16 +6,22 @@ void Cell::_register_methods()
 {
 	register_method("_ready", &Cell::_ready);
 	register_method("_process", &Cell::_process);
+	register_method("on_button_up", &Cell::on_button_up);
+
+	register_signal<Cell>("clicked", "cell", GODOT_VARIANT_TYPE_OBJECT);
 }
 
 void Cell::_ready()
 {
+	connect("button_up", this, "on_button_up");
+	m_isInUseMode = false;
+
 	setItem(0);	// At the beginning, the cell does not contain any item
 }
 
-void Cell::_process()
+void Cell::_process(float delta)
 {
-	if (m_item != 0) {	// Manage user's inputs only if there is an item inside the cell
+	if (m_item != 0 && !m_isInUseMode) {	// Manage user's inputs only if there is an item inside the cell
 
 		const Vector2 mousePosition = get_global_mouse_position();
 
@@ -44,8 +50,10 @@ void Cell::_process()
 		else
 			set_disabled(false);
 	}
-	else
-		set_disabled(true);
+	else {
+		if (!m_isInUseMode)
+			set_disabled(true);
+	}
 
 }
 
@@ -76,11 +84,32 @@ bool Cell::containItem() const
 	return m_item != 0;
 }
 
+void Cell::enableUseMode()
+{
+	m_isInUseMode = true;
+	m_itemInteractButton->set_visible(false);
+	m_itemInteractionTable->set_visible(false);
+}
+
+void Cell::disableUseMode()
+{
+	m_isInUseMode = false;
+	m_itemInteractButton->set_visible(true);
+	m_itemInteractionTable->set_visible(true);
+}
+
+void Cell::on_button_up()
+{
+	emit_signal("clicked", this);
+}
+
 Cell::Cell()
 {
 	m_item = 0;
 	m_itemInteractButton = 0;
 	m_itemInteractionTable = 0;
+
+	m_isInUseMode = false;
 }
 
 Cell::~Cell()

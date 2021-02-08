@@ -1,10 +1,11 @@
 #pragma once
 
-#include <Godot.hpp>
 #include <HBoxContainer.hpp>
 
 #include "Cell.h"
-#include "../utils/Utils.h"
+#include "UseInteraction.h"
+
+class UseInteraction;
 
 /**
  * Represents the player's inventory.
@@ -32,9 +33,12 @@ public:
 	void addItem(Item* newItem);
 	void removeItem(const Item* itemToDelete);
 
+	// When a cell is clicked, if the item in it is able to interact with objectToInteract, increase it's state
+	void enableUseMode(UseInteraction* useInteraction);
+
 	// Display the bottom part of the inventory and offer 10 more places
 	void grow();
-
+	
 	/**
 	 * Search the value given in parameter in the array of Item's pointers.
 	 *
@@ -55,14 +59,28 @@ public:
 	static void removeItemInArray(Item* itemsArray[], const int arraySize, const int idItem);
 
 
+	/* SIGNALS */
+	// Check if the cell's item 
+	void on_cellsButtonInUseMode_clicked(Cell* itemsCellToUse);
+
+	// If the inventory is in use mode, disable it
+	void on_hideAnimation_completed();
+
 	/* CONSTANTS */
 	const real_t ANIMATION_DURATION = real_t(0.5);
 	static const int MAX_ITEM_NUMBER = 15;
+	static const int MIN_ITEM_NUMBER = 5;
 
 private:
 
 	// Update the inventory by adding and/or removing the items contained in the scene, depending on the items's array
 	void updateInventory();
+
+	// Disable the use of the cell's interaction table and connect their click signal to the "" method
+	void setCellsInUseMode();
+
+	// Return to the initial inventory mode
+	void disableUseMode();
 
 
 	/* MEMBER VARIABLES */
@@ -75,6 +93,9 @@ private:
 	int m_itemsNumber;
 	int m_currentInventorySize;
 	bool m_hasGrown;
+
+	bool m_isInUseMode;
+	UseInteraction* m_useInteraction;
 
 	godot::Vector2 m_hidePosition;
 	godot::Vector2 m_displayPosition;

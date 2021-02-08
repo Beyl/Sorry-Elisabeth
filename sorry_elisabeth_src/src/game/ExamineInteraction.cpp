@@ -41,7 +41,7 @@ void ExamineInteraction::_ready()
 
 void ExamineInteraction::play()
 {
-	if (!m_examineText.empty()) {
+	if (!m_dialogBox->getDisplayedText().empty()) {
 		m_dialogBox->set_visible(true);
 		m_dialogBox->display();
 	}

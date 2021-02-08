@@ -93,6 +93,11 @@ void DialogBox::setDisplayedText(godot::String displayedText)
 	m_textLabel->set_bbcode("[center]" + displayedText + "[/center]");
 }
 
+godot::String DialogBox::getDisplayedText() const
+{
+	return m_textLabel->get_bbcode();
+}
+
 godot::Vector2 DialogBox::getDisplayPosition() const
 {
 	return m_displayPosition;

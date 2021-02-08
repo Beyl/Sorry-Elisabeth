@@ -1,11 +1,8 @@
 #pragma once
 
-#include <Godot.hpp>
-#include <Node.hpp>
 #include <Input.hpp>
 #include <GlobalConstants.hpp>
 
-#include "../utils/Utils.h"
 #include "Player.h"
 #include "Camera.h"
 #include "InventoryButton.h"
@@ -44,6 +41,7 @@ public:
 	static const int PLAYER_START_Y = 117;
 	const godot::String TAKE_HANDBAG_INTERACTION_NODE_NAME = "TakeHandbagInteraction";
 	const godot::String TAKE_INTERACTION_NODE_NAME = "TakeInteraction";
+	const godot::String USE_INTERACTION_NODE_NAME = "UseInteraction";
 
 private:
 

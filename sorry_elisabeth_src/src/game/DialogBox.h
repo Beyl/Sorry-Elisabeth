@@ -33,6 +33,7 @@ public:
 
 	// Set the text that will be displayed in the box
 	void setDisplayedText(const godot::String displayedText);
+	godot::String getDisplayedText() const;
 
 
 	/* ACCESSORS */
