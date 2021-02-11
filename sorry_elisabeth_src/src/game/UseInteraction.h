@@ -18,9 +18,6 @@ public:
 	static void _register_methods();
 	void _init();	// Needed by godot
 
-	// Initialise the class and the godot scene
-	void _ready();
-
 	// Add the item to the inventory and remove the parent interactive object
 	virtual void play();
 
@@ -45,7 +42,6 @@ public:
 private:
 
 	Inventory* m_inventory;
-	InteractiveObject* m_parentInteractiveObject;
 
 	// Properties
 	godot::Array m_nextInteractions;

@@ -4,20 +4,12 @@ using namespace godot;
 
 void UseInteraction::_register_methods()
 {
-	register_method("_ready", &UseInteraction::_ready);
-
 	register_property<UseInteraction, Array>("Next object interactions", &UseInteraction::setNextInteractions,
 		&UseInteraction::getNextInteractions, Array());
 	register_property<UseInteraction, String>("Use failed text", &UseInteraction::setUseFailedExaminationText,
 		&UseInteraction::getUseFailedExaminationText, "Insert text");
 	register_property<UseInteraction, Ref<AudioStreamSample>>("Use failed sound", &UseInteraction::setUseFailedSound,
-		&UseInteraction::getUseFailedSound, 0);
-}
-
-void UseInteraction::_ready()
-{
-	m_parentInteractiveObject = get_node(PARENT_INTERACTIVE_OBJECT_PATH)->cast_to<InteractiveObject>
-		(get_node(PARENT_INTERACTIVE_OBJECT_PATH));
+		&UseInteraction::getUseFailedSound, Ref<AudioStreamSample>());
 }
 
 void UseInteraction::play()
@@ -28,7 +20,7 @@ void UseInteraction::play()
 
 void UseInteraction::playFailedExamination()
 {
-	if (m_failedSound != 0) {
+	if (m_failedSound != nullptr) {
 		m_examinationSoundPlayer->set_stream(m_failedSound);
 	}
 	m_dialogBox->setDisplayedText(m_useFailedText);
@@ -39,7 +31,7 @@ void UseInteraction::playFailedExamination()
 
 void UseInteraction::playSucceededExamination()
 {
-	if (m_examinationSound != 0) {
+	if (m_examinationSound != nullptr) {
 		m_examinationSoundPlayer->set_stream(m_examinationSound);
 	}
 	m_dialogBox->setDisplayedText(m_examineText);
@@ -85,8 +77,7 @@ godot::Ref<godot::AudioStreamSample> UseInteraction::getUseFailedSound() const
 
 UseInteraction::UseInteraction()
 {
-	m_inventory = 0;
-	m_parentInteractiveObject = 0;
+	m_inventory = nullptr;
 	m_useFailedText = String();
 }
 

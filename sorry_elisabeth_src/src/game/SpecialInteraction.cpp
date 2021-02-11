@@ -10,7 +10,7 @@ void SpecialInteraction::_register_methods()
 	register_method("on_fadeOut_finished", &SpecialInteraction::on_fadeOut_finished);
 
 	register_property<SpecialInteraction, Ref<AudioStreamSample>>("Special sound", &SpecialInteraction::setSpecialSound,
-		&SpecialInteraction::getSpecialSound, 0);
+		&SpecialInteraction::getSpecialSound, Ref<AudioStreamSample>());
 	register_property<SpecialInteraction, Array>("Next state interactions", &SpecialInteraction::setNextInteractions,
 		&SpecialInteraction::getNextInteractions, Array());
 }
@@ -23,7 +23,7 @@ void SpecialInteraction::_ready()
 	m_specialSoundPlayer = get_node("ObjectSpecialSoundPlayer")->cast_to<AudioStreamPlayer>(get_node("ObjectSpecialSoundPlayer"));
 
 	// Scene initialisation
-	if (m_specialSound != 0) {
+	if (m_specialSound != nullptr) {
 		m_specialSoundPlayer->set_stream(m_specialSound);
 	}
 
@@ -41,7 +41,7 @@ void SpecialInteraction::play()
 
 void SpecialInteraction::on_fadeIn_finished()
 {
-	if (m_specialSound != 0)
+	if (m_specialSound != nullptr)
 		m_specialSoundPlayer->play();
 
 	// Increase parent interactive object state
@@ -83,8 +83,8 @@ godot::Array SpecialInteraction::getNextInteractions() const
 
 SpecialInteraction::SpecialInteraction()
 {
-	m_fadeBackground = 0;
-	m_specialSoundPlayer = 0;
+	m_fadeBackground = nullptr;
+	m_specialSoundPlayer = nullptr;
 }
 
 SpecialInteraction::~SpecialInteraction()

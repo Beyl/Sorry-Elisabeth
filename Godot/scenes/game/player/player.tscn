@@ -14,11 +14,6 @@
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 6 ), ExtResource( 5 ), ExtResource( 7 ), ExtResource( 8 ) ],
-"loop": true,
-"name": "walk_normal",
-"speed": 8.0
-}, {
 "frames": [ ExtResource( 10 ) ],
 "loop": true,
 "name": "walk_handbag",
@@ -32,6 +27,11 @@ animations = [ {
 "frames": [ ExtResource( 4 ), ExtResource( 1 ), ExtResource( 2 ), ExtResource( 3 ) ],
 "loop": true,
 "name": "idle_normal",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 6 ), ExtResource( 5 ), ExtResource( 7 ), ExtResource( 8 ) ],
+"loop": true,
+"name": "walk_normal",
 "speed": 8.0
 } ]
 

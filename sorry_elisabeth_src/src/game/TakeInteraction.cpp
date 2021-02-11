@@ -66,8 +66,8 @@ godot::String TakeInteraction::getItemSceneName() const
 
 TakeInteraction::TakeInteraction()
 {
-	m_inventory = 0;
-	m_parentInteractiveObject = 0;
+	m_inventory = nullptr;
+	m_parentInteractiveObject = nullptr;
 	m_itemScene = Ref<PackedScene>();
 }
 

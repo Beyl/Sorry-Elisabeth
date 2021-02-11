@@ -132,7 +132,7 @@ const int Player::getXDestination()
 
 Player::Player()
 {
-	m_animSprite = 0;
+	m_animSprite = nullptr;
 	m_direction = Direction::RIGHT;
 	m_xDestination = NO_DESTINATION;
 	m_speed = MIN_SPEED;

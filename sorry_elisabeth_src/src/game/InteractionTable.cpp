@@ -81,7 +81,7 @@ void InteractionTable::addInteractionsToScene()
 	// Then add the new ones
 	for (int interaction = 0; interaction < m_interactions.size(); interaction++) {
 		Ref<PackedScene> interactionScene = m_interactions[interaction];
-		if (interactionScene != 0)
+		if (interactionScene != nullptr)
 			m_vBox->add_child(interactionScene->instance());
 	}
 }
@@ -107,8 +107,8 @@ godot::Array InteractionTable::getInteractions() const
 
 InteractionTable::InteractionTable()
 {
-	m_vBox = 0;
-	m_tween = 0;
+	m_vBox = nullptr;
+	m_tween = nullptr;
 	m_animationDuration = 0;
 	m_full_scale = Vector2();
 }

@@ -85,7 +85,7 @@ void Inventory::removeItem(const Item* itemToDelete)
 void Inventory::updateInventory()
 {
 	NodePath pathToCell;
-	Cell* currentCell = 0;
+	Cell* currentCell = nullptr;
 
 	for (int i = 0; i < m_itemsNumber; i++) {
 		
@@ -106,7 +106,7 @@ void Inventory::updateInventory()
 void Inventory::setCellsInUseMode()
 {
 	NodePath pathToCell;
-	Cell* currentCell = 0;
+	Cell* currentCell = nullptr;
 
 	for (int i = 0; i < m_itemsNumber; i++) {
 
@@ -119,7 +119,7 @@ void Inventory::setCellsInUseMode()
 
 		currentCell = get_node(pathToCell)->cast_to<Cell>(get_node(pathToCell));
 
-		if (currentCell->getItem() != 0) {
+		if (currentCell->getItem() != nullptr) {
 			currentCell->enableUseMode();
 			currentCell->connect("clicked", this, "on_cellsButtonInUseMode_clicked");
 		}
@@ -129,7 +129,7 @@ void Inventory::setCellsInUseMode()
 void Inventory::disableUseMode()
 {
 	NodePath pathToCell;
-	Cell* currentCell = 0;
+	Cell* currentCell = nullptr;
 
 	for (int i = 0; i < m_itemsNumber; i++) {
 
@@ -142,14 +142,14 @@ void Inventory::disableUseMode()
 
 		currentCell = get_node(pathToCell)->cast_to<Cell>(get_node(pathToCell));
 
-		if (currentCell->getItem() != 0) {
+		if (currentCell->getItem() != nullptr) {
 			currentCell->disableUseMode();
 			currentCell->disconnect("clicked", this, "on_cellsButtonInUseMode_clicked");
 		}
 	}
 
 	m_isInUseMode = false;
-	m_useInteraction = 0;
+	m_useInteraction = nullptr;
 }
 
 void Inventory::enableUseMode(UseInteraction* useInteraction)
@@ -212,7 +212,7 @@ void Inventory::removeItemInArray(Item* itemsArray[], const int arraySize, const
 		if (i == arraySize - 1)
 			itemsArray[i] = 0;
 		else {
-			if (itemsArray[i + 1] != 0) {
+			if (itemsArray[i + 1] != nullptr) {
 				itemsArray[i] = itemsArray[i + 1]->duplicate()->cast_to<Item>(itemsArray[i + 1]->duplicate());
 				itemsArray[i + 1]->queue_free();
 			}
@@ -226,19 +226,19 @@ void Inventory::removeItemInArray(Item* itemsArray[], const int arraySize, const
 
 Inventory::Inventory()
 {
-	m_topInventory = 0;
-	m_bottomInventory = 0;
-	m_tween = 0;
+	m_topInventory = nullptr;
+	m_bottomInventory = nullptr;
+	m_tween = nullptr;
 	
 	for (int i = 0; i < MAX_ITEM_NUMBER; i++)
-		m_items[i] = 0;
+		m_items[i] = nullptr;
 
 	m_itemsNumber = 0;
 	m_currentInventorySize = 0;
 	m_hasGrown = false;
 
 	m_isInUseMode = false;
-	m_useInteraction = 0;
+	m_useInteraction = nullptr;
 
 	m_hidePosition = Vector2();
 	m_displayPosition = Vector2();

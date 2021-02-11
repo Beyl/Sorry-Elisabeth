@@ -58,8 +58,8 @@ godot::TextureButton* SearchPlace::getCloseButton() const
 
 SearchPlace::SearchPlace()
 {
-	m_tween = 0;
-	m_closeButton = 0;
+	m_tween = nullptr;
+	m_closeButton = nullptr;
 
 	m_displayPosition = Vector2(0, 0);
 	m_hidingPosition = Vector2(0, 0);

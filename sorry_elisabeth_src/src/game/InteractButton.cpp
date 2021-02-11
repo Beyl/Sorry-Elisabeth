@@ -112,8 +112,8 @@ real_t InteractButton::getAnimationDuation() const
 
 InteractButton::InteractButton()
 {
-	m_tween = 0;
-	m_animationPlayer = 0;
+	m_tween = nullptr;
+	m_animationPlayer = nullptr;
 	m_hidePosition = Vector2();
 	m_displayPosition = Vector2();
 	m_animationDuration = 0;

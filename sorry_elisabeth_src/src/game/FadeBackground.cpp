@@ -100,7 +100,7 @@ real_t FadeBackground::getFadeDuration() const
 
 FadeBackground::FadeBackground()
 {
-	m_tween = 0;
+	m_tween = nullptr;
 	m_displayOpacity = 0.0;
 	m_fadeDuration = 0;
 	m_displayColor = Color(0, 0, 0);

@@ -204,7 +204,7 @@ Camera::Camera()
 	m_cellarCamPosition = Vector2(0, 0);
 	m_livingRoomCamPosition = Vector2(0, 0);
 
-	m_tween = 0;
+	m_tween = nullptr;
 }
 
 Camera::~Camera()

@@ -68,11 +68,11 @@ void MainScene::sendInfoToInteractions(Node* currentNode)
 
 MainScene::MainScene()
 {
-	m_player = 0;
-	m_camera = 0;
-	m_inventory = 0;
+	m_player = nullptr;
+	m_camera = nullptr;
+	m_inventory = nullptr;
 	m_gameSceneActive = true;
-	m_inputManager = 0;
+	m_inputManager = nullptr;
 }
 
 MainScene::~MainScene()

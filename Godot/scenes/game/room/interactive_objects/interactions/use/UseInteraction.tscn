@@ -6,3 +6,4 @@
 [node name="UseInteraction" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 "Interaction name" = "Use"
+"Examine text" = "Insert texte here"

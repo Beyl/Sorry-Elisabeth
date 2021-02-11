@@ -18,14 +18,14 @@ void Interaction::_ready()
 	set_disabled(false);
 	m_label->set_text(m_interactionName);
 
-	if (m_objectSound != 0) {
+	if (m_objectSound != nullptr) {
 		m_objectSoundPlayer->set_stream(m_objectSound);
 	}
 }
 
 void Interaction::on_button_released()
 {
-	if (m_objectSound != 0) {
+	if (m_objectSound != nullptr) {
 		m_objectSoundPlayer->play();
 	}
 	emit_signal("interaction_just_played");
@@ -62,8 +62,8 @@ godot::Ref<godot::AudioStreamSample> Interaction::getObjectSound() const
 
 Interaction::Interaction()
 {
-	m_label = 0;
-	m_objectSoundPlayer = 0;
+	m_label = nullptr;
+	m_objectSoundPlayer = nullptr;
 	m_interactionName = String();
 }
 

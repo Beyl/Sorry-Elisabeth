@@ -118,8 +118,8 @@ godot::String InteractiveObject::getUseItemName() const
 
 InteractiveObject::InteractiveObject()
 {
-	m_interactButton = 0;
-	m_interactionTable = 0;
+	m_interactButton = nullptr;
+	m_interactionTable = nullptr;
 	m_state = 0;
 	m_objectStateNumber = 0;
 }

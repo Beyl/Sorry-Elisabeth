@@ -9,7 +9,7 @@ void OpenInteraction::_register_methods()
 	register_method("on_dialogBoxHiding", &OpenInteraction::on_dialogBoxHiding);
 
 	register_property<OpenInteraction, Ref<PackedScene>>("Search place scene", &OpenInteraction::setSearchPlaceScene,
-		&OpenInteraction::getSearchPlaceScene, 0);
+		&OpenInteraction::getSearchPlaceScene, Ref<PackedScene>());
 	register_property<OpenInteraction, String>("Search place scene's name", &OpenInteraction::setSearchPlaceSceneName,
 		&OpenInteraction::getSearchPlaceSceneName, "Set a name");
 }
@@ -77,13 +77,14 @@ godot::String OpenInteraction::getSearchPlaceSceneName() const
 
 OpenInteraction::OpenInteraction()
 {
-	m_searchPlace = 0;
-	m_searchPlaceBackground = 0;
+	m_searchPlace = nullptr;
+	m_searchPlaceBackground = nullptr;
 }
 
 OpenInteraction::~OpenInteraction()
 {
 }
+
 void OpenInteraction::_init()
 {
 }

@@ -4,7 +4,6 @@
 [ext_resource path="res://assets/textures/game/game_ui/close_button/closeButton.png" type="Texture" id=2]
 [ext_resource path="res://scenes/game/room/interactive_objects/interactions/open/search_place/SearchPlace.gdns" type="Script" id=4]
 
-
 [node name="SearchPlace" type="TextureRect"]
 anchor_left = 0.5
 anchor_top = 0.5

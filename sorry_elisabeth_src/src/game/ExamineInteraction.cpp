@@ -11,12 +11,12 @@ void ExamineInteraction::_register_methods()
 	register_property<ExamineInteraction, String>("Interaction name", &Interaction::setInteractionName,
 		&Interaction::getInteractionName, "Interaction");
 	register_property<ExamineInteraction, Ref<AudioStreamSample>>("Object Sound", &Interaction::setObjectSound,
-		&Interaction::getObjectSound, 0);
+		&Interaction::getObjectSound, Ref<AudioStreamSample>());
 	
 	register_property<ExamineInteraction, String>("Examine text", &ExamineInteraction::setExamineText,
 		&ExamineInteraction::getExamineText, "Insert texte here");
 	register_property<ExamineInteraction, Ref<AudioStreamSample>>("Examination Sound", &ExamineInteraction::setExaminationSound,
-		&ExamineInteraction::getExaminationSound, 0);
+		&ExamineInteraction::getExaminationSound, Ref<AudioStreamSample>());
 }
 
 void ExamineInteraction::_ready()
@@ -29,7 +29,7 @@ void ExamineInteraction::_ready()
 		(get_node("ExaminationSoundPlayer"));
 
 	//Scene initialisation
-	if (m_examinationSound != 0) {
+	if (m_examinationSound != nullptr) {
 		m_examinationSoundPlayer->set_stream(m_examinationSound);
 	}
 
@@ -46,7 +46,7 @@ void ExamineInteraction::play()
 		m_dialogBox->display();
 	}
 
-	if (m_examinationSound != 0)
+	if (m_examinationSound != nullptr)
 		m_examinationSoundPlayer->play();
 }
 
@@ -83,9 +83,9 @@ Ref<AudioStreamSample> ExamineInteraction::getExaminationSound() const
 
 ExamineInteraction::ExamineInteraction()
 {
-	m_examineText = "";
-	m_dialogBox = 0;
-	m_examinationSoundPlayer = 0;
+	m_examineText = String();
+	m_dialogBox = nullptr;
+	m_examinationSoundPlayer = nullptr;
 }
 
 ExamineInteraction::~ExamineInteraction()

@@ -154,10 +154,10 @@ DialogBox::DialogBox()
 	m_transitionDisplayDuration = MIN_TRANSITION_DISPLAY_DURATION;
 	m_beforeHidingDuration = MIN_BEFORE_HIDING_DURATION;
 
-	m_boxTween = 0;
-	m_textTween = 0;
-	m_textLabel = 0;
-	m_beforeHideTimer = 0;
+	m_boxTween = nullptr;
+	m_textTween = nullptr;
+	m_textLabel = nullptr;
+	m_beforeHideTimer = nullptr;
 
 	m_displayPosition = Vector2(0, 0);
 	m_hidePosition = Vector2(0, 0);

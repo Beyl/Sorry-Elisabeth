@@ -6,10 +6,6 @@ void TakeHandbagInteraction::_register_methods()
 {
 }
 
-void TakeHandbagInteraction::_init()
-{
-}
-
 void TakeHandbagInteraction::play()
 {
 	m_player->takeHandbag();
@@ -30,10 +26,14 @@ void TakeHandbagInteraction::setInventory(Inventory* newInventory)
 
 TakeHandbagInteraction::TakeHandbagInteraction()
 {
-	m_player = 0;
-	m_inventory = 0;
+	m_player = nullptr;
+	m_inventory = nullptr;
 }
 
 TakeHandbagInteraction::~TakeHandbagInteraction()
+{
+}
+
+void TakeHandbagInteraction::_init()
 {
 }

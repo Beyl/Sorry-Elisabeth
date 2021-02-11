@@ -65,9 +65,9 @@ void InventoryButton::hideAll()
 
 InventoryButton::InventoryButton()
 {
-	m_fadeBackground = 0;
-	m_inventory = 0;
-	m_animationPlayer = 0;
+	m_fadeBackground = nullptr;
+	m_inventory = nullptr;
+	m_animationPlayer = nullptr;
 }
 
 InventoryButton::~InventoryButton()
