@@ -5,6 +5,9 @@
 
 class Inventory;
 
+/**
+ * Offers the possibility to use an item coming from the inventory over an interactive object
+ */
 class UseInteraction : public ExamineInteraction {
 
 	GODOT_SUBCLASS(UseInteraction, ExamineInteraction);	// Needed by godot to be able to use this class

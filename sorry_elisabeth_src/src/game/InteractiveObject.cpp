@@ -69,7 +69,7 @@ bool InteractiveObject::offerInteractions() const
 
 void InteractiveObject::increaseState(godot::Array nextInteractions, Interaction* increaseTypeInteraction)
 {
-	if (m_state <= m_objectStateNumber + Utils::ASCII_CONVERSION_1) {
+	if (m_state < m_objectStateNumber + Utils::ASCII_CONVERSION_0) {
 		m_state++;
 
 		set_animation("state" + String(m_state));	// Set the next animation

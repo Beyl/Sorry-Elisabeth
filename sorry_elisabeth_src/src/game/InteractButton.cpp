@@ -27,13 +27,14 @@ void InteractButton::_ready()
 	set_draw_behind_parent(true);
 	set_pivot_offset(get_size() / 2);
 	set_scale(INVERT_SCALE);
+
+	// Signal initialisation
+	m_tween->connect("tween_all_completed", this, "on_displayAnimation_finished");
 }
 
 void InteractButton::display()
 {
 	set_visible(true);
-
-	m_tween->connect("tween_all_completed", this, "on_displayAnimation_finished");
 
 	m_tween->interpolate_property(this, "rect_position", m_hidePosition, m_displayPosition, m_animationDuration,
 		Tween::TRANS_BOUNCE, Tween::EASE_OUT);
@@ -73,7 +74,6 @@ bool InteractButton::isHided() const
 
 void InteractButton::on_displayAnimation_finished()
 {
-	m_tween->disconnect("tween_all_completed", this, "on_displayAnimation_finished");
 	set_mouse_filter(Control::MOUSE_FILTER_STOP);
 }
 

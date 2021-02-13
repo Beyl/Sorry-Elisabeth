@@ -3,6 +3,9 @@
 #include "ExamineInteraction.h"
 #include "Inventory.h"
 
+/**
+ * Offers the possibility to take an interactive object that is present in the room and add it to the inventory.
+ */
 class TakeInteraction : public ExamineInteraction {
 
 	GODOT_SUBCLASS(TakeInteraction, ExamineInteraction);	// Needed by godot to be able to use this class
