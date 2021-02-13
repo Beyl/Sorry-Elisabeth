@@ -33,7 +33,7 @@ public:
 	bool containItem() const;
 
 	// Disable the display and the use of the interact button and the interaction table
-	void enableUseMode();
+	void enableSpecialMode();
 	// Enable the display and the use of the interact button and of the interaction table
 	void disableUseMode();
 
@@ -53,5 +53,5 @@ protected:
 	InteractionTable* m_itemInteractionTable;
 	InteractButton* m_itemInteractButton;
 
-	bool m_isInUseMode;
+	bool m_isInSpecialMode;
 };

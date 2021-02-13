@@ -5,7 +5,7 @@ using namespace godot;
 void Inventory::_register_methods()
 {
 	register_method("_ready", &Inventory::_ready);
-	register_method("on_cellsButtonInUseMode_clicked", &Inventory::on_cellsButtonInUseMode_clicked);
+	register_method("on_cellsButtonInSpecialMode_clicked", &Inventory::on_cellsButtonInSpecialMode_clicked);
 	register_method("on_hideAnimation_completed", &Inventory::on_hideAnimation_completed);
 }
 
@@ -22,7 +22,9 @@ void Inventory::_ready()
 		m_items[i] = 0;
 
 	// Scene initialisation
-	m_isInUseMode = false;
+	m_specialMode = false;
+	m_combineInteraction = nullptr;
+	m_useInteraction = nullptr;
 	//Position initialisation
 	const Vector2 parentGlobalPosition = get_parent()->cast_to<TextureButton>(get_parent())->get_global_position();
 	m_displayPosition = Utils::getCenteredPosition(get_size()) - parentGlobalPosition;
@@ -58,136 +60,23 @@ void Inventory::hide()
 	m_tween->start();
 }
 
-void Inventory::addItem(Item* newItem)
+Cell* Inventory::getCellWithNumber(const int cellNumber) const
 {
-	if (m_itemsNumber < m_currentInventorySize) {
-		m_items[m_itemsNumber] = newItem->duplicate()->cast_to<Item>(newItem->duplicate());
-		m_itemsNumber++;
-		
-		newItem->queue_free();	// Remove the ancient item from the scene (will be added as a child of a cell in the inventory
-		updateInventory();
-		emit_signal("interact");
-	}
-}
+	Cell* cell = nullptr;
 
-void Inventory::removeItem(const Item* itemToDelete)
-{
-	const int idItem = Inventory::searchItemInArray(m_items, m_itemsNumber, itemToDelete);
+	if (cellNumber >= 0 && cellNumber < Inventory::MAX_ITEM_NUMBER) {
+		NodePath pathToCell;
+		const String stringCellNumber = int(cellNumber + int64_t(Utils::ASCII_CONVERSION_0));
 
-	if (idItem > -1) {
-		Inventory::removeItemInArray(m_items, m_itemsNumber, idItem);
-
-		updateInventory();
-		m_itemsNumber--;
-	}
-}
-
-void Inventory::updateInventory()
-{
-	NodePath pathToCell;
-	Cell* currentCell = nullptr;
-
-	for (int i = 0; i < m_itemsNumber; i++) {
-		
-		const String indexNumber = int(i + int64_t(Utils::ASCII_CONVERSION_0));
-
-		if (i < m_topInventory->get_child_count())
-			pathToCell = NodePath("TopBox/Cell" + indexNumber);
+		if (cellNumber < m_topInventory->get_child_count())
+			pathToCell = NodePath("TopBox/Cell" + stringCellNumber);
 		else
-			pathToCell = NodePath("BottomBox/Cell" + indexNumber);
+			pathToCell = NodePath("BottomBox/Cell" + stringCellNumber);
 
-		currentCell = get_node(pathToCell)->cast_to<Cell>(get_node(pathToCell));
-
-		if (currentCell->getItem() != m_items[i])
-			currentCell->setItem(m_items[i]);
-	}
-}
-
-void Inventory::setCellsInUseMode()
-{
-	NodePath pathToCell;
-	Cell* currentCell = nullptr;
-
-	for (int i = 0; i < m_itemsNumber; i++) {
-
-		const String indexNumber = int(i + int64_t(Utils::ASCII_CONVERSION_0));
-
-		if (i < m_topInventory->get_child_count())
-			pathToCell = NodePath("TopBox/Cell" + indexNumber);
-		else
-			pathToCell = NodePath("BottomBox/Cell" + indexNumber);
-
-		currentCell = get_node(pathToCell)->cast_to<Cell>(get_node(pathToCell));
-
-		if (currentCell->getItem() != nullptr) {
-			currentCell->enableUseMode();
-			currentCell->connect("clicked", this, "on_cellsButtonInUseMode_clicked");
-		}
-	}
-}
-
-void Inventory::disableUseMode()
-{
-	NodePath pathToCell;
-	Cell* currentCell = nullptr;
-
-	for (int i = 0; i < m_itemsNumber; i++) {
-
-		const String indexNumber = int(i + int64_t(Utils::ASCII_CONVERSION_0));
-
-		if (i < m_topInventory->get_child_count())
-			pathToCell = NodePath("TopBox/Cell" + indexNumber);
-		else
-			pathToCell = NodePath("BottomBox/Cell" + indexNumber);
-
-		currentCell = get_node(pathToCell)->cast_to<Cell>(get_node(pathToCell));
-
-		if (currentCell->getItem() != nullptr) {
-			currentCell->disableUseMode();
-			currentCell->disconnect("clicked", this, "on_cellsButtonInUseMode_clicked");
-		}
+		cell = get_node(pathToCell)->cast_to<Cell>(get_node(pathToCell));
 	}
 
-	m_isInUseMode = false;
-	m_useInteraction = nullptr;
-}
-
-void Inventory::enableUseMode(UseInteraction* useInteraction)
-{
-	m_useInteraction = useInteraction;
-	m_isInUseMode = true;
-	setCellsInUseMode();
-}
-
-void Inventory::on_cellsButtonInUseMode_clicked(Cell* itemsCellToUse)
-{
-	InteractiveObject* useInteractionObject =
-		m_useInteraction->get_node(m_useInteraction->PARENT_INTERACTIVE_OBJECT_PATH)->cast_to<InteractiveObject>
-		(m_useInteraction->get_node(m_useInteraction->PARENT_INTERACTIVE_OBJECT_PATH));
-
-	if (itemsCellToUse->getItem()->get_name() == useInteractionObject->getUseItemName()) {
-		m_useInteraction->playSucceededExamination();
-		useInteractionObject->increaseState(m_useInteraction->getNextInteractions(), m_useInteraction);
-		get_parent()->cast_to<InventoryButton>(get_parent())->on_button_released();
-	}
-	else
-		m_useInteraction->playFailedExamination();
-}
-
-void Inventory::on_hideAnimation_completed()
-{
-	if (m_isInUseMode)
-		disableUseMode();
-
-	m_tween->disconnect("tween_all_completed", this, "on_hideAnimation_completed");
-}
-
-void Inventory::grow()
-{
-	m_bottomInventory->set_visible(true);
-	m_hasGrown = true;
-	m_currentInventorySize = Inventory::MAX_ITEM_NUMBER;
-	emit_signal("interact");
+	return cell;
 }
 
 int Inventory::searchItemInArray(Item* itemsArray[], const int arraySize, const Item* pointer)
@@ -224,6 +113,168 @@ void Inventory::removeItemInArray(Item* itemsArray[], const int arraySize, const
 	}
 }
 
+void Inventory::addItem(Item* newItem)
+{
+	if (m_itemsNumber < m_currentInventorySize) {
+		m_items[m_itemsNumber] = newItem->duplicate()->cast_to<Item>(newItem->duplicate());
+		m_itemsNumber++;
+		
+		newItem->queue_free();	// Remove the ancient item from the scene (will be added as a child of a cell in the inventory
+		updateInventory();
+		emit_signal("interact");
+	}
+}
+
+void Inventory::removeItem(const Item* itemToDelete)
+{
+	const int idItem = Inventory::searchItemInArray(m_items, m_itemsNumber, itemToDelete);
+
+	if (idItem > -1) {
+		Inventory::removeItemInArray(m_items, m_itemsNumber, idItem);
+
+		updateInventory();
+		m_itemsNumber--;
+	}
+}
+
+void Inventory::removeItemByName(const godot::String itemName)
+{
+	Cell* currentCell = nullptr;
+	for (int i = 0; i < m_itemsNumber; i++) {
+
+		currentCell = getCellWithNumber(i);
+
+		if (currentCell->getItem()->get_name() == itemName)
+			removeItem(currentCell->getItem());
+	}
+}
+
+void Inventory::updateInventory()
+{
+	Cell* currentCell = nullptr;
+
+	for (int i = 0; i < m_itemsNumber; i++) {
+		
+		currentCell = getCellWithNumber(i);
+
+		if (currentCell->getItem() != m_items[i])
+			currentCell->setItem(m_items[i]);
+	}
+}
+
+void Inventory::setCellsInSpecialMode()
+{
+	Cell* currentCell = nullptr;
+
+	for (int i = 0; i < m_itemsNumber; i++) {
+
+		currentCell = getCellWithNumber(i);
+
+		if (currentCell->getItem() != nullptr) {
+			currentCell->enableSpecialMode();
+			currentCell->connect("clicked", this, "on_cellsButtonInSpecialMode_clicked");
+		}
+	}
+}
+
+void Inventory::disableSpecialMode()
+{
+	Cell* currentCell = nullptr;
+
+	for (int i = 0; i < m_itemsNumber; i++) {
+
+		currentCell = getCellWithNumber(i);
+
+		if (currentCell->getItem() != nullptr) {
+			currentCell->disableUseMode();
+			currentCell->disconnect("clicked", this, "on_cellsButtonInSpecialMode_clicked");
+		}
+	}
+
+	m_specialMode = 0;
+	m_useInteraction = nullptr;
+	m_combineInteraction = nullptr;
+}
+
+void Inventory::enableSpecialMode(Interaction* specialInteraction)
+{
+	if (specialInteraction->get_name().find("UseInteraction") != -1) {
+		m_useInteraction = specialInteraction->cast_to<UseInteraction>(specialInteraction);
+		m_specialMode = 1;
+	}
+	else {
+		m_combineInteraction = specialInteraction->cast_to<CombineInteraction>(specialInteraction);
+		m_specialMode = 2;
+	}
+	setCellsInSpecialMode();
+}
+
+void Inventory::use(Cell* itemsCellToUse)
+{
+	InteractiveObject* useInteractionObject =
+		m_useInteraction->get_node(m_useInteraction->PARENT_INTERACTIVE_OBJECT_PATH)->cast_to<InteractiveObject>
+		(m_useInteraction->get_node(m_useInteraction->PARENT_INTERACTIVE_OBJECT_PATH));
+
+	if (itemsCellToUse->getItem()->get_name() == useInteractionObject->getUseItemName()) {
+		m_useInteraction->playSucceededExamination();
+		useInteractionObject->increaseState(m_useInteraction->getNextInteractions(), m_useInteraction);
+		get_parent()->cast_to<InventoryButton>(get_parent())->on_button_released();
+	}
+	else
+		m_useInteraction->playFailedExamination();
+}
+
+void Inventory::combine(Cell* itemsCellToCombine)
+{
+	Item* cellToCombineItem = itemsCellToCombine->getItem();
+	String name = cellToCombineItem->get_name();
+
+	// If the name corresponds, add the new item and remove the two parents.
+	if (m_combineInteraction->getCombinedItems().has(name)) {
+		Ref<PackedScene> combinedItemScene = m_combineInteraction->getCombinedItems()[name];
+		addItem(combinedItemScene->instance()->cast_to<Item>(combinedItemScene->instance()));
+
+		m_combineInteraction->playSucceededExamination();
+
+		Item* combineInteractionItem =
+			m_combineInteraction->get_node(m_combineInteraction->PARENT_INTERACTIVE_OBJECT_PATH)->cast_to<Item>
+			(m_combineInteraction->get_node(m_combineInteraction->PARENT_INTERACTIVE_OBJECT_PATH));
+		removeItem(combineInteractionItem);
+		removeItemByName(name);
+
+		disableSpecialMode();
+	}
+	else {
+		m_combineInteraction->playFailedExamination();
+		disableSpecialMode();
+	}
+}
+
+void Inventory::on_cellsButtonInSpecialMode_clicked(Cell* itemsCellToInteract)
+{
+	if (m_specialMode == 1)
+		use(itemsCellToInteract);
+	else
+		combine(itemsCellToInteract);
+	
+}
+
+void Inventory::on_hideAnimation_completed()
+{
+	if (m_specialMode != 0)
+		disableSpecialMode();
+
+	m_tween->disconnect("tween_all_completed", this, "on_hideAnimation_completed");
+}
+
+void Inventory::grow()
+{
+	m_bottomInventory->set_visible(true);
+	m_hasGrown = true;
+	m_currentInventorySize = Inventory::MAX_ITEM_NUMBER;
+	emit_signal("interact");
+}
+
 Inventory::Inventory()
 {
 	m_topInventory = nullptr;
@@ -237,8 +288,9 @@ Inventory::Inventory()
 	m_currentInventorySize = 0;
 	m_hasGrown = false;
 
-	m_isInUseMode = false;
+	m_specialMode = 0;
 	m_useInteraction = nullptr;
+	m_combineInteraction = nullptr;
 
 	m_hidePosition = Vector2();
 	m_displayPosition = Vector2();

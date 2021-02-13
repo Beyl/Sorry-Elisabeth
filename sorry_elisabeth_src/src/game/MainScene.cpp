@@ -48,16 +48,19 @@ void MainScene::sendInfoToInteractions(Node* currentNode)
 {
 	bool hasBeenSet = false;
 
-	if (currentNode->get_name() == TAKE_HANDBAG_INTERACTION_NODE_NAME) {
+	if (currentNode->get_name().find(TAKE_HANDBAG_INTERACTION_NODE_NAME) != -1) {
 		currentNode->cast_to<TakeHandbagInteraction>(currentNode)->setPlayer(m_player);
 		currentNode->cast_to<TakeHandbagInteraction>(currentNode)->setInventory(m_inventory);
 		hasBeenSet = true;
 	}
-	else if (currentNode->get_name() == TAKE_INTERACTION_NODE_NAME) {
+	else if (currentNode->get_name().find(TAKE_INTERACTION_NODE_NAME) != -1) {
 		currentNode->cast_to<TakeInteraction>(currentNode)->setInventory(m_inventory);
 	}
-	else if (currentNode->get_name() == USE_INTERACTION_NODE_NAME) {
+	else if (currentNode->get_name().find(USE_INTERACTION_NODE_NAME) != -1) {
 		currentNode->cast_to<UseInteraction>(currentNode)->setInventory(m_inventory);
+	}
+	else if (currentNode->get_name().find(COMBINE_INTERACTION_NODE_NAME) != -1) {
+		currentNode->cast_to<CombineInteraction>(currentNode)->setInventory(m_inventory);
 	}
 
 	if (!hasBeenSet) {
