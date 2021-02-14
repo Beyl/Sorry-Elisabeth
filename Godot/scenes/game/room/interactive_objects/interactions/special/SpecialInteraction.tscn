@@ -6,8 +6,8 @@
 
 [node name="SpecialInteraction" instance=ExtResource( 1 )]
 script = ExtResource( 3 )
-"Next state interactions" = [ null, null, null ]
-"Interaction name" = "Special"
+"Interaction name" = "Interaction"
+"Examine text" = "Insert texte here"
 
 [node name="FadeBackgroundLayer" type="CanvasLayer" parent="." index="3"]
 layer = 2

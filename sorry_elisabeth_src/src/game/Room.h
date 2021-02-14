@@ -32,8 +32,10 @@ public:
 	void on_interaction_finished();
 
 
-	/* MUTATORS */
+	/* ACCESSORS & MUTATORS */
 	void setPlayer(Player* player);
+	void setDoorIsOpen(const bool isOpen);
+	bool getDoorIsOpen() const;
 
 
 	/* CONSTANTS */
@@ -53,4 +55,5 @@ private:
 
 	bool m_playerIsInteracting;
 	bool m_lightIsOn;
+	bool m_doorIsOpened;
 };

@@ -109,6 +109,16 @@ void Room::setPlayer(Player* player)
 	m_player = player;
 }
 
+void Room::setDoorIsOpen(const bool isOpen)
+{
+	m_doorIsOpened = isOpen;
+}
+
+bool Room::getDoorIsOpen() const
+{
+	return m_doorIsOpened;
+}
+
 Room::Room()
 {
 	m_interactiveObjects = godot::Array();

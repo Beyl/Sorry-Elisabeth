@@ -60,12 +60,19 @@ void MainScene::sendInfoToInteractions(Node* currentNode)
 	}
 	else if (currentNode->get_name().find(TAKE_INTERACTION_NODE_NAME) != -1) {
 		currentNode->cast_to<TakeInteraction>(currentNode)->setInventory(m_inventory);
+		hasBeenSet = true;
 	}
 	else if (currentNode->get_name().find(USE_INTERACTION_NODE_NAME) != -1) {
 		currentNode->cast_to<UseInteraction>(currentNode)->setInventory(m_inventory);
+		hasBeenSet = true;
 	}
 	else if (currentNode->get_name().find(COMBINE_INTERACTION_NODE_NAME) != -1) {
 		currentNode->cast_to<CombineInteraction>(currentNode)->setInventory(m_inventory);
+		hasBeenSet = true;
+	}
+	else if (currentNode->get_name().find(OPEN_DOOR_INTERACTION_NODE_NAME) != -1) {
+		currentNode->cast_to<OpenDoorInteraction>(currentNode)->setRoom(m_room1);
+		hasBeenSet = true;
 	}
 
 	if (!hasBeenSet) {

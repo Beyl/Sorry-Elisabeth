@@ -8,6 +8,7 @@
 #include "InventoryButton.h"
 #include "TakeHangbagInteraction.h"
 #include "TakeInteraction.h"
+#include "OpenDoorInteraction.h"
 
 /**
  * Represent the main scene in the game.
@@ -43,6 +44,7 @@ public:
 	const godot::String TAKE_INTERACTION_NODE_NAME = "TakeInteraction";
 	const godot::String USE_INTERACTION_NODE_NAME = "UseInteraction";
 	const godot::String COMBINE_INTERACTION_NODE_NAME = "CombineInteraction";
+	const godot::String OPEN_DOOR_INTERACTION_NODE_NAME = "OpenDoorInteraction";
 
 private:
 

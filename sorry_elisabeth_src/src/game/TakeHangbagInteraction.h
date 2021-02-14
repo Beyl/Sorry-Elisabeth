@@ -19,8 +19,7 @@ public:
 
 	// Register all methods and properties that godot is directly going to call and use
 	static void _register_methods();
-	// Manage groups
-	void _init();
+	void _init();	// Needed by godot
 
 	// Grow up the inventory, change player's sprite animations, remove the handbag and play the examine interaction going with it
 	virtual void play();

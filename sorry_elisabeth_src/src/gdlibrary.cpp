@@ -8,6 +8,7 @@
 #include "game/SpecialInteraction.h"
 #include "game/TakeHangbagInteraction.h"
 #include "game/TakeInteraction.h"
+#include "game/OpenDoorInteraction.h"
 
 #include "../tests/utils/UtilsTest.h"
 #include "../tests/game/PlayerTest.h"
@@ -40,6 +41,7 @@ extern "C" void GDN_EXPORT godot_nativescript_init(void* handle) {
 	register_class<UseInteraction>();
 	register_class<CombineInteraction>();
 	register_class<TakeHandbagInteraction>();
+	register_class<OpenDoorInteraction>();
 	register_class<SpecialInteraction>();
 	register_class<OpenInteraction>();
 	register_class<SearchPlace>();
