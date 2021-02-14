@@ -3,7 +3,7 @@
 #include <Input.hpp>
 #include <GlobalConstants.hpp>
 
-#include "Player.h"
+#include "Room.h"
 #include "Camera.h"
 #include "InventoryButton.h"
 #include "TakeHangbagInteraction.h"
@@ -58,6 +58,7 @@ private:
 	Player* m_player;
 	Camera* m_camera;
 	Inventory* m_inventory;
+	Room* m_room1;
 
 	bool m_gameSceneActive;
 	const godot::Input* m_inputManager;	// To manage inputs

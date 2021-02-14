@@ -14,6 +14,7 @@ void UseInteraction::_register_methods()
 
 void UseInteraction::play()
 {
+	emit_signal("interaction_just_played");
 	m_inventory->enableSpecialMode(this);
 	m_inventory->get_parent()->cast_to<InventoryButton>(m_inventory->get_parent())->on_button_released();
 }

@@ -6,6 +6,8 @@ void Item::_register_methods()
 {
 	register_method("_ready", &Item::_ready);
 	register_method("on_interactButton_released", &Item::on_interactButton_released);
+	register_method("on_interaction_just_played", &Item::on_interaction_just_played);
+	register_method("on_interaction_finished", &Item::on_interaction_finished);
 
 	register_property<Item, int>("Number of state", &InteractiveObject::setObjectStateNumber,
 		&InteractiveObject::getObjectStateNumber, 0);
@@ -44,6 +46,16 @@ InteractButton* Item::getInteractButton() const
 void Item::on_interactButton_released()
 {
 	InteractiveObject::on_interactButton_released();
+}
+
+void Item::on_interaction_just_played()
+{
+	emit_signal("interaction_just_played");
+}
+
+void Item::on_interaction_finished()
+{
+	emit_signal("interaction_finished");
 }
 
 Item::Item()

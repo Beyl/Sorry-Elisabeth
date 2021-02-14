@@ -36,14 +36,18 @@ void ExamineInteraction::_ready()
 	m_dialogBox->set_visible(false);
 	m_dialogBox->setDisplayedText(m_examineText);
 	m_dialogBox->setTextDisplayDuration(m_examinationSoundPlayer->get_stream()->get_length() / 2);
+
+	// Signals initialisation
 	m_dialogBox->connect("just_hided", this, "on_dialogBox_just_hided");
 }
 
 void ExamineInteraction::play()
 {
+
 	if (!m_dialogBox->getDisplayedText().empty()) {
 		m_dialogBox->set_visible(true);
 		m_dialogBox->display();
+		emit_signal("interaction_just_played");
 	}
 
 	if (m_examinationSound != nullptr)

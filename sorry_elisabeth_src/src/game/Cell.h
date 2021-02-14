@@ -32,6 +32,9 @@ public:
 	// Determine if the cell contain an item or not
 	bool containItem() const;
 
+	void enableInteractions();
+	void disableInteractions();
+
 	// Disable the display and the use of the interact button and the interaction table
 	void enableSpecialMode();
 	// Enable the display and the use of the interact button and of the interaction table
@@ -41,8 +44,9 @@ public:
 	/* SIGNALS */
 	void on_button_up();
 
-	/* CONSTANTS */
 
+	/* CONSTANTS */
+	const godot::NodePath INVENTORY_LOCAL_PATH = "../..";
 	static const int HIDE_INTERACT_BUTTON_MARGIN_X = 4;
 	static const int HIDE_INTERACT_BUTTON_MARGIN_Y = 16;
 
@@ -54,4 +58,5 @@ protected:
 	InteractButton* m_itemInteractButton;
 
 	bool m_isInSpecialMode;
+	bool m_canInteract;
 };

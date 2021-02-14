@@ -15,6 +15,7 @@ void CombineInteraction::_register_methods()
 void CombineInteraction::play()
 {
 	m_inventory->enableSpecialMode(this);
+	emit_signal("interaction_just_played");
 }
 
 void CombineInteraction::playFailedExamination()

@@ -26,6 +26,10 @@ public:
 	virtual void play();
 
 
+	/* SIGNAL */
+	void on_examineInteraction_finished();
+
+
 	/* MUTATORS */
 	void setPlayer(Player* newPlayer);
 	void setInventory(Inventory* newInventory);

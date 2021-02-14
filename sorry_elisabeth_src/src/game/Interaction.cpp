@@ -13,6 +13,8 @@ void Interaction::_ready()
 	connect("button_up", this, "on_button_released");
 	add_user_signal("interaction_just_played");
 	add_user_signal("interaction_finished");
+	connect("interaction_finished", get_node(PARENT_INTERACTIVE_OBJECT_PATH), "on_interaction_finished");
+	connect("interaction_just_played", get_node(PARENT_INTERACTIVE_OBJECT_PATH), "on_interaction_just_played");
 
 	// Scene initialisation
 	set_disabled(false);
@@ -28,7 +30,6 @@ void Interaction::on_button_released()
 	if (m_objectSound != nullptr) {
 		m_objectSoundPlayer->play();
 	}
-	emit_signal("interaction_just_played");
 }
 
 void Interaction::setInteractionName(const godot::String newName)

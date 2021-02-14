@@ -25,6 +25,7 @@ extern "C" void GDN_EXPORT godot_nativescript_init(void* handle) {
 
 	// Main scene game classes
 	register_class<MainScene>();
+	register_class<Room>();
 	register_class<Player>();
 	register_class<Camera>();
 	register_class<InventoryButton>();

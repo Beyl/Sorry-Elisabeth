@@ -1,4 +1,4 @@
-#include "Inventory.h"
+ #include "Inventory.h"
 
 using namespace godot;
 
@@ -7,6 +7,8 @@ void Inventory::_register_methods()
 	register_method("_ready", &Inventory::_ready);
 	register_method("on_cellsButtonInSpecialMode_clicked", &Inventory::on_cellsButtonInSpecialMode_clicked);
 	register_method("on_hideAnimation_completed", &Inventory::on_hideAnimation_completed);
+	register_method("on_interaction_just_played", &Inventory::on_interaction_just_played);
+	register_method("on_interaction_finished", &Inventory::on_interaction_finished);
 }
 
 void Inventory::_ready()
@@ -25,6 +27,7 @@ void Inventory::_ready()
 	m_specialMode = false;
 	m_combineInteraction = nullptr;
 	m_useInteraction = nullptr;
+	m_isInteracting = false;
 	//Position initialisation
 	const Vector2 parentGlobalPosition = get_parent()->cast_to<TextureButton>(get_parent())->get_global_position();
 	m_displayPosition = Utils::getCenteredPosition(get_size()) - parentGlobalPosition;
@@ -137,6 +140,17 @@ void Inventory::removeItem(const Item* itemToDelete)
 	}
 }
 
+void Inventory::manageInteractions()
+{
+	for (int i = 0; i < m_itemsNumber; i++) {
+		Cell* itemCell = m_items[i]->get_parent()->cast_to<Cell>(m_items[i]->get_parent());
+		if (canInteract(m_items[i]))
+			itemCell->enableInteractions();
+		else
+			itemCell->disableInteractions();
+	}
+}
+
 void Inventory::removeItemByName(const godot::String itemName)
 {
 	Cell* currentCell = nullptr;
@@ -160,6 +174,11 @@ void Inventory::updateInventory()
 		if (currentCell->getItem() != m_items[i])
 			currentCell->setItem(m_items[i]);
 	}
+}
+
+bool Inventory::canInteract(Item* item)
+{
+	return false;
 }
 
 void Inventory::setCellsInSpecialMode()
@@ -235,6 +254,7 @@ void Inventory::combine(Cell* itemsCellToCombine)
 		addItem(combinedItemScene->instance()->cast_to<Item>(combinedItemScene->instance()));
 
 		m_combineInteraction->playSucceededExamination();
+		m_combineInteraction->emit_signal("interaction_finished");
 
 		Item* combineInteractionItem =
 			m_combineInteraction->get_node(m_combineInteraction->PARENT_INTERACTIVE_OBJECT_PATH)->cast_to<Item>
@@ -267,6 +287,18 @@ void Inventory::on_hideAnimation_completed()
 	m_tween->disconnect("tween_all_completed", this, "on_hideAnimation_completed");
 }
 
+void Inventory::on_interaction_just_played()
+{
+	Godot::print("test1");
+	m_isInteracting = true;
+}
+
+void Inventory::on_interaction_finished()
+{
+	Godot::print("test2");
+	m_isInteracting = false;
+}
+
 void Inventory::grow()
 {
 	m_bottomInventory->set_visible(true);
@@ -291,6 +323,7 @@ Inventory::Inventory()
 	m_specialMode = 0;
 	m_useInteraction = nullptr;
 	m_combineInteraction = nullptr;
+	m_isInteracting = false;
 
 	m_hidePosition = Vector2();
 	m_displayPosition = Vector2();
