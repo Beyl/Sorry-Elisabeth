@@ -106,13 +106,15 @@ void Cell::enableSpecialMode()
 	m_isInSpecialMode = true;
 	m_itemInteractButton->set_visible(false);
 	m_itemInteractionTable->set_visible(false);
+	disableInteractions();
 }
 
-void Cell::disableUseMode()
+void Cell::disableSpecialMode()
 {
 	m_isInSpecialMode = false;
 	m_itemInteractButton->set_visible(true);
 	m_itemInteractionTable->set_visible(true);
+	enableInteractions();
 }
 
 void Cell::on_button_up()

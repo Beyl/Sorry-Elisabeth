@@ -38,7 +38,7 @@ public:
 	// Disable the display and the use of the interact button and the interaction table
 	void enableSpecialMode();
 	// Enable the display and the use of the interact button and of the interaction table
-	void disableUseMode();
+	void disableSpecialMode();
 
 
 	/* SIGNALS */

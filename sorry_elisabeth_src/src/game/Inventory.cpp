@@ -61,6 +61,12 @@ void Inventory::hide()
 	m_tween->interpolate_property(this, "rect_position", m_displayPosition, m_hidePosition, ANIMATION_DURATION,
 		Tween::TRANS_BACK, Tween::EASE_IN);
 	m_tween->start();
+
+	if (m_specialMode != 0)
+		disableSpecialMode();
+
+	if (m_isInteracting)
+		m_isInteracting = false;
 }
 
 Cell* Inventory::getCellWithNumber(const int cellNumber) const
@@ -140,17 +146,6 @@ void Inventory::removeItem(const Item* itemToDelete)
 	}
 }
 
-void Inventory::manageInteractions()
-{
-	for (int i = 0; i < m_itemsNumber; i++) {
-		Cell* itemCell = m_items[i]->get_parent()->cast_to<Cell>(m_items[i]->get_parent());
-		if (canInteract(m_items[i]))
-			itemCell->enableInteractions();
-		else
-			itemCell->disableInteractions();
-	}
-}
-
 void Inventory::removeItemByName(const godot::String itemName)
 {
 	Cell* currentCell = nullptr;
@@ -173,6 +168,23 @@ void Inventory::updateInventory()
 
 		if (currentCell->getItem() != m_items[i])
 			currentCell->setItem(m_items[i]);
+	}
+}
+
+void Inventory::manageInteractions()
+{
+	for (int i = 0; i < m_itemsNumber; i++) {
+		Cell* itemCell = m_items[i]->get_parent()->cast_to<Cell>(m_items[i]->get_parent());
+		if (canInteract(m_items[i]))
+			itemCell->enableInteractions();
+		else
+			itemCell->disableInteractions();
+	}
+
+	if (m_specialMode == 2 && m_itemsNumber < 2) {
+		m_combineInteraction->setCombineFailedExaminationText("I don't have enough items to combine with...");
+		m_combineInteraction->playFailedExamination();
+		disableSpecialMode();
 	}
 }
 
@@ -205,7 +217,7 @@ void Inventory::disableSpecialMode()
 		currentCell = getCellWithNumber(i);
 
 		if (currentCell->getItem() != nullptr) {
-			currentCell->disableUseMode();
+			currentCell->disableSpecialMode();
 			currentCell->disconnect("clicked", this, "on_cellsButtonInSpecialMode_clicked");
 		}
 	}
@@ -276,7 +288,6 @@ void Inventory::on_cellsButtonInSpecialMode_clicked(Cell* itemsCellToInteract)
 		use(itemsCellToInteract);
 	else
 		combine(itemsCellToInteract);
-	
 }
 
 void Inventory::on_hideAnimation_completed()
