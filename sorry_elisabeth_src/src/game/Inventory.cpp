@@ -178,7 +178,7 @@ void Inventory::updateInventory()
 
 bool Inventory::canInteract(Item* item)
 {
-	return false;
+	return !m_isInteracting;
 }
 
 void Inventory::setCellsInSpecialMode()
@@ -289,13 +289,11 @@ void Inventory::on_hideAnimation_completed()
 
 void Inventory::on_interaction_just_played()
 {
-	Godot::print("test1");
 	m_isInteracting = true;
 }
 
 void Inventory::on_interaction_finished()
 {
-	Godot::print("test2");
 	m_isInteracting = false;
 }
 

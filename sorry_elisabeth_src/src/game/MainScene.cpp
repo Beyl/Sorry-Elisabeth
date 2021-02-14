@@ -31,7 +31,7 @@ void MainScene::_physics_process()
 {
 	if (m_gameSceneActive) {
 		m_room1->manageInteractions();
-		//m_inventory->manageInteractions();
+		m_inventory->manageInteractions();
 
 		if (m_inputManager->is_action_just_released("mouse_left_click")) {
 			if (Utils::isInsideRoom(get_local_mouse_position())) {
