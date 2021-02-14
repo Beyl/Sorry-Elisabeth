@@ -35,6 +35,7 @@ void SpecialInteraction::_ready()
 
 void SpecialInteraction::play()
 {
+	emit_signal("interaction_just_played");
 	m_fadeBackground->set_mouse_filter(Control::MOUSE_FILTER_STOP);
 	m_fadeBackground->fadeIn();
 }

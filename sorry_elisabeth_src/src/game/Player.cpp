@@ -63,6 +63,13 @@ void Player::mooveTo(const int xDestination)
 void Player::takeHandbag()
 {
 	m_animationSubName = "_handbag";
+
+	if (m_animSprite->get_animation().find("walk") != -1) {
+		m_animSprite->set_animation("walk" + m_animationSubName);
+		m_animSprite->play();
+	}
+	else
+		stopMooving();
 }
 
 void Player::changeDirection(const Direction newDirection)

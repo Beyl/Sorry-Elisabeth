@@ -7,6 +7,8 @@ void InteractiveObject::_register_methods()
 	register_method("_ready", &InteractiveObject::_ready);
 	register_method("on_interactButton_released", &InteractiveObject::on_interactButton_released);
 	register_method("on_increaseTypeInteraction_finished", &InteractiveObject::on_increaseTypeInteraction_finished);
+	register_method("on_interaction_just_played", &InteractiveObject::on_interaction_just_played);
+	register_method("on_interaction_finished", &InteractiveObject::on_interaction_finished);
 
 	register_property<InteractiveObject, int>("Number of state", &InteractiveObject::setObjectStateNumber,
 		&InteractiveObject::getObjectStateNumber, 0);
@@ -14,6 +16,8 @@ void InteractiveObject::_register_methods()
 		&InteractiveObject::getObjectSize, Vector2());	
 	register_property<InteractiveObject, String>("Use item name", &InteractiveObject::setUseItemName,
 		&InteractiveObject::getUseItemName, "Insert use item name");
+	register_property<InteractiveObject, bool>("Interact only when lighted", &InteractiveObject::setInteractOnlyWhenLighted,
+		&InteractiveObject::interactOnlyWhenLighted, NULL);
 }
 
 void InteractiveObject::_ready()
@@ -27,6 +31,10 @@ void InteractiveObject::_ready()
 	m_state = Utils::ASCII_CONVERSION_1;
 	m_interactButton->set_visible(false);
 	m_interactButton->connect("button_up", this, "on_interactButton_released");
+
+	// Signals initialisation
+	add_user_signal("interaction_just_played");
+	add_user_signal("interaction_finished");
 }
 
 void InteractiveObject::setInteractionTablePosition()
@@ -38,8 +46,10 @@ void InteractiveObject::setInteractionTablePosition()
 
 void InteractiveObject::displayInteractButton()
 {
-	if (offerInteractions())
-		m_interactButton->display();
+	if (offerInteractions()) {
+		if (m_interactButton->isHided() && m_interactionTable->isHided())
+			m_interactButton->display();
+	}
 	else
 		m_interactButton->set_visible(false);
 }
@@ -85,6 +95,16 @@ void InteractiveObject::on_increaseTypeInteraction_finished()
 	m_interactionTable->addInteractionsToScene();
 }
 
+void InteractiveObject::on_interaction_just_played()
+{
+	emit_signal("interaction_just_played");
+}
+
+void InteractiveObject::on_interaction_finished()
+{
+	emit_signal("interaction_finished");
+}
+
 void InteractiveObject::setObjectStateNumber(const int stateNumber)
 {
 	m_objectStateNumber = stateNumber;
@@ -115,6 +135,16 @@ godot::String InteractiveObject::getUseItemName() const
 	return m_useItemName;
 }
 
+void InteractiveObject::setInteractOnlyWhenLighted(const bool canInteract)
+{
+	m_interactOnlyWhenLighted = canInteract;
+}
+
+bool InteractiveObject::interactOnlyWhenLighted() const
+{
+	return m_interactOnlyWhenLighted;
+}
+
 
 InteractiveObject::InteractiveObject()
 {
@@ -122,6 +152,7 @@ InteractiveObject::InteractiveObject()
 	m_interactionTable = nullptr;
 	m_state = 0;
 	m_objectStateNumber = 0;
+	m_interactOnlyWhenLighted = false;
 }
 
 InteractiveObject::~InteractiveObject()

@@ -38,6 +38,9 @@ public:
 	// Allow the player to close the search place window
 	void on_dialogBoxHiding();
 
+	// Emit the interaction_just_played signal again because the player hasn't finished interacting
+	void on_examineInteraction_finished();
+
 
 	/* PROPERTIES */
 	void setSearchPlaceScene(const godot::Ref<godot::PackedScene> newSearchPlaceScene);

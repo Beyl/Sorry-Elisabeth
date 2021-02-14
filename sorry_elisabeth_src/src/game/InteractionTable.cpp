@@ -93,8 +93,6 @@ void InteractionTable::setTableSize()
 	m_vBox->set_position(Vector2(VBOX_MARGIN, VBOX_MARGIN));
 }
 
-
-
 void InteractionTable::setInteractions(const godot::Array newInteractions)
 {
 	m_interactions = newInteractions;

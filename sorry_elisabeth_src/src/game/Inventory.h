@@ -55,6 +55,8 @@ public:
 	void addItem(Item* newItem);
 	void removeItem(const Item* itemToDelete);
 
+	void manageInteractions();
+
 	// Put the inventory in combine or use mode. Now if cell is clicked, it manages a combine or use interaction
 	void enableSpecialMode(Interaction* specialInteraction);
 
@@ -68,6 +70,9 @@ public:
 
 	// If the inventory is in a special mode, disable it
 	void on_hideAnimation_completed();
+
+	void on_interaction_just_played();
+	void on_interaction_finished();
 
 
 	/* CONSTANTS */
@@ -84,6 +89,8 @@ private:
 
 	// Update the inventory by adding and/or removing the items contained in the scene, depending on the items's array
 	void updateInventory();
+
+	bool canInteract(Item* item);
 
 	/* Disable the use of the cell's interaction table and connect their click signal to the
 		"on_cellsButtonInSpecialMode_clicked" method */
@@ -113,6 +120,7 @@ private:
 	int m_specialMode;	// Equal to 0 : normal mode | Equal to 1 : use mode | Equal to 2 : combine mode
 	UseInteraction* m_useInteraction;
 	CombineInteraction* m_combineInteraction;
+	bool m_isInteracting;
 
 	godot::Vector2 m_hidePosition;
 	godot::Vector2 m_displayPosition;

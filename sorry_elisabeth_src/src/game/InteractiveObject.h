@@ -42,6 +42,9 @@ public:
 	// Add the new interactions to the interaction table
 	void on_increaseTypeInteraction_finished();
 
+	void on_interaction_just_played();
+	void on_interaction_finished();
+
 
 	/* PROPERTIES */
 	void setObjectStateNumber(const int stateNumber);
@@ -52,6 +55,9 @@ public:
 
 	void setUseItemName(const godot::String newItemName);
 	godot::String getUseItemName() const;
+
+	void setInteractOnlyWhenLighted(const bool canInteract);
+	bool interactOnlyWhenLighted() const;
 
 protected:
 
@@ -68,4 +74,8 @@ protected:
 	// Properties
 	int m_objectStateNumber;
 	godot::Vector2 m_objectSize;
+
+private:
+
+	bool m_interactOnlyWhenLighted;
 };

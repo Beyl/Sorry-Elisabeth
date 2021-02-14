@@ -7,6 +7,7 @@ void OpenInteraction::_register_methods()
 	register_method("_ready", &OpenInteraction::_ready);
 	register_method("on_searchPlaceCloseButton_released", &OpenInteraction::on_searchPlaceCloseButton_released);
 	register_method("on_dialogBoxHiding", &OpenInteraction::on_dialogBoxHiding);
+	register_method("on_examineInteraction_finished", &OpenInteraction::on_examineInteraction_finished);
 
 	register_property<OpenInteraction, Ref<PackedScene>>("Search place scene", &OpenInteraction::setSearchPlaceScene,
 		&OpenInteraction::getSearchPlaceScene, Ref<PackedScene>());
@@ -28,8 +29,11 @@ void OpenInteraction::_ready()
 	m_searchPlace = get_node(pathToSearchPlace)->cast_to<SearchPlace>(get_node(pathToSearchPlace));
 
 	m_searchPlaceBackground->setFadeDuration(m_searchPlace->getAnimationDuration());
+
+	// Signals initialisation
 	m_searchPlace->getCloseButton()->connect("button_up", this, "on_searchPlaceCloseButton_released");
 	m_dialogBox->getBeforeHideTimer()->connect("timeout", this, "on_dialogBoxHiding");
+	ExamineInteraction::connect("interaction_finished", this, "on_examineInteraction_finished");
 }
 
 void OpenInteraction::play()
@@ -48,11 +52,18 @@ void OpenInteraction::on_searchPlaceCloseButton_released()
 {
 	m_searchPlaceBackground->fadeOut();
 	m_searchPlaceBackground->set_mouse_filter(Control::MOUSE_FILTER_IGNORE);
+	emit_signal("interaction_finished");
 }
 
 void OpenInteraction::on_dialogBoxHiding()
 {
 	m_searchPlace->getCloseButton()->set_disabled(false);
+}
+
+void OpenInteraction::on_examineInteraction_finished()
+{
+	if (m_searchPlaceBackground->get_mouse_filter() == Control::MOUSE_FILTER_STOP)
+		emit_signal("interaction_just_played");
 }
 
 void OpenInteraction::setSearchPlaceScene(const godot::Ref<godot::PackedScene> newSearchPlaceScene)

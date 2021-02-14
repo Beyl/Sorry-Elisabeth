@@ -19,15 +19,20 @@ void MainScene::_ready()
 	m_camera = get_node("Camera")->cast_to<Camera>(get_node("Camera"));
 	m_inventory = get_node("UILayer/InventoryButton/Inventory")->cast_to<Inventory>
 		(get_node("UILayer/InventoryButton/Inventory"));
+	m_room1 = get_node("Room")->cast_to<Room>(get_node("Room"));
 
 	// Scene initialisation
 	m_player->set_position(Vector2(real_t(PLAYER_START_X), real_t(PLAYER_START_Y)));
 	sendInfoToInteractions(this);
+	m_room1->setPlayer(m_player);
 }
 
 void MainScene::_physics_process()
 {
 	if (m_gameSceneActive) {
+		m_room1->manageInteractions();
+		m_inventory->manageInteractions();
+
 		if (m_inputManager->is_action_just_released("mouse_left_click")) {
 			if (Utils::isInsideRoom(get_local_mouse_position())) {
 				// If a left click is done, moove the player to the this point
@@ -74,6 +79,7 @@ MainScene::MainScene()
 	m_player = nullptr;
 	m_camera = nullptr;
 	m_inventory = nullptr;
+	m_room1 = nullptr;
 	m_gameSceneActive = true;
 	m_inputManager = nullptr;
 }

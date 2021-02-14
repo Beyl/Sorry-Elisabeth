@@ -83,6 +83,7 @@ public:
 	static const int ROOM_HEIGHT_ENDING = 180;
 	static const int ROOM_WIDTH_BEGINNING = -40;
 	static const int ROOM_WIDTH_ENDING = 660;
+	static const int CAN_INTERACT_RANGE = 15;
 
 	// INTERACTIONS & ITEM
 	static const int MAX_INTERACTIONS_NUMBER = 3;
