@@ -39,7 +39,8 @@ void InteractiveObject::_ready()
 
 void InteractiveObject::setInteractionTablePosition()
 {
-	const real_t yPosition = -m_objectSize.y / 2 - m_interactionTable->get_size().y - Utils::INTERACT_BUTTON_MARGIN * 4;
+	const real_t yPosition = -m_interactionTable->get_size().y - m_objectSize.y / 2 -
+		m_interactionTable->MIN_VBOX_SIZE * m_interactionTable->getInteractionsNumber() + Utils::INTERACT_BUTTON_MARGIN * 4;
 	const real_t xPosition = -m_interactionTable->get_size().x / 2;
 	m_interactionTable->set_position(Vector2(xPosition, yPosition));
 }

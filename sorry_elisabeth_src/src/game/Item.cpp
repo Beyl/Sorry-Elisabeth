@@ -28,7 +28,7 @@ void Item::_ready()
 
 void Item::setInteractionTablePosition()
 {
-	const real_t yPosition = - Utils::CELL_SIZE / 2 - m_interactionTable->get_size().y - Utils::INTERACT_BUTTON_MARGIN;
+	const real_t yPosition = -m_interactionTable->get_size().y - Utils::CELL_SIZE / 2 - Utils::INTERACT_BUTTON_MARGIN * 4;
 	const real_t xPosition = -m_interactionTable->get_size().x / 2;
 	m_interactionTable->set_position(Vector2(xPosition, yPosition));
 }
@@ -45,7 +45,11 @@ InteractButton* Item::getInteractButton() const
 
 void Item::on_interactButton_released()
 {
-	InteractiveObject::on_interactButton_released();
+	m_interactButton->hide();
+
+	m_interactionTable->setTableSize();
+	setInteractionTablePosition();
+	m_interactionTable->display();
 }
 
 void Item::on_interaction_just_played()
