@@ -42,6 +42,8 @@ public:
 	/* CONSTANTS */
 	static const int MAX_NAME_CHAR = 18;
 	const godot::NodePath PARENT_INTERACTIVE_OBJECT_PATH = "../../..";
+	static const int MAX_INTERACTIONS_NUMBER = 3;
+	static const int INTERACT_BUTTON_MARGIN = 1;
 
 protected:
 

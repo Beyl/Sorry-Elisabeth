@@ -1,4 +1,5 @@
 #include "utils.h"
+#include "../game/Room.h"
 
 using namespace godot;
 
@@ -24,12 +25,12 @@ bool const Utils::isInsideRoom(const godot::Vector2 eltPosition)
 
 bool const Utils::isInsideRoomX(const real_t eltXPosition)
 {
-    return isInsideObjectX(eltXPosition, ROOM_WIDTH_BEGINNING, (ROOM_WIDTH_ENDING + (-ROOM_WIDTH_BEGINNING)));
+    return isInsideObjectX(eltXPosition, Room::ROOM_WIDTH_BEGINNING, (Room::ROOM_WIDTH_ENDING + (-Room::ROOM_WIDTH_BEGINNING)));
 }
 
 bool const Utils::isInsideRoomY(const real_t eltYPosition)
 {
-    return isInsideObjectX(eltYPosition, ROOM_HEIGHT_BEGINNING, (ROOM_WIDTH_ENDING - ROOM_HEIGHT_BEGINNING));
+    return isInsideObjectX(eltYPosition, Room::ROOM_HEIGHT_BEGINNING, (Room::ROOM_WIDTH_ENDING - Room::ROOM_HEIGHT_BEGINNING));
 }
 
 godot::Vector2 Utils::getCenteredPosition(const godot::Vector2 objectSize)

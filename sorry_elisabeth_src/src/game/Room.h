@@ -40,6 +40,11 @@ public:
 
 	/* CONSTANTS */
 	const godot::String INTERACTIVE_OBJECT_NAME_PART = "IO";
+	static const int ROOM_HEIGHT_BEGINNING = 0;
+	static const int ROOM_HEIGHT_ENDING = 180;
+	static const int ROOM_WIDTH_BEGINNING = -40;
+	static const int ROOM_WIDTH_ENDING = 660;
+	static const int CAN_INTERACT_RANGE = 15;
 
 private:
 

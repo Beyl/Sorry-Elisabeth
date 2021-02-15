@@ -53,11 +53,11 @@ void Room::manageInteractions()
 bool Room::isInInteractionZone(InteractiveObject* object) const
 {
 	Vector2 objectRangePosition = Vector2(
-		object->get_global_position().x - object->getObjectSize().x / 2 - Utils::CAN_INTERACT_RANGE,
-		object->get_global_position().y - object->getObjectSize().y / 2 - Utils::CAN_INTERACT_RANGE);
+		object->get_global_position().x - object->getObjectSize().x / 2 - Room::CAN_INTERACT_RANGE,
+		object->get_global_position().y - object->getObjectSize().y / 2 - Room::CAN_INTERACT_RANGE);
 	Vector2 objectRangeSize = Vector2(
-		object->getObjectSize().x + Utils::CAN_INTERACT_RANGE * 2,
-		object->getObjectSize().y + Utils::CAN_INTERACT_RANGE * 2);
+		object->getObjectSize().x + Room::CAN_INTERACT_RANGE * 2,
+		object->getObjectSize().y + Room::CAN_INTERACT_RANGE * 2);
 
 	return Utils::isInsideObject(m_player->get_global_position(), objectRangePosition, objectRangeSize);
 }

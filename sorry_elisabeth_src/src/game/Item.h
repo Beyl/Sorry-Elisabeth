@@ -34,6 +34,9 @@ public:
 	void on_interaction_just_played();
 	void on_interaction_finished();
 
+	/* CONSTANT */
+	static const int ITEM_SIZE = 10;
+
 private:
 	// Calculate and set the interaction table's position depending on its size
 	void setInteractionTablePosition();

@@ -1,4 +1,5 @@
 #include "DialogBox.h"
+#include "Room.h"
 
 using namespace godot;
 
@@ -29,7 +30,7 @@ void DialogBox::_ready()
 	// Scene initilisation
 	m_textLabel->set_percent_visible(0);
 	m_displayPosition = Vector2(X_DISPLAY_POSITION, Y_DISPLAY_POSITION);
-	m_hidePosition = Vector2(get_position().x, Utils::ROOM_HEIGHT_ENDING + 50);
+	m_hidePosition = Vector2(get_position().x, Room::ROOM_HEIGHT_ENDING + 50);
 	set_position(m_hidePosition);
 	m_beforeHideTimer->set_wait_time(m_beforeHidingDuration);
 

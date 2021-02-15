@@ -1,4 +1,5 @@
 #include "Item.h"
+#include "Cell.h"
 
 using namespace godot;
 
@@ -20,7 +21,7 @@ void Item::_ready()
 	InteractiveObject::_ready();
 
 	const real_t yDisplayPosition =
-		m_interactButton->getHidePosition().y - Utils::CELL_SIZE / 2 - m_interactButton->get_size().y / 2 - Utils::INTERACT_BUTTON_MARGIN;
+		m_interactButton->getHidePosition().y - Cell::CELL_SIZE / 2 - m_interactButton->get_size().y / 2 - Interaction::INTERACT_BUTTON_MARGIN;
 	m_interactButton->setDisplayPosition(Vector2(m_interactButton->getHidePosition().x, yDisplayPosition));
 
 	setInteractionTablePosition();
@@ -28,7 +29,7 @@ void Item::_ready()
 
 void Item::setInteractionTablePosition()
 {
-	const real_t yPosition = -m_interactionTable->get_size().y - Utils::CELL_SIZE / 2 - Utils::INTERACT_BUTTON_MARGIN * 4;
+	const real_t yPosition = -m_interactionTable->get_size().y - Cell::CELL_SIZE / 2 - Interaction::INTERACT_BUTTON_MARGIN * 4;
 	const real_t xPosition = -m_interactionTable->get_size().x / 2;
 	m_interactionTable->set_position(Vector2(xPosition, yPosition));
 }

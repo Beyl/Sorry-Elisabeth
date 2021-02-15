@@ -32,12 +32,12 @@ void Inventory::_ready()
 	const Vector2 parentGlobalPosition = get_parent()->cast_to<TextureButton>(get_parent())->get_global_position();
 	m_displayPosition = Utils::getCenteredPosition(get_size()) - parentGlobalPosition;
 	m_hidePosition = Vector2(Utils::getCenteredPosition(get_size()).x,
-		Utils::SCREEN_HEIGHT + Utils::INVENTORY_HEIGHT) - parentGlobalPosition;
+		Utils::SCREEN_HEIGHT + Inventory::INVENTORY_HEIGHT) - parentGlobalPosition;
 	set_position(m_hidePosition);
 
 	m_currentInventorySize = Inventory::MIN_ITEM_NUMBER;
 	m_bottomInventory->set_position(Vector2(m_bottomInventory->get_position().x,
-		Utils::INVENTORY_HEIGHT - m_bottomInventory->get_size().y));
+		Inventory::INVENTORY_HEIGHT - m_bottomInventory->get_size().y));
 	m_bottomInventory->set_visible(false);
 	m_hasGrown = false;
 
