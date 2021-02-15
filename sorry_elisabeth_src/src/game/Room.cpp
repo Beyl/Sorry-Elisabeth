@@ -17,7 +17,7 @@ void Room::_ready()
 	// Scene initialisation
 	m_player = nullptr;
 	m_playerIsInteracting = false;
-	m_lightIsOn = true;
+	setLightIsOn(false);
 
 	// Signals initialisation
 	connectInteractionSignal();
@@ -83,14 +83,9 @@ bool Room::isPlayerInside() const
 	return m_player != nullptr;
 }
 
-void Room::turnOnLights()
+void Room::setLightIsOn(const bool setOn)
 {
-	// TODO
-}
-
-void Room::turnOffLights()
-{
-	// TODO
+	m_lightIsOn = setOn;
 }
 
 bool Room::isLightTurnOn() const

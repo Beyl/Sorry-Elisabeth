@@ -22,10 +22,6 @@ public:
 	bool isPlayerInteracting() const;
 	bool isPlayerInside() const;
 
-	void turnOnLights();
-	void turnOffLights();
-	bool isLightTurnOn() const;
-
 
 	/* SIGNALS */
 	void on_interaction_just_played();
@@ -34,8 +30,12 @@ public:
 
 	/* ACCESSORS & MUTATORS */
 	void setPlayer(Player* player);
+
 	void setDoorIsOpen(const bool isOpen);
 	bool getDoorIsOpen() const;
+
+	void setLightIsOn(const bool setOn);
+	bool isLightTurnOn() const;
 
 
 	/* CONSTANTS */
@@ -48,6 +48,7 @@ private:
 
 	bool isInInteractionZone(InteractiveObject* object) const;
 	bool canInteract(InteractiveObject* object) const;
+
 
 	/* MEMBER VARIABLES */
 	godot::Array m_interactiveObjects;

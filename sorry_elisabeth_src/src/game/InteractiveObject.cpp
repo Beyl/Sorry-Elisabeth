@@ -29,12 +29,13 @@ void InteractiveObject::_ready()
 	// Scene initialisation
 	setInteractionTablePosition();
 	m_state = Utils::ASCII_CONVERSION_1;
+	set_animation("state" + String(m_state));
 	m_interactButton->set_visible(false);
-	m_interactButton->connect("button_up", this, "on_interactButton_released");
 
 	// Signals initialisation
 	add_user_signal("interaction_just_played");
 	add_user_signal("interaction_finished");
+	m_interactButton->connect("button_up", this, "on_interactButton_released");
 }
 
 void InteractiveObject::setInteractionTablePosition()

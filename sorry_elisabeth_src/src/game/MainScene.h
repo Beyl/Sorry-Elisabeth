@@ -6,9 +6,6 @@
 #include "Room.h"
 #include "Camera.h"
 #include "InventoryButton.h"
-#include "TakeHangbagInteraction.h"
-#include "TakeInteraction.h"
-#include "OpenDoorInteraction.h"
 
 /**
  * Represent the main scene in the game.
@@ -49,13 +46,15 @@ public:
 	const godot::String USE_INTERACTION_NODE_NAME = "UseInteraction";
 	const godot::String COMBINE_INTERACTION_NODE_NAME = "CombineInteraction";
 	const godot::String OPEN_DOOR_INTERACTION_NODE_NAME = "OpenDoorInteraction";
+	const godot::String ACTIVE_LIGHT_R1_INTERACTION_NODE_NAME = "ActiveLightInteractionR1";
+	const godot::String ACTIVE_LIGHT_R2_INTERACTION_NODE_NAME = "ActiveLightInteractionR2";
 
 private:
 
 	// Send the player's informations to the camera
 	void sendPlayerInfoToCam();
 
-	// Recursive method that sends the inventory's and player's pointer to the interaction wich need them
+	// Recursive method that sends the inventory's, player's and room's	pointer to the interaction wich need them
 	void sendInfoToInteractions(Node* currentNode);
 
 
@@ -65,6 +64,7 @@ private:
 	Camera* m_camera;
 	Inventory* m_inventory;
 	Room* m_room1;
+	Room* m_room2;
 
 	bool m_gameSceneActive;
 	const godot::Input* m_inputManager;	// To manage inputs

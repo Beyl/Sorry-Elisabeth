@@ -1,5 +1,10 @@
 #include "MainScene.h"
 
+#include "TakeHangbagInteraction.h"
+#include "TakeInteraction.h"
+#include "OpenDoorInteraction.h"
+#include "ActiveLightInteraction.h"
+
 using namespace godot;
 
 void MainScene::_register_methods()
@@ -20,7 +25,8 @@ void MainScene::_ready()
 	m_camera = get_node("Camera")->cast_to<Camera>(get_node("Camera"));
 	m_inventory = get_node("UILayer/InventoryButton/Inventory")->cast_to<Inventory>
 		(get_node("UILayer/InventoryButton/Inventory"));
-	m_room1 = get_node("Room")->cast_to<Room>(get_node("Room"));
+	m_room1 = get_node("Room1")->cast_to<Room>(get_node("Room1"));
+	m_room2 = get_node("Room2")->cast_to<Room>(get_node("Room2"));
 
 	// Scene initialisation
 	m_camera->setEnableChangeRoom(false);
@@ -28,6 +34,7 @@ void MainScene::_ready()
 	m_player->set_position(Vector2(real_t(PLAYER_START_X), real_t(PLAYER_START_Y)));
 	sendInfoToInteractions(this);
 	m_room1->setPlayer(m_player);
+	m_room2->setPlayer(m_player);
 
 	// Signals initialisation
 	m_room1->connect("door_opened", this, "on_room1_door_opened");
@@ -85,6 +92,12 @@ void MainScene::sendInfoToInteractions(Node* currentNode)
 	else if (currentNode->get_name().find(OPEN_DOOR_INTERACTION_NODE_NAME) != -1) {
 		currentNode->cast_to<OpenDoorInteraction>(currentNode)->setRoom(m_room1);
 		hasBeenSet = true;
+	} else if (currentNode->get_name().find(ACTIVE_LIGHT_R1_INTERACTION_NODE_NAME) != -1) {
+		currentNode->cast_to<ActiveLightInteraction>(currentNode)->setRoom(m_room1);
+		hasBeenSet = true;
+	} else if (currentNode->get_name().find(ACTIVE_LIGHT_R2_INTERACTION_NODE_NAME) != -1) {
+		currentNode->cast_to<ActiveLightInteraction>(currentNode)->setRoom(m_room2);
+		hasBeenSet = true;
 	}
 
 	if (!hasBeenSet) {
@@ -99,6 +112,7 @@ MainScene::MainScene()
 	m_camera = nullptr;
 	m_inventory = nullptr;
 	m_room1 = nullptr;
+	m_room2 = nullptr;
 	m_gameSceneActive = true;
 	m_inputManager = nullptr;
 }
