@@ -77,26 +77,7 @@ public:
 	// SCREEN
 	static const int SCREEN_WIDTH = 320;
 	static const int SCREEN_HEIGHT = 180;
-
-	// ROOM
-	static const int ROOM_HEIGHT_BEGINNING = 25;
-	static const int ROOM_HEIGHT_ENDING = 180;
-	static const int ROOM_WIDTH_BEGINNING = -40;
-	static const int ROOM_WIDTH_ENDING = 680;
-	static const int CAN_INTERACT_RANGE = 15;
-
-	// INTERACTIONS & ITEM
-	static const int MAX_INTERACTIONS_NUMBER = 3;
-	static const int ITEM_SIZE = 10;	// It is a square size, that's why we can have a unique value
-	static const int INTERACT_BUTTON_MARGIN = 1;
-
-	// INVENTORY
-	static const int INVENTORY_HEIGHT = 60;
-	static const int INVENTORY_WIDTH = 236;
-
-	// CELL
-	static const int CELL_SIZE = 20;	// It is a square size, that's why we can have a unique value
-
+	
 	// OTHERS
 	static const int ASCII_CONVERSION_0 = 48;	// 48 on the ascii table is equal to "0"
 	static const int ASCII_CONVERSION_1 = 49;	// 49 on the ascii table is equal to "1"

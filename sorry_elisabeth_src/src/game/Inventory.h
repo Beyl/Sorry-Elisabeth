@@ -79,6 +79,8 @@ public:
 	const real_t ANIMATION_DURATION = real_t(0.5);
 	static const int MAX_ITEM_NUMBER = 15;
 	static const int MIN_ITEM_NUMBER = 5;
+	static const int INVENTORY_HEIGHT = 60;
+	static const int INVENTORY_WIDTH = 236;
 
 private:
 

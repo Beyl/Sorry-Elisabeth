@@ -46,6 +46,7 @@ public:
 
 
 	/* CONSTANTS */
+	static const int CELL_SIZE = 20;
 	const godot::NodePath INVENTORY_LOCAL_PATH = "../..";
 	static const int HIDE_INTERACT_BUTTON_MARGIN_X = 4;
 	static const int HIDE_INTERACT_BUTTON_MARGIN_Y = 16;
