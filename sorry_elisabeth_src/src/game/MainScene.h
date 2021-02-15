@@ -37,6 +37,10 @@ public:
 	void _physics_process(); 
 
 
+	/* SIGNALS */
+	void on_room1_door_opened();
+
+
 	/* CONSTANTS */
 	static const int PLAYER_START_X = 40;
 	static const int PLAYER_START_Y = 117;

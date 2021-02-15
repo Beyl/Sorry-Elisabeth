@@ -18,6 +18,7 @@ void Player::_ready()
 	// Initialisation of the scene
 	m_animationSubName = "_normal";
 	m_direction = Direction::RIGHT;
+	m_maxPositionLeft = Player::SPRITE_WIDTH / 2;
 	stopMooving();	// The player doesn't moove when entering a scene
 }
 
@@ -26,14 +27,14 @@ void Player::_physics_process()
 	if (m_xDestination != NO_DESTINATION) {		// If the player is mooving
 
 		if (m_direction == Direction::RIGHT) {
-			if (get_position().x >= m_xDestination)	// If he reached the destination then set stop him
+			if (get_position().x >= m_xDestination || get_position().x >= m_maxPositionRight)	// If he reached the destination then set stop him
 				stopMooving();
 			else
 				move_and_slide(Vector2(real_t(m_speed), 0));	// Otherwise make him moove
 		}
 
 		else {
-			if (get_position().x <= m_xDestination)
+			if (get_position().x <= m_xDestination || get_position().x <= m_maxPositionLeft)
 				stopMooving();
 			else
 				move_and_slide(Vector2(real_t(-m_speed), 0));
@@ -127,14 +128,19 @@ int Player::getSpeed() const
 	return m_speed;
 }
 
-const Direction Player::getDirection()
+Direction Player::getDirection() const
 {
 	return m_direction;
 }
 
-const int Player::getXDestination()
+int Player::getXDestination() const
 {
 	return m_xDestination;
+}
+
+void Player::setMaxPositionRight(const int position)
+{
+	m_maxPositionRight = position;
 }
 
 Player::Player()

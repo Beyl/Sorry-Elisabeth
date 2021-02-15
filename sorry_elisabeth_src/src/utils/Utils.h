@@ -79,10 +79,10 @@ public:
 	static const int SCREEN_HEIGHT = 180;
 
 	// ROOM
-	static const int ROOM_HEIGHT_BEGINNING = 0;
+	static const int ROOM_HEIGHT_BEGINNING = 25;
 	static const int ROOM_HEIGHT_ENDING = 180;
 	static const int ROOM_WIDTH_BEGINNING = -40;
-	static const int ROOM_WIDTH_ENDING = 660;
+	static const int ROOM_WIDTH_ENDING = 680;
 	static const int CAN_INTERACT_RANGE = 15;
 
 	// INTERACTIONS & ITEM

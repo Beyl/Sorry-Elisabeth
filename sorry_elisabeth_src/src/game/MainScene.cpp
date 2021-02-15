@@ -6,6 +6,7 @@ void MainScene::_register_methods()
 {
 	register_method("_ready", &MainScene::_ready);
 	register_method("_physics_process", &MainScene::_physics_process);
+	register_method("on_room1_door_opened", &MainScene::on_room1_door_opened);
 }
 
 void MainScene::_ready()
@@ -22,9 +23,14 @@ void MainScene::_ready()
 	m_room1 = get_node("Room")->cast_to<Room>(get_node("Room"));
 
 	// Scene initialisation
+	m_camera->setEnableChangeRoom(false);
+	m_player->setMaxPositionRight(Utils::SCREEN_WIDTH - Player::SPRITE_WIDTH / 2);
 	m_player->set_position(Vector2(real_t(PLAYER_START_X), real_t(PLAYER_START_Y)));
 	sendInfoToInteractions(this);
 	m_room1->setPlayer(m_player);
+
+	// Signals initialisation
+	m_room1->connect("door_opened", this, "on_room1_door_opened");
 }
 
 void MainScene::_physics_process()
@@ -41,6 +47,12 @@ void MainScene::_physics_process()
 		}
 	}
 	sendPlayerInfoToCam();
+}
+
+void MainScene::on_room1_door_opened()
+{
+	m_camera->setEnableChangeRoom(true);
+	m_player->setMaxPositionRight(Utils::SCREEN_WIDTH * 2 - Player::SPRITE_WIDTH / 2);
 }
 
 void MainScene::sendPlayerInfoToCam()

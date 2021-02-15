@@ -39,9 +39,11 @@ public:
 	// Change the actual animated sprite animation with the handbag one
 	void takeHandbag();
 
-	/* ACCESSORS */
-	const Direction getDirection();
-	const int getXDestination();
+	/* ACCESSORS & MUTATORS*/
+	Direction getDirection() const;
+	int getXDestination() const;
+
+	void setMaxPositionRight(const int position);
 
 
 	/* PROPERTIES */
@@ -50,6 +52,7 @@ public:
 
 
 	/* CONSTANTS */
+	static const int SPRITE_WIDTH = 32;
 	static const int MIN_SPEED = 5;
 	static const int MAX_SPEED = 500;
 	static const int NO_DESTINATION = -500;	// Set when the player doesn't need to move
@@ -67,6 +70,8 @@ protected:
 
 	Direction m_direction;	// Define where the player is looking
 	int m_xDestination;	// Define where the player is going
+	int m_maxPositionLeft;
+	int m_maxPositionRight;
 	godot::String m_animationSubName;
 
 	//Properties

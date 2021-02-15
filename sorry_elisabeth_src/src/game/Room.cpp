@@ -11,13 +11,17 @@ void Room::_register_methods()
 
 void Room::_ready()
 {
+	// Get children
 	getInteractiveObjects();	// Get the interactive objects in the array
-	connectInteractionSignal();	// Signals initialisation
-
+	
+	// Scene initialisation
 	m_player = nullptr;
 	m_playerIsInteracting = false;
-
 	m_lightIsOn = true;
+
+	// Signals initialisation
+	connectInteractionSignal();
+	add_user_signal("door_opened");
 }
 
 void Room::getInteractiveObjects()
@@ -111,6 +115,9 @@ void Room::setPlayer(Player* player)
 
 void Room::setDoorIsOpen(const bool isOpen)
 {
+	if (isOpen)
+		emit_signal("door_opened");
+
 	m_doorIsOpened = isOpen;
 }
 

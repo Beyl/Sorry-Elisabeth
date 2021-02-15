@@ -15,25 +15,22 @@ void Camera::_register_methods()
 		&Camera::setLivingRoomCamPosition, &Camera::getLivingRoomCamPosition,Vector2(LIVING_ROOM_POSITION_X, 0));
 	register_property<Camera, double>("Interpolation Duration", &Camera::setInterpolationDuration,
 		&Camera::getInterpolationDuration, 0.1);
-
-	register_property<Camera, int>("Follow player left X position",
-		&Camera::setStartFollowPlayerLeft, &Camera::getStartFollowPlayerLeft, START_FOLLOW_PLAYER_LEFT_MIN);
-	register_property<Camera, int>("Follow player right X position",
-		&Camera::setStartFollowPlayerRight, &Camera::getStartFollowPlayerRight, START_FOLLOW_PLAYER_RIGHT_MIN);
 }
 
 void Camera::_ready()
 {
-	// Member variables initalisation
-	m_playerIsInCellar = true;
-
 	// Get children
 	m_tween = get_node("Tween")->cast_to<Tween>(get_node("Tween"));
+
+	// Scene initialisation
+	m_playerIsInCellar = true;
+	m_enableChangeRoom = false;
+	setStartFollowPlayerLeft(Camera::START_FOLLOW_PLAYER_LEFT);
 }
 
 void Camera::_process()
 {
-	if (isPlayerEnteringNewRoom()) {
+	if (isPlayerEnteringNewRoom() && m_enableChangeRoom) {
 		if (m_playerIsInCellar)
 			changeRoom(false);	// False mean : change to the living room
 		else
@@ -41,9 +38,21 @@ void Camera::_process()
 	}
 
 	// Make the camera follow the player when he is in the extreme of the rooms
-	if (m_playerPosition.x < m_startFollowPlayerLeft ||
-		m_playerPosition.x > m_startFollowPlayerRight)
-		follow_player();
+	if (m_playerPosition.x < m_startFollowPlayerLeft && m_playerPosition.x > Camera::CELLAR_POSITION_X) 
+		follow_player(Direction::LEFT);
+	else if	(m_playerPosition.x > m_startFollowPlayerRight &&
+		m_playerPosition.x < m_startFollowPlayerRight + Camera::CHANGE_ROOM_RANGE * 2)
+		follow_player(Direction::RIGHT);
+}
+
+void Camera::setEnableChangeRoom(const bool allow)
+{
+	if (allow)
+		setStartFollowPlayerRight(Camera::START_FOLLOW_PLAYER_RIGHT_2);
+	else
+		setStartFollowPlayerRight(Camera::START_FOLLOW_PLAYER_RIGHT_1);
+
+	m_enableChangeRoom = allow;
 }
 
 const bool Camera::isPlayerEnteringNewRoom()
@@ -98,16 +107,22 @@ void Camera::changeRoom(const bool changeToCellar)
 	}
 }
 
-void Camera::follow_player()
+void Camera::follow_player(const Direction direction)
 {
-	if (m_playerIsInCellar) {
+	if (direction == Direction::LEFT) {
 		m_tween->interpolate_property(this, "position", get_position(),
 			Vector2(m_cellarCamPosition.x - (m_startFollowPlayerLeft - m_playerPosition.x), 0),
 			1, 10, 1);
 	}
 	else {
+		real_t xCamPosition;
+		if (m_playerIsInCellar)
+			xCamPosition = m_cellarCamPosition.x;
+		else
+			xCamPosition = m_livingRoomCamPosition.x;
+
 		m_tween->interpolate_property(this, "position", get_position(),
-			Vector2(m_livingRoomCamPosition.x + (m_playerPosition.x - m_startFollowPlayerRight), 0),
+			Vector2(xCamPosition + (m_playerPosition.x - m_startFollowPlayerRight), 0),
 			1, 10, 1);
 	}
 	m_tween->start();
@@ -152,11 +167,6 @@ double Camera::getInterpolationDuration() const
 
 void Camera::setStartFollowPlayerLeft(const int newPosition)
 {
-	if (newPosition < START_FOLLOW_PLAYER_LEFT_MIN)
-		m_startFollowPlayerLeft = START_FOLLOW_PLAYER_LEFT_MIN;
-	else if (newPosition > START_FOLLOW_PLAYER_LEFT_MAX)
-		m_startFollowPlayerLeft = START_FOLLOW_PLAYER_LEFT_MAX;
-	else
 		m_startFollowPlayerLeft = newPosition;
 }
 
@@ -167,11 +177,6 @@ int Camera::getStartFollowPlayerLeft() const
 
 void Camera::setStartFollowPlayerRight(const int newPosition)
 {
-	if (newPosition < START_FOLLOW_PLAYER_RIGHT_MIN)
-		m_startFollowPlayerRight = START_FOLLOW_PLAYER_RIGHT_MIN;
-	else if (newPosition > START_FOLLOW_PLAYER_RIGHT_MAX)
-		m_startFollowPlayerRight = START_FOLLOW_PLAYER_RIGHT_MAX;
-	else
 		m_startFollowPlayerRight = newPosition;
 }
 
@@ -200,6 +205,7 @@ Camera::Camera()
 	m_playerIsInCellar = true;
 	m_playerPosition = Vector2(0, 0);
 	m_playerDirection = Direction::RIGHT;
+	m_enableChangeRoom = false;
 
 	m_cellarCamPosition = Vector2(0, 0);
 	m_livingRoomCamPosition = Vector2(0, 0);

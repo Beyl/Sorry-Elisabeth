@@ -42,6 +42,14 @@ public:
 	void setInterpolationDuration(const double newDuration);
 	double getInterpolationDuration() const;
 
+
+	/* ACCESSORS & MUTATORS */
+	void setPlayerPosition(const godot::Vector2 playerPosition);
+	void setPlayerDirection(const Direction newDirection);
+
+	// Prevent or allow the camera to change room when the player is in the range
+	void setEnableChangeRoom(const bool allow);
+
 	void setStartFollowPlayerLeft(const int newPosition);
 	int getStartFollowPlayerLeft() const;
 
@@ -49,20 +57,12 @@ public:
 	int getStartFollowPlayerRight() const;
 
 
-	/* MUTATORS */
-	void setPlayerPosition(const godot::Vector2 playerPosition);
-	void setPlayerDirection(const Direction newDirection);
-
-
 	/* CONSTANTS */
 	static const int CELLAR_POSITION_X = 0;
 	static const int LIVING_ROOM_POSITION_X = 320;
-
-	static const int START_FOLLOW_PLAYER_LEFT_MIN = 0;
-	static const int START_FOLLOW_PLAYER_LEFT_MAX = 160;
-	static const int START_FOLLOW_PLAYER_RIGHT_MIN = 480;
-	static const int START_FOLLOW_PLAYER_RIGHT_MAX = 640;
-
+	static const int START_FOLLOW_PLAYER_LEFT = 60;
+	static const int START_FOLLOW_PLAYER_RIGHT_1 = 260;
+	static const int START_FOLLOW_PLAYER_RIGHT_2 = 580;
 	static const int CHANGE_ROOM_RANGE = 20; //The range in wich the player is considered in the other room
 
 protected:
@@ -86,8 +86,8 @@ protected:
 	 */
 	void changeRoom(const bool changeToCellar);
 
-	// Make the camera follow the player
-	void follow_player();
+	// Make the camera follow the player (to the right or to the left)
+	void follow_player(const Direction direction);
 
 
 	/* MEMBER VARIABLES */
@@ -97,6 +97,7 @@ protected:
 	godot::Vector2 m_playerPosition;
 	Direction m_playerDirection;
 	bool m_playerIsInCellar;	//True if the player is in the cellar, false otherwise
+	bool m_enableChangeRoom;
 
 	// Properties
 	godot::Vector2 m_cellarCamPosition;
