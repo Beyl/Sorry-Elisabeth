@@ -8,7 +8,6 @@
 rect_pivot_offset = Vector2( -230.32, 19.8423 )
 script = ExtResource( 2 )
 "Interaction name" = "Open"
-"Examine text" = "Insert texte here"
 
 [node name="FadeBackgroundLayer" type="CanvasLayer" parent="." index="3"]
 layer = 2

@@ -29,13 +29,19 @@ public:
 
 	/**
 	 * Called every tic (60 times per secondes)
-	 *		Manage user's inputs
+	 *		Manage player's movement, room and inventory interactions
 	 */
 	void _physics_process(); 
 
 
 	/* SIGNALS */
 	void on_room1_door_opened();
+	void on_room_interaction_just_played();
+	void on_room_interaction_finished();
+
+	// Prevent the player from moving
+	void on_mouse_entered_button();
+	void on_mouse_exited_button();
 
 
 	/* CONSTANTS */
@@ -48,6 +54,8 @@ public:
 	const godot::String OPEN_DOOR_INTERACTION_NODE_NAME = "OpenDoorInteraction";
 	const godot::String ACTIVE_LIGHT_R1_INTERACTION_NODE_NAME = "ActiveLightInteractionR1";
 	const godot::String ACTIVE_LIGHT_R2_INTERACTION_NODE_NAME = "ActiveLightInteractionR2";
+	const godot::String INTERACT_BUTTON_NODE_NAME = "InteractButton";
+	const godot::String INVENTORY_BUTTON_NODE_NAME = "InventoryButton";
 
 private:
 
@@ -56,6 +64,12 @@ private:
 
 	// Recursive method that sends the inventory's, player's and room's	pointer to the interaction wich need them
 	void sendInfoToInteractions(Node* currentNode);
+
+	// Recursive method that connect the signals mouse_entered and mouse_exited from the selected nodes
+	void connectButtonSignals(Node* currentNode);
+
+	// Determine if the player can moove
+	bool canPlayerMoove() const;
 
 
 	/* MEMBER VARIABLES */
@@ -66,6 +80,7 @@ private:
 	Room* m_room1;
 	Room* m_room2;
 
-	bool m_gameSceneActive;
+	bool m_playerIsInteracting;
+	bool m_mouseIsInButton;
 	const godot::Input* m_inputManager;	// To manage inputs
 };

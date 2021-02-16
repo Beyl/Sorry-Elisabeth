@@ -12,13 +12,18 @@ void MainScene::_register_methods()
 	register_method("_ready", &MainScene::_ready);
 	register_method("_physics_process", &MainScene::_physics_process);
 	register_method("on_room1_door_opened", &MainScene::on_room1_door_opened);
+	register_method("on_room_interaction_just_played", &MainScene::on_room_interaction_just_played);
+	register_method("on_room_interaction_finished", &MainScene::on_room_interaction_finished);
+	register_method("on_mouse_entered_button", &MainScene::on_mouse_entered_button);
+	register_method("on_mouse_exited_button", &MainScene::on_mouse_exited_button);
 }
 
 void MainScene::_ready()
 {
 	// Member variables initialisation
 	m_inputManager = Input::get_singleton();
-	m_gameSceneActive = true;
+	m_playerIsInteracting = false;
+	m_mouseIsInButton = false;
 
 	// Get the children
 	m_player = get_node("Player")->cast_to<Player>(get_node("Player"));
@@ -29,25 +34,34 @@ void MainScene::_ready()
 	m_room2 = get_node("Room2")->cast_to<Room>(get_node("Room2"));
 
 	// Scene initialisation
-	m_camera->setEnableChangeRoom(false);
 	m_player->setMaxPositionRight(Utils::SCREEN_WIDTH - Player::SPRITE_WIDTH / 2);
 	m_player->set_position(Vector2(real_t(PLAYER_START_X), real_t(PLAYER_START_Y)));
+
+	m_camera->setEnableChangeRoom(false);
 	sendInfoToInteractions(this);
+
 	m_room1->setPlayer(m_player);
 	m_room2->setPlayer(m_player);
 
+	m_room1->setLightIsOn(false);
+
 	// Signals initialisation
+	connectButtonSignals(this);
 	m_room1->connect("door_opened", this, "on_room1_door_opened");
+	m_room1->connect("interaction_just_played", this, "on_room_interaction_just_played");
+	m_room1->connect("interaction_finished", this, "on_room_interaction_finished");
+	m_room2->connect("interaction_just_played", this, "on_room_interaction_just_played");
+	m_room2->connect("interaction_finished", this, "on_room_interaction_finished");
 }
 
 void MainScene::_physics_process()
 {
-	if (m_gameSceneActive) {
+	if (!m_inventory->isOpen()) {
 		m_room1->manageInteractions();
 		m_inventory->manageInteractions();
 
 		if (m_inputManager->is_action_just_released("mouse_left_click")) {
-			if (Utils::isInsideRoom(get_local_mouse_position())) {
+			if (canPlayerMoove()) {
 				// If a left click is done, moove the player to the this point
 				m_player->mooveTo(int(get_local_mouse_position().x));
 			}
@@ -106,6 +120,57 @@ void MainScene::sendInfoToInteractions(Node* currentNode)
 	}
 }
 
+void MainScene::connectButtonSignals(Node* currentNode)
+{
+	bool continueConnecting = true;
+
+	if (currentNode->get_name().find("Interaction") != -1 ||
+		currentNode->get_name().find(INTERACT_BUTTON_NODE_NAME) != -1 ||
+		currentNode->get_name().find(INVENTORY_BUTTON_NODE_NAME) != -1) {
+
+		currentNode->cast_to<Control>(currentNode)->connect("mouse_entered", this, "on_mouse_entered_button");
+		currentNode->cast_to<Control>(currentNode)->connect("mouse_exited", this, "on_mouse_exited_button");
+
+		if (currentNode->get_name().find(INVENTORY_BUTTON_NODE_NAME) != -1 || currentNode->get_name().find("Interaction") != -1)
+			continueConnecting = false;
+	}
+
+	if (continueConnecting) {
+		for (int i = 0; i < currentNode->get_child_count(); i++)
+			connectButtonSignals(currentNode->get_child(i));
+	}
+}
+
+bool MainScene::canPlayerMoove() const
+{
+	return
+		!m_mouseIsInButton &&
+		!m_inventory->isOpen() &&
+		!m_playerIsInteracting &&
+		Utils::isInsideRoom(get_local_mouse_position());
+}
+
+void MainScene::on_room_interaction_just_played()
+{
+	m_playerIsInteracting = true;
+}
+
+void MainScene::on_room_interaction_finished()
+{
+	m_playerIsInteracting = false;
+}
+
+void MainScene::on_mouse_entered_button()
+{
+	m_mouseIsInButton = true;
+}
+
+void MainScene::on_mouse_exited_button()
+{
+	m_mouseIsInButton = false;
+}
+
+
 MainScene::MainScene()
 {
 	m_player = nullptr;
@@ -113,7 +178,8 @@ MainScene::MainScene()
 	m_inventory = nullptr;
 	m_room1 = nullptr;
 	m_room2 = nullptr;
-	m_gameSceneActive = true;
+	m_playerIsInteracting = false;
+	m_mouseIsInButton = false;
 	m_inputManager = nullptr;
 }
 

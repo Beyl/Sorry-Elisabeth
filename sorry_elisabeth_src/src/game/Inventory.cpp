@@ -69,6 +69,11 @@ void Inventory::hide()
 		m_isInteracting = false;
 }
 
+bool Inventory::isOpen() const
+{
+	return get_position() == m_displayPosition;
+}
+
 Cell* Inventory::getCellWithNumber(const int cellNumber) const
 {
 	Cell* cell = nullptr;

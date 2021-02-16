@@ -22,6 +22,8 @@ void Room::_ready()
 	// Signals initialisation
 	connectInteractionSignal();
 	add_user_signal("door_opened");
+	add_user_signal("interaction_just_played");
+	add_user_signal("interaction_finished");
 }
 
 void Room::getInteractiveObjects()
@@ -96,11 +98,13 @@ bool Room::isLightTurnOn() const
 void Room::on_interaction_just_played()
 {
 	m_playerIsInteracting = true;
+	emit_signal("interaction_just_played");
 }
 
 void Room::on_interaction_finished()
 {
 	m_playerIsInteracting = false;
+	emit_signal("interaction_finished");
 }
 
 void Room::setPlayer(Player* player)
