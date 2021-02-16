@@ -10,6 +10,7 @@
 #include "game/TakeInteraction.h"
 #include "game/OpenDoorInteraction.h"
 #include "game/ActiveLightInteraction.h"
+#include "game/Light.h"
 
 #include "../tests/utils/UtilsTest.h"
 #include "../tests/game/PlayerTest.h"
@@ -28,6 +29,7 @@ extern "C" void GDN_EXPORT godot_nativescript_init(void* handle) {
 	// Main scene game classes
 	register_class<MainScene>();
 	register_class<Room>();
+	register_class<Light>();
 	register_class<Player>();
 	register_class<Camera>();
 	register_class<InventoryButton>();

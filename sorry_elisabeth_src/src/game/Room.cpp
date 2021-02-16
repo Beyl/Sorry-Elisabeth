@@ -1,4 +1,5 @@
 #include "Room.h"
+#include "Light.h"
 
 using namespace godot;
 
@@ -13,7 +14,8 @@ void Room::_ready()
 {
 	// Get children
 	getInteractiveObjects();	// Get the interactive objects in the array
-	
+	getLights();	// Same for the lights
+
 	// Scene initialisation
 	m_player = nullptr;
 	m_playerIsInteracting = false;
@@ -24,6 +26,15 @@ void Room::_ready()
 	add_user_signal("door_opened");
 	add_user_signal("interaction_just_played");
 	add_user_signal("interaction_finished");
+}
+
+void Room::getLights()
+{
+	for (int i = 0; i < get_child_count(); i++) {
+		if (get_child(i)->get_name().find(LIGHT_NODE_NAME_PART) != -1) {
+			m_lights.append(get_child(i)->cast_to<Light>(get_child(i)));
+		}
+	}
 }
 
 void Room::getInteractiveObjects()
@@ -88,6 +99,14 @@ bool Room::isPlayerInside() const
 void Room::setLightIsOn(const bool setOn)
 {
 	m_lightIsOn = setOn;
+
+	for (int i = 0; i < m_lights.size(); i++) {
+		Light* currentLight = m_lights[i];
+		if (currentLight->getOnlyWhenActivated()) {
+			Godot::print("test");
+			currentLight->set_visible(m_lightIsOn);
+		}
+	}
 }
 
 bool Room::isLightTurnOn() const

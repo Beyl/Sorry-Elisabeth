@@ -40,6 +40,7 @@ public:
 
 	/* CONSTANTS */
 	const godot::String INTERACTIVE_OBJECT_NAME_PART = "IO";
+	const godot::String LIGHT_NODE_NAME_PART = "Light";
 	static const int ROOM_HEIGHT_BEGINNING = 0;
 	static const int ROOM_HEIGHT_ENDING = 180;
 	static const int ROOM_WIDTH_BEGINNING = -40;
@@ -48,6 +49,7 @@ public:
 
 private:
 
+	void getLights();
 	void getInteractiveObjects();
 	void connectInteractionSignal();
 
@@ -56,6 +58,7 @@ private:
 
 
 	/* MEMBER VARIABLES */
+	godot::Array m_lights;
 	godot::Array m_interactiveObjects;
 	Player* m_player;
 

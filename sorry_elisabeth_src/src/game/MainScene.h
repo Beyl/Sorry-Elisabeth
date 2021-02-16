@@ -46,7 +46,7 @@ public:
 
 	/* CONSTANTS */
 	static const int PLAYER_START_X = 40;
-	static const int PLAYER_START_Y = 117;
+	static const int PLAYER_START_Y = 140;
 	const godot::String TAKE_HANDBAG_INTERACTION_NODE_NAME = "TakeHandbagInteraction";
 	const godot::String TAKE_INTERACTION_NODE_NAME = "TakeInteraction";
 	const godot::String USE_INTERACTION_NODE_NAME = "UseInteraction";

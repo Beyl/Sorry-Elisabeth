@@ -1,10 +1,9 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scenes/game/room/interactive_objects/interaction_table/InteractionTable.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/textures/icon.png" type="Texture" id=2]
 [ext_resource path="res://scenes/game/room/interactive_objects/interact_button/InteractButton.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/game/room/interactive_objects/interactive_object/InteractiveObject.gdns" type="Script" id=4]
-[ext_resource path="res://assets/textures/icon3.png" type="Texture" id=6]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -13,7 +12,7 @@ animations = [ {
 "name": "state1",
 "speed": 5.0
 }, {
-"frames": [ ExtResource( 6 ) ],
+"frames": [ ExtResource( 2 ) ],
 "loop": true,
 "name": "state2",
 "speed": 5.0
@@ -25,6 +24,7 @@ scale = Vector2( 0.5, 0.5 )
 frames = SubResource( 1 )
 animation = "state1"
 script = ExtResource( 4 )
+"Number of state" = 2
 "Object size" = Vector2( 64, 64 )
 
 [node name="InteractionTable" parent="." instance=ExtResource( 1 )]
