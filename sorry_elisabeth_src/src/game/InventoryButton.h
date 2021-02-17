@@ -35,6 +35,24 @@ public:
 	// Play the interation signal animation
 	void on_Inventory_interact();
 
+	// Hide the button under the bottom of the screen
+	void hideButton();
+
+	// Display the button
+	void displayButton();
+
+
+	/* PROPERTIES */
+	void setDisplayPosition(const godot::Vector2 position);
+	godot::Vector2 getDisplayPosition() const;
+
+	void setHidePosition(const godot::Vector2 position);
+	godot::Vector2 getHidePosition() const;
+
+
+	/* CONSTANT */
+	const real_t TWEEN_ANIMATION_DURATION = 0.75;
+
 private:
 
 	void displayAll();
@@ -44,4 +62,8 @@ private:
 	Inventory* m_inventory;
 	FadeBackground* m_fadeBackground;
 	godot::AnimationPlayer* m_animationPlayer;
+	godot::Tween* m_tween;
+
+	godot::Vector2 m_displayPosition;
+	godot::Vector2 m_hidePosition;
 };

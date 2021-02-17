@@ -15,10 +15,8 @@ script = ExtResource( 2 )
 layer = 2
 
 [node name="DialogBox" parent="DialogBoxLayer" index="0" instance=ExtResource( 3 )]
-visible = false
-margin_top = -199.0
-margin_bottom = -174.0
-"Time before hiding" = 2.0
+margin_top = 10.0
+margin_bottom = 30.0
 
 [node name="ExaminationSoundPlayer" type="AudioStreamPlayer" parent="." index="3"]
 stream = SubResource( 1 )

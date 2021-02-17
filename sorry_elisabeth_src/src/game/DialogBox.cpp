@@ -30,13 +30,14 @@ void DialogBox::_ready()
 	// Scene initilisation
 	m_textLabel->set_percent_visible(0);
 	m_displayPosition = Vector2(X_DISPLAY_POSITION, Y_DISPLAY_POSITION);
-	m_hidePosition = Vector2(get_position().x, Room::ROOM_HEIGHT_ENDING + 50);
+	m_hidePosition = Vector2(get_position().x, Room::ROOM_HEIGHT_ENDING + 40);
 	set_position(m_hidePosition);
 	m_beforeHideTimer->set_wait_time(m_beforeHidingDuration);
 
 	// Signals initialisation
 	m_beforeHideTimer->connect("timeout", this, "on_beforeHideTimer_timeout");
 	m_textTween->connect("tween_all_completed", this, "on_textDisplayed");
+	add_user_signal("just_started");
 	add_user_signal("just_hided");
 }
 
@@ -49,6 +50,8 @@ void DialogBox::display()
 		m_boxTween->interpolate_property(this, "rect_position", get_position(), m_displayPosition,
 			m_transitionDisplayDuration, Tween::TRANS_BOUNCE, Tween::EASE_OUT);
 		m_boxTween->start();
+
+		emit_signal("just_started");
 	}
 }
 

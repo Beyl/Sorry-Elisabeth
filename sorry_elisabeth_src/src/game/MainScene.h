@@ -43,10 +43,14 @@ public:
 	void on_mouse_entered_button();
 	void on_mouse_exited_button();
 
+	// Hide the inventory button when displaying a dialog box
+	void on_dialogBox_just_started();
+	void on_dialogBox_just_hided();
+
 
 	/* CONSTANTS */
 	static const int PLAYER_START_X = 40;
-	static const int PLAYER_START_Y = 140;
+	static const int PLAYER_START_Y = 120;
 	const godot::String TAKE_HANDBAG_INTERACTION_NODE_NAME = "TakeHandbagInteraction";
 	const godot::String TAKE_INTERACTION_NODE_NAME = "TakeInteraction";
 	const godot::String USE_INTERACTION_NODE_NAME = "UseInteraction";
@@ -56,6 +60,7 @@ public:
 	const godot::String ACTIVE_LIGHT_R2_INTERACTION_NODE_NAME = "ActiveLightInteractionR2";
 	const godot::String INTERACT_BUTTON_NODE_NAME = "InteractButton";
 	const godot::String INVENTORY_BUTTON_NODE_NAME = "InventoryButton";
+	const godot::String DIALOGBOX_NODE_NAME = "DialogBox";
 
 private:
 
@@ -65,8 +70,8 @@ private:
 	// Recursive method that sends the inventory's, player's and room's	pointer to the interaction wich need them
 	void sendInfoToInteractions(Node* currentNode);
 
-	// Recursive method that connect the signals mouse_entered and mouse_exited from the selected nodes
-	void connectButtonSignals(Node* currentNode);
+	// Recursive method that connect the signals needed from buttons and dialog boxes
+	void connectNeededSignals(Node* currentNode);
 
 	// Determine if the player can moove
 	bool canPlayerMoove() const;

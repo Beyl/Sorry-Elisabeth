@@ -16,6 +16,8 @@ void MainScene::_register_methods()
 	register_method("on_room_interaction_finished", &MainScene::on_room_interaction_finished);
 	register_method("on_mouse_entered_button", &MainScene::on_mouse_entered_button);
 	register_method("on_mouse_exited_button", &MainScene::on_mouse_exited_button);
+	register_method("on_dialogBox_just_started", &MainScene::on_dialogBox_just_started);
+	register_method("on_dialogBox_just_hided", &MainScene::on_dialogBox_just_hided);
 }
 
 void MainScene::_ready()
@@ -46,7 +48,7 @@ void MainScene::_ready()
 	m_room1->setLightIsOn(false);
 
 	// Signals initialisation
-	connectButtonSignals(this);
+	connectNeededSignals(this);
 	m_room1->connect("door_opened", this, "on_room1_door_opened");
 	m_room1->connect("interaction_just_played", this, "on_room_interaction_just_played");
 	m_room1->connect("interaction_finished", this, "on_room_interaction_finished");
@@ -120,7 +122,7 @@ void MainScene::sendInfoToInteractions(Node* currentNode)
 	}
 }
 
-void MainScene::connectButtonSignals(Node* currentNode)
+void MainScene::connectNeededSignals(Node* currentNode)
 {
 	bool continueConnecting = true;
 
@@ -130,14 +132,18 @@ void MainScene::connectButtonSignals(Node* currentNode)
 
 		currentNode->cast_to<Control>(currentNode)->connect("mouse_entered", this, "on_mouse_entered_button");
 		currentNode->cast_to<Control>(currentNode)->connect("mouse_exited", this, "on_mouse_exited_button");
+	}
+	else if (currentNode->get_name() == DIALOGBOX_NODE_NAME) {
 
-		if (currentNode->get_name().find(INVENTORY_BUTTON_NODE_NAME) != -1 || currentNode->get_name().find("Interaction") != -1)
-			continueConnecting = false;
+		currentNode->cast_to<DialogBox>(currentNode)->connect("just_started", this, "on_dialogBox_just_started");
+		currentNode->cast_to<DialogBox>(currentNode)->connect("just_hided", this, "on_dialogBox_just_hided");
+
+		continueConnecting = false;
 	}
 
 	if (continueConnecting) {
 		for (int i = 0; i < currentNode->get_child_count(); i++)
-			connectButtonSignals(currentNode->get_child(i));
+			connectNeededSignals(currentNode->get_child(i));
 	}
 }
 
@@ -170,6 +176,15 @@ void MainScene::on_mouse_exited_button()
 	m_mouseIsInButton = false;
 }
 
+void MainScene::on_dialogBox_just_started()
+{
+	m_inventory->get_parent()->cast_to<InventoryButton>(m_inventory->get_parent())->hideButton();
+}
+
+void MainScene::on_dialogBox_just_hided()
+{
+	m_inventory->get_parent()->cast_to<InventoryButton>(m_inventory->get_parent())->displayButton();
+}
 
 MainScene::MainScene()
 {

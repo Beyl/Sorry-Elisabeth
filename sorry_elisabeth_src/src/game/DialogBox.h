@@ -68,10 +68,10 @@ public:
 
 	/* CONSTANTS */
 	static const int MIN_TEXT_DISPLAY_DURATION = 1;
-	static const int MIN_TRANSITION_DISPLAY_DURATION = 1;
-	static const int MIN_BEFORE_HIDING_DURATION = 1;
+	static const int MIN_TRANSITION_DISPLAY_DURATION = NULL;
+	static const int MIN_BEFORE_HIDING_DURATION = NULL;
 	static const int X_DISPLAY_POSITION = 20;
-	static const int Y_DISPLAY_POSITION = 145;
+	static const int Y_DISPLAY_POSITION = 155;
 
 protected:
 

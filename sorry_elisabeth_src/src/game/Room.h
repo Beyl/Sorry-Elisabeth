@@ -42,7 +42,7 @@ public:
 	const godot::String INTERACTIVE_OBJECT_NAME_PART = "IO";
 	const godot::String LIGHT_NODE_NAME_PART = "Light";
 	static const int ROOM_HEIGHT_BEGINNING = 0;
-	static const int ROOM_HEIGHT_ENDING = 180;
+	static const int ROOM_HEIGHT_ENDING = 150;
 	static const int ROOM_WIDTH_BEGINNING = -40;
 	static const int ROOM_WIDTH_ENDING = 660;
 	static const int CAN_INTERACT_RANGE = 15;
