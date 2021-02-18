@@ -31,7 +31,6 @@ texture_hover = ExtResource( 4 )
 expand = true
 script = ExtResource( 3 )
 __meta__ = {
-"_edit_group_": true,
 "_edit_use_anchors_": false
 }
 
@@ -42,10 +41,10 @@ show_behind_parent = true
 
 [node name="Inventory" parent="." instance=ExtResource( 1 )]
 visible = false
-margin_left = 44.3354
-margin_top = 188.359
-margin_right = 280.335
-margin_bottom = 248.359
+margin_left = 42.0
+margin_top = 30.0
+margin_right = 278.0
+margin_bottom = 90.0
 mouse_filter = 0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

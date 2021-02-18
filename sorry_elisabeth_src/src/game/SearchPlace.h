@@ -31,6 +31,8 @@ public:
 	void display();
 	void hide();
 
+	void setIsOpen(const bool isOpen);
+
 	// Hide the search place
 	void on_closeButton_released();
 
@@ -38,6 +40,10 @@ public:
 	/* ACCESSORS */
 	real_t getAnimationDuration() const;
 	godot::TextureButton* getCloseButton() const;
+
+
+	/* CONSTANTS */
+	const godot::String ITEM_NODE_NAME = "Item";
 
 protected:
 

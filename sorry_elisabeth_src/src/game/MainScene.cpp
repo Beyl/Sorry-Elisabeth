@@ -3,6 +3,7 @@
 #include "TakeHangbagInteraction.h"
 #include "TakeInteraction.h"
 #include "OpenDoorInteraction.h"
+#include "OpenInteraction.h"
 #include "ActiveLightInteraction.h"
 
 using namespace godot;
@@ -11,9 +12,12 @@ void MainScene::_register_methods()
 {
 	register_method("_ready", &MainScene::_ready);
 	register_method("_physics_process", &MainScene::_physics_process);
+	register_method("on_inventory_item_added", &MainScene::on_inventory_item_added);
 	register_method("on_room1_door_opened", &MainScene::on_room1_door_opened);
 	register_method("on_room_interaction_just_played", &MainScene::on_room_interaction_just_played);
 	register_method("on_room_interaction_finished", &MainScene::on_room_interaction_finished);
+	register_method("on_openInteraction_just_played", &MainScene::on_openInteraction_just_played);
+	register_method("on_openInteraction_finished", &MainScene::on_openInteraction_finished);
 	register_method("on_mouse_entered_button", &MainScene::on_mouse_entered_button);
 	register_method("on_mouse_exited_button", &MainScene::on_mouse_exited_button);
 	register_method("on_dialogBox_just_started", &MainScene::on_dialogBox_just_started);
@@ -25,6 +29,7 @@ void MainScene::_ready()
 	// Member variables initialisation
 	m_inputManager = Input::get_singleton();
 	m_playerIsInteracting = false;
+	m_inOpenInteraction = false;
 	m_mouseIsInButton = false;
 
 	// Get the children
@@ -49,6 +54,7 @@ void MainScene::_ready()
 
 	// Signals initialisation
 	connectNeededSignals(this);
+	m_inventory->connect("item_added", this, "on_inventory_item_added");
 	m_room1->connect("door_opened", this, "on_room1_door_opened");
 	m_room1->connect("interaction_just_played", this, "on_room_interaction_just_played");
 	m_room1->connect("interaction_finished", this, "on_room_interaction_finished");
@@ -70,6 +76,11 @@ void MainScene::_physics_process()
 		}
 	}
 	sendPlayerInfoToCam();
+}
+
+void MainScene::on_inventory_item_added()
+{
+	connectNeededSignals(m_inventory);
 }
 
 void MainScene::on_room1_door_opened()
@@ -128,17 +139,29 @@ void MainScene::connectNeededSignals(Node* currentNode)
 
 	if (currentNode->get_name().find("Interaction") != -1 ||
 		currentNode->get_name().find(INTERACT_BUTTON_NODE_NAME) != -1 ||
-		currentNode->get_name().find(INVENTORY_BUTTON_NODE_NAME) != -1) {
+		currentNode->get_name().find(INVENTORY_BUTTON_NODE_NAME) != -1 ||
+		currentNode->get_name().find(CLOSE_BUTTON_NODE_NAME) != -1) {
 
 		currentNode->cast_to<Control>(currentNode)->connect("mouse_entered", this, "on_mouse_entered_button");
 		currentNode->cast_to<Control>(currentNode)->connect("mouse_exited", this, "on_mouse_exited_button");
+
+		if (currentNode->get_name().find(OPEN_INTERACTION_NODE_NAME) != -1) {
+			currentNode->cast_to<OpenInteraction>(currentNode)->
+				connect("openInteraction_just_played", this, "on_openInteraction_just_played");
+			currentNode->cast_to<OpenInteraction>(currentNode)->
+				connect("openInteraction_finished", this, "on_openInteraction_finished");
+
+			continueConnecting = false;
+		}
 	}
 	else if (currentNode->get_name() == DIALOGBOX_NODE_NAME) {
 
-		currentNode->cast_to<DialogBox>(currentNode)->connect("just_started", this, "on_dialogBox_just_started");
-		currentNode->cast_to<DialogBox>(currentNode)->connect("just_hided", this, "on_dialogBox_just_hided");
+		if (currentNode->get_parent()->get_parent()->get_name().find(OPEN_INTERACTION_NODE_NAME) == -1) {
+			currentNode->cast_to<DialogBox>(currentNode)->connect("just_started", this, "on_dialogBox_just_started");
+			currentNode->cast_to<DialogBox>(currentNode)->connect("just_hided", this, "on_dialogBox_just_hided");
 
-		continueConnecting = false;
+			continueConnecting = false;
+		}
 	}
 
 	if (continueConnecting) {
@@ -151,8 +174,9 @@ bool MainScene::canPlayerMoove() const
 {
 	return
 		!m_mouseIsInButton &&
-		!m_inventory->isOpen() &&
+		!m_inventory->get_parent()->cast_to<InventoryButton>(m_inventory->get_parent())->isInventoryOpen() &&
 		!m_playerIsInteracting &&
+		!m_inOpenInteraction &&
 		Utils::isInsideRoom(get_local_mouse_position());
 }
 
@@ -164,6 +188,18 @@ void MainScene::on_room_interaction_just_played()
 void MainScene::on_room_interaction_finished()
 {
 	m_playerIsInteracting = false;
+}
+
+void MainScene::on_openInteraction_just_played()
+{
+	m_inOpenInteraction = true;
+	on_dialogBox_just_started();
+}
+
+void MainScene::on_openInteraction_finished()
+{
+	m_inOpenInteraction = false;
+	on_dialogBox_just_hided();
 }
 
 void MainScene::on_mouse_entered_button()
@@ -194,6 +230,7 @@ MainScene::MainScene()
 	m_room1 = nullptr;
 	m_room2 = nullptr;
 	m_playerIsInteracting = false;
+	m_inOpenInteraction = false;
 	m_mouseIsInButton = false;
 	m_inputManager = nullptr;
 }

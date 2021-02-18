@@ -41,6 +41,12 @@ public:
 	// Display the button
 	void displayButton();
 
+	bool isInventoryOpen();
+
+
+	/* SIGNALS */
+	void on_tween_all_completed();
+
 
 	/* PROPERTIES */
 	void setDisplayPosition(const godot::Vector2 position);
@@ -52,6 +58,7 @@ public:
 
 	/* CONSTANT */
 	const real_t TWEEN_ANIMATION_DURATION = 0.75;
+	const godot::Vector2 INVENTORY_GLOBAL_POSITION = godot::Vector2(42, 60);
 
 private:
 
@@ -66,4 +73,6 @@ private:
 
 	godot::Vector2 m_displayPosition;
 	godot::Vector2 m_hidePosition;
+	bool m_isAnimated;
+	bool m_isDisplaying;
 };

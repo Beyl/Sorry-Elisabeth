@@ -43,6 +43,7 @@ void Inventory::_ready()
 
 	// Signal initialisation
 	add_user_signal("interact");
+	add_user_signal("item_added");
 }
 
 void Inventory::display()
@@ -136,6 +137,7 @@ void Inventory::addItem(Item* newItem)
 		newItem->queue_free();	// Remove the ancient item from the scene (will be added as a child of a cell in the inventory
 		updateInventory();
 		emit_signal("interact");
+		emit_signal("item_added");
 	}
 }
 

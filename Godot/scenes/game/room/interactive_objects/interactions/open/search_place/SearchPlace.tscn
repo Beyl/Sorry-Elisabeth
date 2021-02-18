@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/textures/game/room/interactive_objects/interactions/intercation.png" type="Texture" id=1]
 [ext_resource path="res://assets/textures/game/game_ui/close_button/closeButton.png" type="Texture" id=2]
+[ext_resource path="res://scenes/game/room/interactive_objects/interactive_object/IO2.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/game/room/interactive_objects/interactions/open/search_place/SearchPlace.gdns" type="Script" id=4]
 
 [node name="SearchPlace" type="TextureRect"]
@@ -33,3 +34,6 @@ texture_normal = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="IO2" parent="." instance=ExtResource( 3 )]
+position = Vector2( 45.9401, 46.2079 )

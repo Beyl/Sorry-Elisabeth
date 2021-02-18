@@ -1,4 +1,5 @@
 #include "SearchPlace.h"
+#include "Item.h"
 
 using namespace godot;
 
@@ -39,6 +40,18 @@ void SearchPlace::hide()
 	m_tween->interpolate_property(this, "rect_position", m_displayPosition, m_hidingPosition,
 		TWEEN_ANIMATION_DURATION, Tween::TRANS_CUBIC, Tween::EASE_OUT);
 	m_tween->start();
+}
+
+void SearchPlace::setIsOpen(const bool isOpen)
+{
+	for (int i = 0; i < get_child_count(); i++) {
+		if (get_child(i)->get_name().find(ITEM_NODE_NAME) != -1) {
+			if (isOpen)
+				get_child(i)->cast_to<Item>(get_child(i))->enableOpenMode();
+			else
+				get_child(i)->cast_to<Item>(get_child(i))->disableOpenMode();
+		}
+	}
 }
 
 void SearchPlace::on_closeButton_released()

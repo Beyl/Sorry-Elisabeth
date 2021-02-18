@@ -6,6 +6,7 @@ using namespace godot;
 void Item::_register_methods()
 {
 	register_method("_ready", &Item::_ready);
+	register_method("_process", &Item::_process);
 	register_method("on_interactButton_released", &Item::on_interactButton_released);
 	register_method("on_interaction_just_played", &Item::on_interaction_just_played);
 	register_method("on_interaction_finished", &Item::on_interaction_finished);
@@ -21,10 +22,39 @@ void Item::_ready()
 	InteractiveObject::_ready();
 
 	const real_t yDisplayPosition =
-		m_interactButton->getHidePosition().y - Cell::CELL_SIZE / 2 - m_interactButton->get_size().y / 2 - Interaction::INTERACT_BUTTON_MARGIN;
+		m_interactButton->getHidePosition().y - Cell::CELL_SIZE / 2 - m_interactButton->get_size().y / 2 -
+		Interaction::INTERACT_BUTTON_MARGIN;
 	m_interactButton->setDisplayPosition(Vector2(m_interactButton->getHidePosition().x, yDisplayPosition));
 
 	setInteractionTablePosition();
+}
+
+void Item::_process(float delat)
+{
+	const Vector2 mousePosition = get_global_mouse_position();
+
+	const Vector2 itemMarginPosition =
+		Vector2(get_global_position().x - Cell::HIDE_INTERACT_BUTTON_MARGIN_X,
+			get_global_position().y - real_t(Cell::HIDE_INTERACT_BUTTON_MARGIN_Y * 1.5));
+	const Vector2 itemMarginSize = Vector2(m_objectSize.x + 2 * Cell::HIDE_INTERACT_BUTTON_MARGIN_X,
+		m_objectSize.y + real_t(Cell::HIDE_INTERACT_BUTTON_MARGIN_Y * 1.5));
+
+	if (Utils::isInsideObject(mousePosition, itemMarginPosition, itemMarginSize)) {
+		if (m_interactButton->isHided() && m_interactionTable->isHided())
+			displayInteractButton();
+	}
+	else
+		hideAll();
+}
+
+void Item::enableOpenMode()
+{
+	set_process(false);
+}
+
+void Item::disableOpenMode()
+{
+	set_process(true);
 }
 
 void Item::setInteractionTablePosition()

@@ -8,6 +8,7 @@ void InventoryButton::_register_methods()
 	register_method("_process", &InventoryButton::_process);
 	register_method("on_button_released", &InventoryButton::on_button_released);
 	register_method("on_Inventory_interact", &InventoryButton::on_Inventory_interact);
+	register_method("on_tween_all_completed", &InventoryButton::on_tween_all_completed);
 
 	register_property<InventoryButton, Vector2>("Display position", &InventoryButton::setDisplayPosition,
 		&InventoryButton::getDisplayPosition, Vector2());
@@ -23,9 +24,14 @@ void InventoryButton::_ready()
 	m_animationPlayer = get_node("AnimationPlayer")->cast_to<AnimationPlayer>(get_node("AnimationPlayer"));
 	m_tween = get_node("Tween")->cast_to<Tween>(get_node("Tween"));
 
+	// Scene initialisation
+	m_isAnimated = false;
+	m_isDisplaying = false;
+
 	// Signal initialisation
 	connect("button_up", this, "on_button_released");
 	m_inventory->connect("interact", this, "on_Inventory_interact");
+	m_tween->connect("tween_all_completed", this, "on_tween_all_completed");
 }
 
 void InventoryButton::_process(float delta)
@@ -37,6 +43,9 @@ void InventoryButton::_process(float delta)
 			m_fadeBackground->set_mouse_filter(Control::MOUSE_FILTER_IGNORE);
 		else
 			m_fadeBackground->set_mouse_filter(Control::MOUSE_FILTER_STOP);
+
+		if (m_isAnimated)
+			m_inventory->set_global_position(INVENTORY_GLOBAL_POSITION);
 	}
 }
 
@@ -61,6 +70,8 @@ void InventoryButton::hideButton()
 		m_tween->interpolate_property(this, "rect_position", m_displayPosition, m_hidePosition,
 			real_t(TWEEN_ANIMATION_DURATION / 1.5), Tween::TRANS_BACK, Tween::EASE_IN_OUT);
 		m_tween->start();
+
+		m_isAnimated = true;
 	}
 }
 
@@ -70,7 +81,19 @@ void InventoryButton::displayButton()
 		m_tween->interpolate_property(this, "rect_position", m_hidePosition, m_displayPosition, TWEEN_ANIMATION_DURATION,
 			Tween::TRANS_BOUNCE, Tween::EASE_OUT);
 		m_tween->start();
+
+		m_isAnimated = true;
 	}
+}
+
+bool InventoryButton::isInventoryOpen()
+{
+	return m_fadeBackground->isDisplayed();
+}
+
+void InventoryButton::on_tween_all_completed()
+{
+	m_isAnimated = false;
 }
 
 void InventoryButton::setDisplayPosition(const godot::Vector2 position)
@@ -116,6 +139,7 @@ InventoryButton::InventoryButton()
 
 	m_displayPosition = Vector2();
 	m_hidePosition = Vector2();
+	m_isAnimated = false;
 }
 
 InventoryButton::~InventoryButton()

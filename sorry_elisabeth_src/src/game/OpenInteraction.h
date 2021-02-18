@@ -41,6 +41,8 @@ public:
 	// Emit the interaction_just_played signal again because the player hasn't finished interacting
 	void on_examineInteraction_finished();
 
+	void on_background_fadeOut_finished();
+
 
 	/* PROPERTIES */
 	void setSearchPlaceScene(const godot::Ref<godot::PackedScene> newSearchPlaceScene);

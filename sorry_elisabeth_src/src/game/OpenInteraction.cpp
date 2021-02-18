@@ -8,6 +8,7 @@ void OpenInteraction::_register_methods()
 	register_method("on_searchPlaceCloseButton_released", &OpenInteraction::on_searchPlaceCloseButton_released);
 	register_method("on_dialogBoxHiding", &OpenInteraction::on_dialogBoxHiding);
 	register_method("on_examineInteraction_finished", &OpenInteraction::on_examineInteraction_finished);
+	register_method("on_background_fadeOut_finished", &OpenInteraction::on_background_fadeOut_finished);
 
 	register_property<OpenInteraction, Ref<PackedScene>>("Search place scene", &OpenInteraction::setSearchPlaceScene,
 		&OpenInteraction::getSearchPlaceScene, Ref<PackedScene>());
@@ -33,14 +34,19 @@ void OpenInteraction::_ready()
 	// Signals initialisation
 	m_searchPlace->getCloseButton()->connect("button_up", this, "on_searchPlaceCloseButton_released");
 	m_dialogBox->getBeforeHideTimer()->connect("timeout", this, "on_dialogBoxHiding");
+	m_searchPlaceBackground->connect("fadeOut_finished", this, "on_background_fadeOut_finished");
 	ExamineInteraction::connect("interaction_finished", this, "on_examineInteraction_finished");
+	add_user_signal("openInteraction_just_played");
+	add_user_signal("openInteraction_finished");
 }
 
 void OpenInteraction::play()
 {
 	ExamineInteraction::play();
+	emit_signal("openInteraction_just_played");
 
 	if (!m_searchPlaceBackground->isDisplayed()) {
+		m_searchPlace->setIsOpen(true);
 		m_searchPlace->display();
 		m_searchPlace->getCloseButton()->set_disabled(true);
 		m_searchPlaceBackground->fadeIn();
@@ -52,6 +58,7 @@ void OpenInteraction::on_searchPlaceCloseButton_released()
 {
 	m_searchPlaceBackground->fadeOut();
 	m_searchPlaceBackground->set_mouse_filter(Control::MOUSE_FILTER_IGNORE);
+	m_searchPlace->setIsOpen(false);
 	emit_signal("interaction_finished");
 }
 
@@ -64,6 +71,11 @@ void OpenInteraction::on_examineInteraction_finished()
 {
 	if (m_searchPlaceBackground->get_mouse_filter() == Control::MOUSE_FILTER_STOP)
 		emit_signal("interaction_just_played");
+}
+
+void OpenInteraction::on_background_fadeOut_finished()
+{
+	emit_signal("openInteraction_finished");
 }
 
 void OpenInteraction::setSearchPlaceScene(const godot::Ref<godot::PackedScene> newSearchPlaceScene)

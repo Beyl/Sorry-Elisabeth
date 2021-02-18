@@ -21,6 +21,13 @@ public:
 	// Initialise the class and the godot scene
 	void _ready();
 	
+	// Used only in an open interaction situation. Handle interactions
+	void _process(float delat);
+
+	// Enable the process method
+	void enableOpenMode();
+	void disableOpenMode();
+
 
 	/* ACCESSORS */
 	InteractionTable* getInteractionTable() const;
