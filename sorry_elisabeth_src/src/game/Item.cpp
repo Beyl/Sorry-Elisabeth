@@ -27,9 +27,10 @@ void Item::_ready()
 	m_interactButton->setDisplayPosition(Vector2(m_interactButton->getHidePosition().x, yDisplayPosition));
 
 	setInteractionTablePosition();
+	disableOpenMode();
 }
 
-void Item::_process(float delat)
+void Item::_process(float delta)
 {
 	const Vector2 mousePosition = get_global_mouse_position();
 
@@ -49,12 +50,12 @@ void Item::_process(float delat)
 
 void Item::enableOpenMode()
 {
-	set_process(false);
+	set_process(true);
 }
 
 void Item::disableOpenMode()
 {
-	set_process(true);
+	set_process(false);
 }
 
 void Item::setInteractionTablePosition()

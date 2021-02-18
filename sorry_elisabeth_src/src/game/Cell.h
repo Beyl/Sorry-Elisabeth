@@ -41,6 +41,10 @@ public:
 	void disableSpecialMode();
 
 
+	/* ACCESSORS */
+	bool isDisabled() const;
+
+
 	/* SIGNALS */
 	void on_button_up();
 
@@ -59,5 +63,5 @@ protected:
 	InteractButton* m_itemInteractButton;
 
 	bool m_isInSpecialMode;
-	bool m_canInteract;
+	bool m_isDisabled;
 };

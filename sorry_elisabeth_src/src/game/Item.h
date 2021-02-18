@@ -22,7 +22,7 @@ public:
 	void _ready();
 	
 	// Used only in an open interaction situation. Handle interactions
-	void _process(float delat);
+	void _process(float delta);
 
 	// Enable the process method
 	void enableOpenMode();

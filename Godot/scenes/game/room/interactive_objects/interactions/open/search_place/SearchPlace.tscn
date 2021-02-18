@@ -35,5 +35,5 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="IO2" parent="." instance=ExtResource( 3 )]
+[node name="ItemTest" parent="." instance=ExtResource( 3 )]
 position = Vector2( 45.9401, 46.2079 )

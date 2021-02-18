@@ -182,10 +182,14 @@ void Inventory::manageInteractions()
 {
 	for (int i = 0; i < m_itemsNumber; i++) {
 		Cell* itemCell = m_items[i]->get_parent()->cast_to<Cell>(m_items[i]->get_parent());
-		if (canInteract(m_items[i]))
-			itemCell->enableInteractions();
-		else
-			itemCell->disableInteractions();
+		if (canInteract(m_items[i])) {
+			if (itemCell->isDisabled())
+				itemCell->enableInteractions();
+		}
+		else {
+			if (!itemCell->isDisabled())
+				itemCell->disableInteractions();
+		}
 	}
 
 	if (m_specialMode == 2 && m_itemsNumber < 2) {

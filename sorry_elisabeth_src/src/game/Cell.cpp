@@ -15,14 +15,15 @@ void Cell::_ready()
 {
 	connect("button_up", this, "on_button_up");
 	m_isInSpecialMode = false;
-	enableInteractions();
+	m_isDisabled = false;
+	disableInteractions();
 
 	setItem(nullptr);	// At the beginning, the cell does not contain any item
 }
 
 void Cell::_process(float delta)
 {
-	if (m_item != nullptr && !m_isInSpecialMode && m_canInteract) {	// Manage user's inputs only if there is an item inside the cell
+	if (m_item != nullptr && !m_isInSpecialMode) {	// Manage user's inputs only if there is an item inside the cell
 
 		const Vector2 mousePosition = get_global_mouse_position();
 
@@ -93,12 +94,21 @@ bool Cell::containItem() const
 
 void Cell::enableInteractions()
 {
-	m_canInteract = true;
+	m_isDisabled = false;
+
+	set_process(true);
+	set_disabled(false);
 }
 
 void Cell::disableInteractions()
 {
-	m_canInteract = false;
+	m_isDisabled = true;
+
+	set_disabled(true);
+	set_process(false);
+
+	if (m_item != nullptr)
+		m_item->hideAll();
 }
 
 void Cell::enableSpecialMode()
@@ -117,6 +127,11 @@ void Cell::disableSpecialMode()
 	enableInteractions();
 }
 
+bool Cell::isDisabled() const
+{
+	return m_isDisabled;
+}
+
 void Cell::on_button_up()
 {
 	emit_signal("clicked", this);
@@ -129,7 +144,7 @@ Cell::Cell()
 	m_itemInteractionTable = nullptr;
 
 	m_isInSpecialMode = false;
-	m_canInteract = false;
+	m_isDisabled = false;
 }
 
 Cell::~Cell()
