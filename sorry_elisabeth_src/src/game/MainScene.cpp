@@ -18,6 +18,7 @@ void MainScene::_register_methods()
 	register_method("on_room_interaction_finished", &MainScene::on_room_interaction_finished);
 	register_method("on_openInteraction_just_played", &MainScene::on_openInteraction_just_played);
 	register_method("on_openInteraction_finished", &MainScene::on_openInteraction_finished);
+	register_method("on_camera_changed_room", &MainScene::on_camera_changed_room);
 	register_method("on_mouse_entered_button", &MainScene::on_mouse_entered_button);
 	register_method("on_mouse_exited_button", &MainScene::on_mouse_exited_button);
 	register_method("on_dialogBox_just_started", &MainScene::on_dialogBox_just_started);
@@ -55,6 +56,7 @@ void MainScene::_ready()
 	// Signals initialisation
 	connectNeededSignals(this);
 	m_inventory->connect("item_added", this, "on_inventory_item_added");
+	m_camera->connect("room_changed", this, "on_camera_changed_room");
 	m_room1->connect("door_opened", this, "on_room1_door_opened");
 	m_room1->connect("interaction_just_played", this, "on_room_interaction_just_played");
 	m_room1->connect("interaction_finished", this, "on_room_interaction_finished");
@@ -77,8 +79,8 @@ void MainScene::_physics_process()
 		m_inventory->manageInteractions();
 
 	sendPlayerInfoToCam();
-	m_room1->setInventoryIsOpen(m_inventory->isOpen());
-	m_room1->manageInteractions();
+	getActiveRoom()->setInventoryIsOpen(m_inventory->isOpen());
+	getActiveRoom()->manageInteractions();
 }
 
 void MainScene::on_inventory_item_added()
@@ -145,14 +147,17 @@ void MainScene::connectNeededSignals(Node* currentNode)
 		currentNode->get_name().find(INVENTORY_BUTTON_NODE_NAME) != -1 ||
 		currentNode->get_name().find(CLOSE_BUTTON_NODE_NAME) != -1) {
 
-		currentNode->cast_to<Control>(currentNode)->connect("mouse_entered", this, "on_mouse_entered_button");
-		currentNode->cast_to<Control>(currentNode)->connect("mouse_exited", this, "on_mouse_exited_button");
+		if (!currentNode->is_connected("mouse_entered", this, "on_mouse_entered_button")) {
+			currentNode->connect("mouse_entered", this, "on_mouse_entered_button");
+			currentNode->connect("mouse_exited", this, "on_mouse_exited_button");
+		}
 
 		if (currentNode->get_name().find(OPEN_INTERACTION_NODE_NAME) != -1) {
-			currentNode->cast_to<OpenInteraction>(currentNode)->
-				connect("openInteraction_just_played", this, "on_openInteraction_just_played");
-			currentNode->cast_to<OpenInteraction>(currentNode)->
-				connect("openInteraction_finished", this, "on_openInteraction_finished");
+
+			if (!currentNode->is_connected("openInteraction_just_played", this, "on_openInteraction_just_played")) {
+				currentNode->connect("openInteraction_just_played", this, "on_openInteraction_just_played");
+				currentNode->connect("openInteraction_finished", this, "on_openInteraction_finished");
+			}
 
 			continueConnecting = false;
 		}
@@ -160,8 +165,11 @@ void MainScene::connectNeededSignals(Node* currentNode)
 	else if (currentNode->get_name() == DIALOGBOX_NODE_NAME) {
 
 		if (currentNode->get_parent()->get_parent()->get_name().find(OPEN_INTERACTION_NODE_NAME) == -1) {
-			currentNode->cast_to<DialogBox>(currentNode)->connect("just_started", this, "on_dialogBox_just_started");
-			currentNode->cast_to<DialogBox>(currentNode)->connect("just_hided", this, "on_dialogBox_just_hided");
+
+			if (currentNode->is_connected("just_started", this, "on_dialogBox_just_started")) {
+				currentNode->connect("just_started", this, "on_dialogBox_just_started");
+				currentNode->connect("just_hided", this, "on_dialogBox_just_hided");
+			}
 
 			continueConnecting = false;
 		}
@@ -171,6 +179,14 @@ void MainScene::connectNeededSignals(Node* currentNode)
 		for (int i = 0; i < currentNode->get_child_count(); i++)
 			connectNeededSignals(currentNode->get_child(i));
 	}
+}
+
+Room* MainScene::getActiveRoom() const
+{
+	if (m_room1->isPlayerInside())
+		return m_room1;
+	else
+		return m_room2;
 }
 
 bool MainScene::canPlayerMoove() const
@@ -203,6 +219,18 @@ void MainScene::on_openInteraction_finished()
 {
 	m_inOpenInteraction = false;
 	on_dialogBox_just_hided();
+}
+
+void MainScene::on_camera_changed_room()
+{
+	if (m_room1->isPlayerInside()) {
+		m_room1->setPlayer(nullptr);
+		m_room2->setPlayer(m_player);
+	}
+	else {
+		m_room2->setPlayer(nullptr);
+		m_room1->setPlayer(m_player);
+	}
 }
 
 void MainScene::on_mouse_entered_button()

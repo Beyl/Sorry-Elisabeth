@@ -26,6 +26,9 @@ void Camera::_ready()
 	m_playerIsInCellar = true;
 	m_enableChangeRoom = false;
 	setStartFollowPlayerLeft(Camera::START_FOLLOW_PLAYER_LEFT);
+
+	// Signal initialisation
+	add_user_signal("room_changed");
 }
 
 void Camera::_process()
@@ -105,6 +108,8 @@ void Camera::changeRoom(const bool changeToCellar)
 			real_t(m_interpolationDuration), 10, 1);
 		m_tween->start();
 	}
+
+	emit_signal("room_changed");
 }
 
 void Camera::follow_player(const Direction direction)

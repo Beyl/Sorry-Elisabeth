@@ -39,6 +39,7 @@ scale = Vector2( 1.5, 1.5 )
 Speed = 100
 
 [node name="Camera" parent="." instance=ExtResource( 2 )]
+"Living room position" = Vector2( 310, 0 )
 "Interpolation Duration" = 0.8
 
 [node name="UILayer" type="CanvasLayer" parent="."]

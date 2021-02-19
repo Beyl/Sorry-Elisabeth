@@ -35,13 +35,18 @@ public:
 
 
 	/* SIGNALS */
+	// Connect the needed signals with the new item added
 	void on_inventory_item_added();
+
 
 	void on_room1_door_opened();
 	void on_room_interaction_just_played();
 	void on_room_interaction_finished();
 	void on_openInteraction_just_played();
 	void on_openInteraction_finished();
+
+	// Assign the player to the new room
+	void on_camera_changed_room();
 
 	// Prevent the player from moving
 	void on_mouse_entered_button();
@@ -78,6 +83,9 @@ private:
 
 	// Recursive method that connect the signals needed from buttons and dialog boxes
 	void connectNeededSignals(Node* currentNode);
+
+	// Return the room where the player is
+	Room* getActiveRoom() const;
 
 	// Determine if the player can moove
 	bool canPlayerMoove() const;
