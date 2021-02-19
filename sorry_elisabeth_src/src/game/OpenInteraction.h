@@ -41,6 +41,7 @@ public:
 	// Emit the interaction_just_played signal again because the player hasn't finished interacting
 	void on_examineInteraction_finished();
 
+	// Emit the interaction_finished signal when the search place is closed
 	void on_background_fadeOut_finished();
 
 

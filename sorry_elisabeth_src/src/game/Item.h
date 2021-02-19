@@ -29,9 +29,10 @@ public:
 	void disableOpenMode();
 
 
-	/* ACCESSORS */
+	/* ACCESSORS & MUTATORS */
 	InteractionTable* getInteractionTable() const;
 	InteractButton* getInteractButton() const;
+	void setPlayerIsInteracting(const bool isInteracting);
 
 
 	/* SIGNALS */
@@ -47,4 +48,6 @@ public:
 private:
 	// Calculate and set the interaction table's position depending on its size
 	void setInteractionTablePosition();
+
+	bool m_isPlayerInteracting;	// Usefull only in open mode
 };

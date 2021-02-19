@@ -65,8 +65,6 @@ void MainScene::_ready()
 void MainScene::_physics_process()
 {
 	if (!m_inventory->isOpen()) {
-		m_room1->manageInteractions();
-		m_inventory->manageInteractions();
 
 		if (m_inputManager->is_action_just_released("mouse_left_click")) {
 			if (canPlayerMoove()) {
@@ -75,7 +73,12 @@ void MainScene::_physics_process()
 			}
 		}
 	}
+	else
+		m_inventory->manageInteractions();
+
 	sendPlayerInfoToCam();
+	m_room1->setInventoryIsOpen(m_inventory->isOpen());
+	m_room1->manageInteractions();
 }
 
 void MainScene::on_inventory_item_added()

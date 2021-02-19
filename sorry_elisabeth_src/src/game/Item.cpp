@@ -28,6 +28,7 @@ void Item::_ready()
 
 	setInteractionTablePosition();
 	disableOpenMode();
+	m_isPlayerInteracting = false;
 }
 
 void Item::_process(float delta)
@@ -41,7 +42,7 @@ void Item::_process(float delta)
 		m_objectSize.y + real_t(Cell::HIDE_INTERACT_BUTTON_MARGIN_Y * 1.5));
 
 	if (Utils::isInsideObject(mousePosition, itemMarginPosition, itemMarginSize)) {
-		if (m_interactButton->isHided() && m_interactionTable->isHided())
+		if (m_interactButton->isHided() && m_interactionTable->isHided() && !m_isPlayerInteracting)
 			displayInteractButton();
 	}
 	else
@@ -75,6 +76,11 @@ InteractButton* Item::getInteractButton() const
 	return m_interactButton;
 }
 
+void Item::setPlayerIsInteracting(const bool isInteracting)
+{
+	m_isPlayerInteracting = isInteracting;
+}
+
 void Item::on_interactButton_released()
 {
 	m_interactButton->hide();
@@ -96,6 +102,7 @@ void Item::on_interaction_finished()
 
 Item::Item()
 {
+	m_isPlayerInteracting = false;
 }
 
 Item::~Item()

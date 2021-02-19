@@ -94,40 +94,6 @@ Cell* Inventory::getCellWithNumber(const int cellNumber) const
 	return cell;
 }
 
-int Inventory::searchItemInArray(Item* itemsArray[], const int arraySize, const Item* pointer)
-{
-	int id = -1, i = 0;
-	bool found = false;
-
-	while (i < arraySize && !found) {
-		if (itemsArray[i] == pointer) {
-			id = i;
-			found = true;
-		}
-		i++;
-	}
-
-	return id;
-}
-
-void Inventory::removeItemInArray(Item* itemsArray[], const int arraySize, const int idItem)
-{
-	for (int i = idItem; i < arraySize; i++) {
-		if (i == arraySize - 1)
-			itemsArray[i] = 0;
-		else {
-			if (itemsArray[i + 1] != nullptr) {
-				itemsArray[i] = itemsArray[i + 1]->duplicate()->cast_to<Item>(itemsArray[i + 1]->duplicate());
-				itemsArray[i + 1]->queue_free();
-			}
-			else {
-				itemsArray[i] = 0;
-				break;
-			}
-		}
-	}
-}
-
 void Inventory::addItem(Item* newItem)
 {
 	if (m_itemsNumber < m_currentInventorySize) {
@@ -325,6 +291,40 @@ void Inventory::grow()
 	m_hasGrown = true;
 	m_currentInventorySize = Inventory::MAX_ITEM_NUMBER;
 	emit_signal("interact");
+}
+
+int Inventory::searchItemInArray(Item* itemsArray[], const int arraySize, const Item* pointer)
+{
+	int id = -1, i = 0;
+	bool found = false;
+
+	while (i < arraySize && !found) {
+		if (itemsArray[i] == pointer) {
+			id = i;
+			found = true;
+		}
+		i++;
+	}
+
+	return id;
+}
+
+void Inventory::removeItemInArray(Item* itemsArray[], const int arraySize, const int idItem)
+{
+	for (int i = idItem; i < arraySize; i++) {
+		if (i == arraySize - 1)
+			itemsArray[i] = 0;
+		else {
+			if (itemsArray[i + 1] != nullptr) {
+				itemsArray[i] = itemsArray[i + 1]->duplicate()->cast_to<Item>(itemsArray[i + 1]->duplicate());
+				itemsArray[i + 1]->queue_free();
+			}
+			else {
+				itemsArray[i] = 0;
+				break;
+			}
+		}
+	}
 }
 
 Inventory::Inventory()

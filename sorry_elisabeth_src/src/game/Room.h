@@ -16,9 +16,9 @@ public:
 	void _init();	// Needed by godot;
 
 	void _ready();
+	void clearAndGetInteractiveObjects();
 
 	void manageInteractions();
-
 	bool isPlayerInteracting() const;
 	bool isPlayerInside() const;
 
@@ -27,6 +27,9 @@ public:
 	void on_interaction_just_played();
 	void on_interaction_finished();
 
+	void on_itemOpenInteraction_just_played();
+	void on_itemOpenInteraction_finished();
+
 
 	/* ACCESSORS & MUTATORS */
 	void setPlayer(Player* player);
@@ -34,12 +37,15 @@ public:
 	void setDoorIsOpen(const bool isOpen);
 	bool getDoorIsOpen() const;
 
+	void setInventoryIsOpen(const bool isOpen);
+
 	void setLightIsOn(const bool setOn);
 	bool isLightTurnOn() const;
 
 
 	/* CONSTANTS */
 	const godot::String INTERACTIVE_OBJECT_NAME_PART = "IO";
+	const godot::String ITEM_NODE_NAME_PART = "Item";
 	const godot::String LIGHT_NODE_NAME_PART = "Light";
 	static const int ROOM_HEIGHT_BEGINNING = 0;
 	static const int ROOM_HEIGHT_ENDING = 150;
@@ -49,9 +55,9 @@ public:
 
 private:
 
+	void getInteractiveObjects(godot::Node* node);
+	void connectInteractionSignals(godot::Node* node);
 	void getLights();
-	void getInteractiveObjects();
-	void connectInteractionSignal();
 
 	bool isInInteractionZone(InteractiveObject* object) const;
 	bool canInteract(InteractiveObject* object) const;
@@ -63,6 +69,8 @@ private:
 	Player* m_player;
 
 	bool m_playerIsInteracting;
+	bool m_isOpenInteracting;
+	bool m_isInventoryOpen;
 	bool m_lightIsOn;
 	bool m_doorIsOpened;
 };

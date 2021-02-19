@@ -46,7 +46,6 @@ void OpenInteraction::play()
 	emit_signal("openInteraction_just_played");
 
 	if (!m_searchPlaceBackground->isDisplayed()) {
-		m_searchPlace->setIsOpen(true);
 		m_searchPlace->display();
 		m_searchPlace->getCloseButton()->set_disabled(true);
 		m_searchPlaceBackground->fadeIn();
@@ -64,6 +63,7 @@ void OpenInteraction::on_searchPlaceCloseButton_released()
 
 void OpenInteraction::on_dialogBoxHiding()
 {
+	m_searchPlace->setIsOpen(true);
 	m_searchPlace->getCloseButton()->set_disabled(false);
 }
 

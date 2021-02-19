@@ -30,6 +30,22 @@ public:
 	// Initialise the class and the godot scene
 	void _ready();
 
+	void display();
+	void hide();
+	bool isOpen() const;
+
+	void addItem(Item* newItem);
+	void removeItem(const Item* itemToDelete);
+
+	void manageInteractions();
+
+	// Put the inventory in combine or use mode. Now if cell is clicked, it manages a combine or use interaction
+	void enableSpecialMode(Interaction* specialInteraction);
+
+	// Display the bottom part of the inventory and offer 10 more places
+	void grow();
+
+
 	/**
 	 * Search the value given in parameter in the array of Item's pointers.
 	 *
@@ -49,20 +65,6 @@ public:
 	 */
 	static void removeItemInArray(Item* itemsArray[], const int arraySize, const int idItem);
 
-	void display();
-	void hide();
-	bool isOpen() const;
-
-	void addItem(Item* newItem);
-	void removeItem(const Item* itemToDelete);
-
-	void manageInteractions();
-
-	// Put the inventory in combine or use mode. Now if cell is clicked, it manages a combine or use interaction
-	void enableSpecialMode(Interaction* specialInteraction);
-
-	// Display the bottom part of the inventory and offer 10 more places
-	void grow();
 
 
 	/* SIGNALS */
