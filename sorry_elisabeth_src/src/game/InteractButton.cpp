@@ -19,7 +19,6 @@ void InteractButton::_ready()
 {
 	// Get children
 	m_tween = get_node("Tween")->cast_to<Tween>(get_node("Tween"));
-	m_animationPlayer = get_node("AnimationPlayer")->cast_to<AnimationPlayer>(get_node("AnimationPlayer"));
 
 	// Scene initialisation
 	set_disabled(true);
@@ -27,7 +26,6 @@ void InteractButton::_ready()
 	set_modulate(NO_OPACITY);
 	set_draw_behind_parent(true);
 	set_pivot_offset(get_size() / 2);
-	set_scale(INVERT_SCALE);
 
 	// Signal initialisation
 	m_tween->connect("tween_all_completed", this, "on_displayAnimation_finished");
@@ -38,30 +36,27 @@ void InteractButton::display()
 	set_visible(true);
 
 	m_tween->interpolate_property(this, "rect_position", m_hidePosition, m_displayPosition, m_animationDuration,
-		Tween::TRANS_BOUNCE, Tween::EASE_OUT);
+		Tween::TRANS_BACK, Tween::EASE_OUT);
 	m_tween->start();
 
 	m_tween->interpolate_property(this, "modulate", NO_OPACITY, FULL_OPACITY, m_animationDuration,
 		Tween::TRANS_LINEAR, Tween::EASE_IN);
 	m_tween->start();
-
-	m_animationPlayer->play("turn_around");
 }
 
 void InteractButton::hide()
 {
 	set_mouse_filter(Control::MOUSE_FILTER_IGNORE);
 	set_disabled(true);
+	set_draw_behind_parent(true);
 
 	m_tween->interpolate_property(this, "rect_position", m_displayPosition, m_hidePosition, m_animationDuration,
-		Tween::TRANS_LINEAR, Tween::EASE_OUT);
+		Tween::TRANS_BACK, Tween::EASE_IN);
 	m_tween->start();
 
 	m_tween->interpolate_property(this, "modulate", FULL_OPACITY, NO_OPACITY, m_animationDuration,
 		Tween::TRANS_LINEAR, Tween::EASE_OUT);
 	m_tween->start();
-
-	m_animationPlayer->play_backwards("turn_around");
 }
 
 bool InteractButton::isDisplayed() const
@@ -71,7 +66,7 @@ bool InteractButton::isDisplayed() const
 
 bool InteractButton::isHided() const
 {
-	return get_position() == getHidePosition();
+	return get_modulate() == NO_OPACITY;
 }
 
 void InteractButton::on_displayAnimation_finished()
@@ -79,6 +74,7 @@ void InteractButton::on_displayAnimation_finished()
 	if (isDisplayed()) {
 		set_mouse_filter(Control::MOUSE_FILTER_STOP);
 		set_disabled(false);
+		set_draw_behind_parent(false);
 	}
 }
 
@@ -118,7 +114,6 @@ real_t InteractButton::getAnimationDuation() const
 InteractButton::InteractButton()
 {
 	m_tween = nullptr;
-	m_animationPlayer = nullptr;
 	m_hidePosition = Vector2();
 	m_displayPosition = Vector2();
 	m_animationDuration = 0;

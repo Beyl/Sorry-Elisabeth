@@ -19,14 +19,14 @@ void OpenInteraction::_register_methods()
 void OpenInteraction::_ready()
 {
 	//Get children
-	m_searchPlaceBackground = get_node("CanvasLayer/FadeBackground")->cast_to<FadeBackground>
-		(get_node("CanvasLayer/FadeBackground"));
+	m_searchPlaceBackground = get_node("SearchPlaceLayer/FadeBackground")->cast_to<FadeBackground>
+		(get_node("SearchPlaceLayer/FadeBackground"));
 
 	//Scene initialisation
 
 	//Get the specific search place packed scene
-	get_node("CanvasLayer")->add_child(m_searchPlaceScene->instance());
-	const NodePath pathToSearchPlace = NodePath("CanvasLayer/" + m_searchPlaceSceneName);
+	get_node("SearchPlaceLayer")->add_child(m_searchPlaceScene->instance());
+	const NodePath pathToSearchPlace = NodePath("SearchPlaceLayer/" + m_searchPlaceSceneName);
 	m_searchPlace = get_node(pathToSearchPlace)->cast_to<SearchPlace>(get_node(pathToSearchPlace));
 
 	m_searchPlaceBackground->setFadeDuration(m_searchPlace->getAnimationDuration());

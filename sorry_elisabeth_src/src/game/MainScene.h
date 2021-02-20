@@ -36,7 +36,7 @@ public:
 
 	/* SIGNALS */
 	// Connect the needed signals with the new item added
-	void on_inventory_item_added();
+	void on_mouse_wont_exit();
 
 
 	void on_room1_door_opened();

@@ -39,6 +39,8 @@ public:
 	// Display the interaction table
 	void on_interactButton_released();
 
+	void on_interaction_table_displayed();
+
 	// Add the new interactions to the interaction table
 	void on_increaseTypeInteraction_finished();
 

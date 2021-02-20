@@ -1,9 +1,13 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://assets/textures/game/room/interactive_objects/interactionTable.png" type="Texture" id=2]
 [ext_resource path="res://scenes/game/room/interactive_objects/interaction_table/InteractionTable.gdns" type="Script" id=3]
 
+[sub_resource type="CanvasItemMaterial" id=1]
+light_mode = 1
+
 [node name="InteractionTable" type="TextureRect"]
+material = SubResource( 1 )
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
