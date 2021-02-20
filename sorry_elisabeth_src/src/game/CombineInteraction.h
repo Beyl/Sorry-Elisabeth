@@ -25,7 +25,6 @@ public:
 	virtual void play();
 
 	void playFailedExamination();
-	void playSucceededExamination();
 
 
 	/* MUTATORS */

@@ -41,7 +41,7 @@ public:
 	// Display the button
 	void displayButton();
 
-	bool isInventoryOpen();
+	bool isInventoryOpen() const;
 
 
 	/* SIGNALS */

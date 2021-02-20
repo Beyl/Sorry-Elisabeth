@@ -86,7 +86,7 @@ void InventoryButton::displayButton()
 	}
 }
 
-bool InventoryButton::isInventoryOpen()
+bool InventoryButton::isInventoryOpen() const
 {
 	return m_fadeBackground->isDisplayed();
 }
@@ -140,6 +140,7 @@ InventoryButton::InventoryButton()
 	m_displayPosition = Vector2();
 	m_hidePosition = Vector2();
 	m_isAnimated = false;
+	m_isDisplaying = false;
 }
 
 InventoryButton::~InventoryButton()

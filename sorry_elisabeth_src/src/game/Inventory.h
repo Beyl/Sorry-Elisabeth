@@ -32,7 +32,6 @@ public:
 
 	void display();
 	void hide();
-	bool isOpen() const;
 
 	void addItem(Item* newItem);
 	void removeItem(const Item* itemToDelete);

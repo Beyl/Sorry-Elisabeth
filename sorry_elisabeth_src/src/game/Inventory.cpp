@@ -62,17 +62,6 @@ void Inventory::hide()
 	m_tween->interpolate_property(this, "rect_position", m_displayPosition, m_hidePosition, ANIMATION_DURATION,
 		Tween::TRANS_BACK, Tween::EASE_IN);
 	m_tween->start();
-
-	if (m_specialMode != 0)
-		disableSpecialMode();
-
-	if (m_isInteracting)
-		m_isInteracting = false;
-}
-
-bool Inventory::isOpen() const
-{
-	return get_position() == m_displayPosition;
 }
 
 Cell* Inventory::getCellWithNumber(const int cellNumber) const
@@ -163,6 +152,11 @@ void Inventory::manageInteractions()
 		m_combineInteraction->playFailedExamination();
 		disableSpecialMode();
 	}
+	else if (m_specialMode == 1 && m_itemsNumber == 0) {
+		m_useInteraction->setUseFailedExaminationText("I don't have anything that's going to be usefull.");
+		m_useInteraction->playFailedExamination();
+		disableSpecialMode();
+	}
 }
 
 bool Inventory::canInteract(Item* item)
@@ -242,14 +236,13 @@ void Inventory::combine(Cell* itemsCellToCombine)
 		Ref<PackedScene> combinedItemScene = m_combineInteraction->getCombinedItems()[name];
 		addItem(combinedItemScene->instance()->cast_to<Item>(combinedItemScene->instance()));
 
-		m_combineInteraction->playSucceededExamination();
-		m_combineInteraction->emit_signal("interaction_finished");
-
 		Item* combineInteractionItem =
 			m_combineInteraction->get_node(m_combineInteraction->PARENT_INTERACTIVE_OBJECT_PATH)->cast_to<Item>
 			(m_combineInteraction->get_node(m_combineInteraction->PARENT_INTERACTIVE_OBJECT_PATH));
 		removeItem(combineInteractionItem);
 		removeItemByName(name);
+
+		m_combineInteraction->emit_signal("interaction_finished");
 
 		disableSpecialMode();
 	}
@@ -271,6 +264,9 @@ void Inventory::on_hideAnimation_completed()
 {
 	if (m_specialMode != 0)
 		disableSpecialMode();
+
+	if (m_isInteracting)
+		m_isInteracting = false;
 
 	m_tween->disconnect("tween_all_completed", this, "on_hideAnimation_completed");
 }

@@ -38,6 +38,7 @@ void MainScene::_ready()
 	m_camera = get_node("Camera")->cast_to<Camera>(get_node("Camera"));
 	m_inventory = get_node("UILayer/InventoryButton/Inventory")->cast_to<Inventory>
 		(get_node("UILayer/InventoryButton/Inventory"));
+	m_inventoryButton = get_node("UILayer/InventoryButton")->cast_to<InventoryButton>(get_node("UILayer/InventoryButton"));
 	m_room1 = get_node("Room1")->cast_to<Room>(get_node("Room1"));
 	m_room2 = get_node("Room2")->cast_to<Room>(get_node("Room2"));
 
@@ -66,8 +67,12 @@ void MainScene::_ready()
 
 void MainScene::_physics_process()
 {
-	if (!m_inventory->isOpen()) {
+	connectNeededSignals(this);
+	sendPlayerInfoToCam();
+	getActiveRoom()->setInventoryIsOpen(m_inventoryButton->isInventoryOpen());
+	getActiveRoom()->manageInteractions();
 
+	if (!m_inventoryButton->isInventoryOpen()) {
 		if (m_inputManager->is_action_just_released("mouse_left_click")) {
 			if (canPlayerMoove()) {
 				// If a left click is done, moove the player to the this point
@@ -77,15 +82,11 @@ void MainScene::_physics_process()
 	}
 	else
 		m_inventory->manageInteractions();
-
-	sendPlayerInfoToCam();
-	getActiveRoom()->setInventoryIsOpen(m_inventory->isOpen());
-	getActiveRoom()->manageInteractions();
 }
 
 void MainScene::on_inventory_item_added()
 {
-	connectNeededSignals(m_inventory);
+	m_mouseIsInButton = false;
 }
 
 void MainScene::on_room1_door_opened()
@@ -166,7 +167,7 @@ void MainScene::connectNeededSignals(Node* currentNode)
 
 		if (currentNode->get_parent()->get_parent()->get_name().find(OPEN_INTERACTION_NODE_NAME) == -1) {
 
-			if (currentNode->is_connected("just_started", this, "on_dialogBox_just_started")) {
+			if (!currentNode->is_connected("just_started", this, "on_dialogBox_just_started")) {
 				currentNode->connect("just_started", this, "on_dialogBox_just_started");
 				currentNode->connect("just_hided", this, "on_dialogBox_just_hided");
 			}
@@ -193,10 +194,10 @@ bool MainScene::canPlayerMoove() const
 {
 	return
 		!m_mouseIsInButton &&
-		!m_inventory->get_parent()->cast_to<InventoryButton>(m_inventory->get_parent())->isInventoryOpen() &&
+		!m_inventoryButton->isInventoryOpen() &&
 		!m_playerIsInteracting &&
 		!m_inOpenInteraction &&
-		Utils::isInsideRoom(get_local_mouse_position());
+		Utils::isInsideRoom(get_global_mouse_position());
 }
 
 void MainScene::on_room_interaction_just_played()
@@ -258,6 +259,7 @@ MainScene::MainScene()
 	m_player = nullptr;
 	m_camera = nullptr;
 	m_inventory = nullptr;
+	m_inventoryButton = nullptr;
 	m_room1 = nullptr;
 	m_room2 = nullptr;
 	m_playerIsInteracting = false;

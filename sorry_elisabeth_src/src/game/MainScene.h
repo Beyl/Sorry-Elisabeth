@@ -96,6 +96,7 @@ private:
 	Player* m_player;
 	Camera* m_camera;
 	Inventory* m_inventory;
+	InventoryButton* m_inventoryButton;
 	Room* m_room1;
 	Room* m_room2;
 

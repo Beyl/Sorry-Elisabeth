@@ -29,17 +29,6 @@ void CombineInteraction::playFailedExamination()
 	ExamineInteraction::play();
 }
 
-void CombineInteraction::playSucceededExamination()
-{
-	if (m_examinationSound != nullptr) {
-		m_examinationSoundPlayer->set_stream(m_examinationSound);
-	}
-	m_dialogBox->setDisplayedText(m_examineText);
-	m_dialogBox->setTextDisplayDuration(m_examinationSoundPlayer->get_stream()->get_length() / 2);
-
-	ExamineInteraction::play();
-}
-
 void CombineInteraction::setInventory(Inventory* newInventory)
 {
 	m_inventory = newInventory;

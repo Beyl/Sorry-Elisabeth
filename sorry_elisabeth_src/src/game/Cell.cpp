@@ -104,8 +104,10 @@ void Cell::disableInteractions()
 {
 	m_isDisabled = true;
 
-	set_disabled(true);
-	set_process(false);
+	if (!m_isInSpecialMode) {
+		set_disabled(true);
+		set_process(false);
+	}
 
 	if (m_item != nullptr)
 		m_item->hideAll();

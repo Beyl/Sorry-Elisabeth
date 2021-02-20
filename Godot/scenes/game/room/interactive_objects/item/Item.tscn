@@ -4,7 +4,7 @@
 [ext_resource path="res://scenes/game/room/interactive_objects/interact_button/InteractButton.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/game/room/interactive_objects/item/Item.gdns" type="Script" id=3]
 [ext_resource path="res://assets/textures/game/room/interactive_objects/knife.png" type="Texture" id=4]
-[ext_resource path="res://scenes/game/room/interactive_objects/interactions/examine/ExamineInteraction.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/game/room/interactive_objects/interactions/combine/CombineInteraction.tscn" type="PackedScene" id=5]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
