@@ -38,9 +38,9 @@ void DialogBox::_ready()
 
 	//Tween interpolation init
 	m_textTween->interpolate_property(m_textLabel, "percent_visible", 0, 1,
-		m_textDisplayDuration, Tween::TRANS_LINEAR);
+		real_t(m_textDisplayDuration), Tween::TRANS_LINEAR);
 	m_boxTween->interpolate_property(this, "rect_position", get_position(), m_displayPosition,
-		m_transitionDisplayDuration, Tween::TRANS_BOUNCE, Tween::EASE_OUT);
+		real_t(m_transitionDisplayDuration), Tween::TRANS_BOUNCE, Tween::EASE_OUT);
 
 	display();
 }
@@ -69,7 +69,7 @@ void DialogBox::displayText()
 void DialogBox::hide()
 {
 	m_boxTween->interpolate_property(this, "rect_position", m_displayPosition, m_hidePosition,
-		m_transitionDisplayDuration, Tween::TRANS_LINEAR, Tween::EASE_IN);
+		real_t(m_transitionDisplayDuration), Tween::TRANS_LINEAR, Tween::EASE_IN);
 	m_boxTween->start();
 }
 
