@@ -2,57 +2,70 @@
 
 using namespace godot;
 
-void Interaction::_register_methods()
-{
-	register_method("_ready", &Interaction::_ready);
-	register_method("on_button_released", &Interaction::on_button_released);
-
-	register_property<Interaction, double>("Hiding duration", &Interaction::setHidingDuration,
-		&Interaction::getHidingDuration, 0);
-}
-
 void Interaction::_ready()
 {
-	//Get children
-	m_tween = get_node("Tween")->cast_to<Tween>(get_node("Tween"));
+	// Get children
+	m_label = get_node("Label")->cast_to<Label>(get_node("Label"));
+	m_objectSoundPlayer = get_node("ObjectSoundPlayer")->cast_to<AudioStreamPlayer2D>
+		(get_node("ObjectSoundPlayer"));
 
-	//Signal connection
+	// Signals initialisation
 	connect("button_up", this, "on_button_released");
-}
+	add_user_signal("interaction_just_played");
+	add_user_signal("interaction_finished");
+	connect("interaction_finished", get_node(PARENT_INTERACTIVE_OBJECT_PATH), "on_interaction_finished");
+	connect("interaction_just_played", get_node(PARENT_INTERACTIVE_OBJECT_PATH), "on_interaction_just_played");
 
-void Interaction::play()
-{
+	// Scene initialisation
+	set_disabled(false);
+	m_label->set_text(m_interactionName);
+
+	if (m_objectSound != nullptr) {
+		m_objectSoundPlayer->set_stream(m_objectSound);
+	}
 }
 
 void Interaction::on_button_released()
 {
-	hideParent();
+	if (m_objectSound != nullptr) {
+		m_objectSoundPlayer->play();
+	}
 }
 
-void Interaction::hideParent()
+void Interaction::setInteractionName(const godot::String newName)
 {
-	m_tween->interpolate_property(this, "rect_scale", get_scale(), Vector2(0, 0),
-		real_t(m_hidingDuration), Tween::TRANS_EXPO, Tween::EASE_OUT);
-	m_tween->start();
-}
-
-void Interaction::setHidingDuration(double newDuration)
-{
-	if (newDuration < 0)
-		m_hidingDuration = 0.1;
+	if (newName.length() > MAX_NAME_CHAR) {
+		m_interactionName = "Interaction";
+		Godot::print("The interaction name is too long");
+	}
+	else if (newName.empty()) {
+		m_interactionName = "Interaction";
+		Godot::print("The interaction name is empty");
+	}
 	else
-		m_hidingDuration = newDuration;
+		m_interactionName = newName;
 }
 
-double Interaction::getHidingDuration()
+godot::String Interaction::getInteractionName() const
 {
-	return m_hidingDuration;
+	return m_interactionName;
+}
+
+void Interaction::setObjectSound(const godot::Ref<godot::AudioStreamSample> newSound)
+{
+	m_objectSound = newSound;
+}
+
+godot::Ref<godot::AudioStreamSample> Interaction::getObjectSound() const
+{
+	return m_objectSound;
 }
 
 Interaction::Interaction()
 {
-	m_tween = 0;
-	m_hidingDuration = 0;
+	m_label = nullptr;
+	m_objectSoundPlayer = nullptr;
+	m_interactionName = String();
 }
 
 Interaction::~Interaction()

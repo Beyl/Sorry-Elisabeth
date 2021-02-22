@@ -1,6 +1,5 @@
 #pragma once
 
-#include <Godot.hpp>
 #include <KinematicBody2D.hpp>
 #include <AnimatedSprite.hpp>
 
@@ -15,106 +14,66 @@
  */
 class Player : public godot::KinematicBody2D {
 
-	//To make godot able to use this class
-	GODOT_CLASS(Player, godot::KinematicBody2D);
+	GODOT_CLASS(Player, godot::KinematicBody2D);	// To make godot able to use this class
 
 public:
-	/* CONSTRUCTOR && DESTRUCTOR */
 
-	/**
-	 * Constructor, usefull only to create the class and avoid warnings,
-	 *		the real initialisation is done in the "_ready" method.
-	 */
 	Player();
-
-	/**
-	 * Destructor, usefull only to create the class and avoid warnings,
-	 *		godot deallocates the memory itself.
-	 */
 	~Player();
 
-	/* METHODS */
-
-	//Needed by godot
-
 	/**
-	 * Register the methods godot is directly going to call
+	 * Register the methods and properties godot is directly going to call
 	 */
 	static void _register_methods();
-	/**
-	 * Needed by godot to create the class, not usefull here
-	 *		the initialisation is done in the "_ready" method called after
-	 * 
-	 */
-	void _init();
+	void _init();	// Needed by godot
 
-	/**
-	 * Initilisation of the class and the scene
-	 *		called after the parent node and all its children entenred a scene.
-	 * 
-	 */
+	// Initialise the class and the godot scene
 	void _ready();
 
-	/**
-	 * Called every tic (60 times per seconds).
-	 * 
-	 */
+	// Called every tic (60 times per seconds), manage player movements and animations
 	void _physics_process();
 
-	/**
-	 * Moove the player to the x position given in parameter if it's contained in the room height and width
-	 * 
-	 * @param xDestination, define the x position where the player will go
-	 */
-	void mooveTo(int xDestination);
-	/**
-	 * Change the player's direction
-	 * 
-	 * @param newDirection, the new direction the player will look at
-	 */
-	void changeDirection(Direction newDirection);
-	/**
-	 * Stop the player's movement
-	 */
-	void stopMooving();
+	// Moove the player on the X axis to a given position
+	void mooveTo(const int xDestination);
+
+	// Change the actual animated sprite animation with the handbag one
+	void takeHandbag();
+
+	/* ACCESSORS & MUTATORS*/
+	Direction getDirection() const;
+	int getXDestination() const;
+
+	void setMaxPositionRight(const int position);
+
 
 	/* PROPERTIES */
+	void setSpeed(const int newSpeed);
+	int getSpeed() const;
 
-	int m_speed;
-	/**
-	 * Set the player's speed
-	 * 
-	 * @param newSpeed, the new speed to set to the player restricted between SPEED_MIN and SPEED_MAX
-	 */
-	void setSpeed(int newSpeed);
 
-	/**
-	 * Return the player's speed
-	 * 
-	 * @return the player's speed
-	 */
-	int getSpeed();
+	/* CONSTANTS */
+	static const int SPRITE_WIDTH = 32;
+	static const int MIN_SPEED = 5;
+	static const int MAX_SPEED = 500;
+	static const int NO_DESTINATION = -500;	// Set when the player doesn't need to move
+	static const int NOT_MOOVING_RANGE = 10;	// The range around the player where he does not moove
 
-	/* ACCESSORS & MUTATORS */
+protected:
 
-	/**
-	 * Return the player's direction
-	 *
-	 * @return the player's direction
-	 */
-	Direction getDirection();
+	void changeDirection(const Direction newDirection);
+	void stopMooving();
 
-	/**
-	 * Return the player's x destination
-	 *
-	 * @return the player's x destination
-	 */
-	int getXDestination();
 
-private:
+	/* MEMBER VARIABLES */
 	//Child nodes
 	godot::AnimatedSprite* m_animSprite;
 
 	Direction m_direction;	// Define where the player is looking
 	int m_xDestination;	// Define where the player is going
+	int m_maxPositionLeft;
+	int m_maxPositionRight;
+	godot::String m_animationSubName;
+
+	//Properties
+	int m_speed;
 };

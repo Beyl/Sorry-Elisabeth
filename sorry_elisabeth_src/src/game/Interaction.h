@@ -2,69 +2,56 @@
 
 #include <Godot.hpp>
 #include <TextureButton.hpp>
+#include <Label.hpp>
 #include <Tween.hpp>
+#include <AudioStreamPlayer2D.hpp>
+#include <AudioStreamSample.hpp>
+
+#include "../utils/Utils.h"
 
 /**
- * Mother class (pure virtual) of all the interactions.
- * 
- * It's a button that make the interaction table disapear when clicked.
- * The extensions of this class will define specific actions depending on the interaction type.
+ * Mother class (abstract) of all the interactions.
+		It's a button that make the interaction table disapear when clicked.
+		The extensions of this class will define specific actions depending on the interaction type.
  */
 class Interaction : public godot::TextureButton {
 
 public:
-	/* CONSTRUCTOR && DESTRUCTOR */
 
-	/**
-	 * Constructor, usefull only to create the class and avoid warnings,
-	 *		the real initialisation is done in the "_ready" method.
-	 */
 	Interaction();
-
-	/**
-	 * Destructor, usefull only to create the class and avoid warnings,
-	 *		godot deallocates the memory itself.
-	 */
 	~Interaction();
 
-	/* METHODS */
-
-	//Needed by godot
-
-	/**
-	 * Register the methods godot is directly going to call
-	 */
-	void _register_methods();
-
-	/**
-	 * Initilisation of the class and the scene
-	 *		called after the parent node and all its children entenred a scene.
-	 */
+	// Initilisation of the class and the godot scene
 	void _ready();
 
-	/**
-	 * Play the interaction
-	 */
+	// Play the interaction (no specific function to do here, that's why it is a pure virtual method)
 	virtual void play() = 0;
 	
-	/**
-	 * Call "hideParent".
-	 *		Called when the left mouse button is released.
-	 */
-	virtual void on_button_released();
+	// Play the object sound if there's one setted
+	void on_button_released();
 
-	/**
-	 * Hide the parent (interaction table) with a smooth animation
-	 */
-	void hideParent();
 
 	/* PROPERTIES */
+	void setInteractionName(const godot::String newName);
+	godot::String getInteractionName() const;
 
-	double m_hidingDuration;
-	void setHidingDuration(double newDuration);
-	double getHidingDuration();
+	void setObjectSound(const godot::Ref<godot::AudioStreamSample> newSound);
+	godot::Ref<godot::AudioStreamSample> getObjectSound() const;
 	
+
+	/* CONSTANTS */
+	static const int MAX_NAME_CHAR = 18;
+	const godot::NodePath PARENT_INTERACTIVE_OBJECT_PATH = "../../..";
+	static const int MAX_INTERACTIONS_NUMBER = 3;
+	static const int INTERACT_BUTTON_MARGIN = 1;
+
 protected:
-	//Child nodes
-	godot::Tween* m_tween;
+
+	// Children nodes
+	godot::Label* m_label;
+	godot::AudioStreamPlayer2D* m_objectSoundPlayer;
+
+	// Properties
+	godot::Ref<godot::AudioStreamSample> m_objectSound;	// The possible sound associated with the interaction
+	godot::String m_interactionName;	// The text that will be displayed representing the interaction's name
 };

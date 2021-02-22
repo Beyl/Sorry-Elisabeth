@@ -9,68 +9,76 @@ class Utils {
 
 public:
 
-	/*METHODS*/
+	/**
+	 * Define if the position of the element is contained inside an object
+	 *
+	 * @param eltPosition, the global position of the element
+	 * @param objectPosition, the global position of the object
+	 * @param objectSize, the size of the object
+	 * @return true if the position is contained inside the object and false otherwise
+	 */
+	static bool const isInsideObject(const godot::Vector2 eltPosition, const godot::Vector2 objectPosition, const godot::Vector2 objectSize);
 
 	/**
-	 * Define if the position of the element given in parameter is contained inside the room
+	 * Define if the position of the element is contained inside an object on the X axis
+	 *
+	 * @param eltPosition, the global position of the element on the X axis
+	 * @param objectPosition, the global position of the object on the X axis
+	 * @param objectSize, the height of the object
+	 * @return true if the position is contained inside the object on the X axis and false otherwise
+	 */
+	static bool const isInsideObjectX(const real_t eltPositionX, const real_t objectPositionX, const real_t objectSizeX);
+
+	/**
+	 * Define if the position of the element is contained inside an object on the Y axis
+	 *
+	 * @param eltPosition, the global position of the element on the Y axis
+	 * @param objectPosition, the global position of the object on the Y axis
+	 * @param objectSize, the height of the object
+	 * @return true if the position is contained inside the object on the Y axis and false otherwise
+	 */
+	static bool const isInsideObjectY(const real_t eltPositionY, const real_t objectPositionY, const real_t objectSizeY);
+
+	/**
+	 * Define if the position of the element is contained inside the room range
 	 * 
-	 * @param eltPosition, a vector in 2 demensions representing the position of an element
-	 * @return true if it's contained inside a room and false otherwise
+	 * @param eltPosition, a vector in 2 demensions representing the position of the element
+	 * @return true if it's contained inside the room range and false otherwise
 	 */
 	static bool const isInsideRoom(const godot::Vector2 eltPosition);
 
 	/**
-	 * Define if the X position of the element given in parameter is contained inside the room
+	 * Define if the X position of the element is contained inside X the room
 	 *
-	 * @overload
+	 * @param eltPosition, the X position of the element
+	 * @return true if it's contained inside thre room X range and false otherwise
 	 */
-	static bool const isInsideRoomX(const int eltXPosition);
+	static bool const isInsideRoomX(const real_t eltXPosition);
 
 	/**
-	 * Define if the Y position of the element given in parameter is contained inside the room
+	 * Define if the Y position of the element is contained inside Y the room
 	 *
-	 * @overload
+	 * @param eltPosition, the Y position of the element
+	 * @return true if it's contained inside thre room Y range and false otherwise
 	 */
-	static bool const isInsideRoomY(const int eltYPosition);
+	static bool const isInsideRoomY(const real_t eltYPosition);
 
-	/*CONSTANTS*/
-	//GAME
-	static const int PLAYER_START_X = 25;
-	static const int PLAYER_START_Y = 100;
+	/**
+	 * Define the screen centered position of an object
+	 *
+	 * @param objectSize, the size of the object
+	 * @return the screen centered position of an object
+	 */
+	static godot::Vector2 getCenteredPosition(const godot::Vector2 objectSize);
 
-	//ROOM
-	static const int ROOM_HEIGHT_BEGINNING = 30;
-	static const int ROOM_HEIGHT_ENDING = 180;
-	static const int ROOM_WIDTH_BEGINNING = -40;
-	static const int ROOM_WIDTH_ENDING = 660;
 
-	static const int ROOM1_TRANSITION = 300;	// Go to room 2 when the player's position is greater then that
-	static const int ROOM2_TRANSITION = 20;	// Go to room 1 when the player's position is lower then that 
+	/* CONSTANTS (Coordinates, positions & sizes are setted pixels) */
 
-	//CAMERA
-	static const int CELLAR_POSITION_X = 0;
-	static const int LIVING_ROOM_POSITION_X = 320;
-
-	static const int START_FOLLOW_PLAYER_LEFT_MIN = 0;
-	static const int START_FOLLOW_PLAYER_LEFT_MAX = 160;
-	static const int START_FOLLOW_PLAYER_RIGHT_MIN = 480;
-	static const int START_FOLLOW_PLAYER_RIGHT_MAX = 640;
-
-	//The range (in px) in wich the player's is considered in the other room
-	static const int CHANGE_ROOM_RANGE = 20;
-
-	//PLAYER
-	static const int MIN_SPEED = 5;
-	static const int MAX_SPEED = 500;
-
-	static const int NO_DESTINATION = -500;	// Set when the player doesn't need to move
-
-	static const int NOT_MOOVING_RANGE = 10;	// The range around the player where he does not moove
-
-	//DIALOGBOX
-	static const int MIN_TEXT_DISPLAY_DURATION = 1;
-	static const int MIN_TRANSITION_DISPLAY_DURATION = 1;
-
-	//EXAMINE INTERACTION
-	static const int MAX_LETTERS_DISPLAY = 110;
+	// SCREEN
+	static const int SCREEN_WIDTH = 320;
+	static const int SCREEN_HEIGHT = 180;
+	
+	// OTHERS
+	static const int ASCII_CONVERSION_0 = 48;	// 48 on the ascii table is equal to "0"
+	static const int ASCII_CONVERSION_1 = 49;	// 49 on the ascii table is equal to "1"
 };

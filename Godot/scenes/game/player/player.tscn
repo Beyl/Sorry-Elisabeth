@@ -1,25 +1,37 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
-[ext_resource path="res://assets/textures/player/run_f0.png" type="Texture" id=1]
-[ext_resource path="res://assets/textures/player/idle_f2.png" type="Texture" id=2]
-[ext_resource path="res://assets/textures/player/run_f1.png" type="Texture" id=3]
-[ext_resource path="res://assets/textures/player/idle_f0.png" type="Texture" id=4]
-[ext_resource path="res://assets/textures/player/idle_f3.png" type="Texture" id=5]
-[ext_resource path="res://assets/textures/player/idle_f1.png" type="Texture" id=6]
-[ext_resource path="res://assets/textures/player/run_f3.png" type="Texture" id=7]
-[ext_resource path="res://assets/textures/player/run_f2.png" type="Texture" id=8]
+[ext_resource path="res://assets/textures/game/player/idle_f1.png" type="Texture" id=1]
+[ext_resource path="res://assets/textures/game/player/idle_f2.png" type="Texture" id=2]
+[ext_resource path="res://assets/textures/game/player/idle_f3.png" type="Texture" id=3]
+[ext_resource path="res://assets/textures/game/player/idle_f0.png" type="Texture" id=4]
+[ext_resource path="res://assets/textures/game/player/run_f1.png" type="Texture" id=5]
+[ext_resource path="res://assets/textures/game/player/run_f0.png" type="Texture" id=6]
+[ext_resource path="res://assets/textures/game/player/run_f2.png" type="Texture" id=7]
+[ext_resource path="res://assets/textures/game/player/run_f3.png" type="Texture" id=8]
 [ext_resource path="res://scenes/game/player/player.gdns" type="Script" id=9]
+[ext_resource path="res://assets/textures/icon.png" type="Texture" id=10]
+[ext_resource path="res://assets/textures/icon3.png" type="Texture" id=11]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 4 ), ExtResource( 6 ), ExtResource( 2 ), ExtResource( 5 ) ],
+"frames": [ ExtResource( 10 ) ],
 "loop": true,
-"name": "idle",
+"name": "walk_handbag",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 11 ) ],
+"loop": true,
+"name": "idle_handbag",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 4 ), ExtResource( 1 ), ExtResource( 2 ), ExtResource( 3 ) ],
+"loop": true,
+"name": "idle_normal",
 "speed": 8.0
 }, {
-"frames": [ ExtResource( 1 ), ExtResource( 3 ), ExtResource( 8 ), ExtResource( 7 ) ],
+"frames": [ ExtResource( 6 ), ExtResource( 5 ), ExtResource( 7 ), ExtResource( 8 ) ],
 "loop": true,
-"name": "walk",
+"name": "walk_normal",
 "speed": 8.0
 } ]
 
@@ -32,9 +44,9 @@ Speed = 75
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
-animation = "idle"
-frame = 1
+animation = "idle_normal"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2( 0, 4 )
 shape = SubResource( 2 )

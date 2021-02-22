@@ -2,14 +2,20 @@
  * Register the classes to be abble to use them in godot
  */
 
-#include "game/Player.h"
 #include "game/MainScene.h"
-#include "ui/dialog_box/DialogBox.h"
-#include "game/Interaction.h"
+#include "game/InventoryButton.h"
+#include "game/OpenInteraction.h"
+#include "game/SpecialInteraction.h"
+#include "game/TakeHangbagInteraction.h"
+#include "game/TakeInteraction.h"
+#include "game/OpenDoorInteraction.h"
+#include "game/ActiveLightInteraction.h"
+#include "game/Light.h"
 
+#include "../tests/utils/UtilsTest.h"
 #include "../tests/game/PlayerTest.h"
 #include "../tests/game/CameraTest.h"
-#include "../tests/utils/UtilsTest.h"
+#include "../tests/game/InteractionTableTest.h"
 
 using namespace godot;
 
@@ -20,14 +26,35 @@ extern "C" void GDN_EXPORT godot_gdnative_terminate(godot_gdnative_terminate_opt
 extern "C" void GDN_EXPORT godot_nativescript_init(void* handle) {
 	Godot::nativescript_init(handle);
 
+	// Main scene game classes
 	register_class<MainScene>();
+	register_class<Room>();
+	register_class<Light>();
 	register_class<Player>();
 	register_class<Camera>();
+	register_class<InventoryButton>();
+	register_class<Inventory>();
+	register_class<Cell>();
+	register_class<Item>();
+	register_class<InteractiveObject>();
+	register_class<InteractButton>();
+	register_class<InteractionTable>();
+	register_class<ExamineInteraction>();
+	register_class<TakeInteraction>();
+	register_class<UseInteraction>();
+	register_class<CombineInteraction>();
+	register_class<TakeHandbagInteraction>();
+	register_class<SpecialInteraction>();
+	register_class<OpenDoorInteraction>();
+	register_class<ActiveLightInteraction>();
+	register_class<OpenInteraction>();
+	register_class<SearchPlace>();
 	register_class<DialogBox>();
-	register_class<Interaction>();
+	register_class<FadeBackground>();
 
-	//Tests
+	// Test classes
+	register_class<UtilsTest>();
 	register_class<PlayerTest>();
 	register_class<CameraTest>();
-	register_class<UtilsTest>();
+	register_class<InteractionTableTest>();
 }

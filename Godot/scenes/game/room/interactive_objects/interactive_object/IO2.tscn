@@ -1,0 +1,38 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://scenes/game/room/interactive_objects/interaction_table/InteractionTable.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/game/room/interactive_objects/interact_button/InteractButton.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/textures/iconTest.png" type="Texture" id=3]
+[ext_resource path="res://scenes/game/room/interactive_objects/interactions/take/TakeInteraction.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/game/room/interactive_objects/item/Item.gdns" type="Script" id=5]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 3 ) ],
+"loop": false,
+"name": "state1",
+"speed": 5.0
+} ]
+
+[node name="IO2" type="AnimatedSprite"]
+frames = SubResource( 1 )
+animation = "state1"
+script = ExtResource( 5 )
+"Number of state" = 1
+"Object size" = Vector2( 16, 16 )
+
+[node name="InteractionTable" parent="." instance=ExtResource( 1 )]
+visible = false
+margin_left = -38.0
+margin_top = -28.0
+margin_right = 22.0
+margin_bottom = 12.0
+Interactions = [ ExtResource( 4 ), null, null ]
+
+[node name="InteractButton" parent="." instance=ExtResource( 2 )]
+margin_left = -16.0
+margin_top = -16.0
+margin_right = 0.0
+margin_bottom = 0.0
+"Hide position" = Vector2( -8, -8 )
+"Animation duration" = 0.3

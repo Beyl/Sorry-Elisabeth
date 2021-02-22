@@ -8,191 +8,101 @@
 #include "Direction.h"
 
 /**
- * Represent the player in the game
- * 
- * Can moove according to a direction and a destination on the X axis
- * Animated when standing and mooving
+ * Represent the player in the game.
+		Can moove according to a direction and a destination on the X axis.
+		Animated when standing and mooving.
  */
 class Camera : public godot::Camera2D {
 
-	//To make godot able to use this class
-	GODOT_CLASS(Camera, godot::Camera2D);
+	GODOT_CLASS(Camera, godot::Camera2D);	// Needed by godot to be able to use this class
 
 public:
-	/* CONSTRUCTOR && DESTRUCTOR */
-
-	/**
-	 * Constructor, usefull only to create the class and avoid warnings,
-	 *		the real initialisation is done in the "_ready" method.
-	 */
+	
 	Camera();
-
-	/**
-	 * Destructor, usefull only to create the class and avoid warnings,
-	 *		godot deallocates the memory itself.
-	 */
 	~Camera();
 
-	/* METHODS */
-
-	//Needed by godot
-
-	/**
-	 * Register the methods godot is directly going to call
-	 */
+	// Register the methods and properties that godot is directly going to call and use
 	static void _register_methods();
-	/**
-	 * Needed by godot to create the class, not usefull here
-	 *		the initialisation is done in the "_ready" method called after
-	 * 
-	 */
-	void _init();
+	void _init();	// Needed by godot
 
-	/**
-	 * Initilisation of the class and the scene here.
-	 *		Called after the parent node and all its children entenred a scene.
-	 */
+	// Initialise the class and the godot scene
 	void _ready();
 
-	/**
-	 * Called every frame.
-	 */
+	// Called every frame, manage the camera position
 	void _process();
 
-	/**
-	 * Determine if the player has entered a new room
-	 * 
-	 * @return true if the player has entered in a new room
-	 */
-	bool isPlayerEnteringNewRoom();
+
+	/* PROPERTIES */
+	void setCellarCamPosition(const godot::Vector2 newPosition);
+	godot::Vector2 getCellarCamPosition() const;
+
+	void setLivingRoomCamPosition(const godot::Vector2 newPosition);
+	godot::Vector2 getLivingRoomCamPosition() const;
+
+	void setInterpolationDuration(const double newDuration);
+	double getInterpolationDuration() const;
+
+
+	/* ACCESSORS & MUTATORS */
+	void setPlayerPosition(const godot::Vector2 playerPosition);
+	void setPlayerDirection(const Direction newDirection);
+
+	// Prevent or allow the camera to change room when the player is in the range
+	void setEnableChangeRoom(const bool allow);
+
+	void setStartFollowPlayerLeft(const int newPosition);
+	int getStartFollowPlayerLeft() const;
+
+	void setStartFollowPlayerRight(const int newPosition);
+	int getStartFollowPlayerRight() const;
+
+
+	/* CONSTANTS */
+	static const int CELLAR_POSITION_X = 0;
+	static const int LIVING_ROOM_POSITION_X = 320;
+	static const int START_FOLLOW_PLAYER_LEFT = 60;
+	static const int START_FOLLOW_PLAYER_RIGHT_1 = 260;
+	static const int START_FOLLOW_PLAYER_RIGHT_2 = 580;
+	static const int CHANGE_ROOM_RANGE = 20; //The range in wich the player is considered in the other room
+
+protected:
+
+	// Determine if the player is curently entering a new room
+	const bool isPlayerEnteringNewRoom();
 
 	/**
 	 * Determine if the player is inside the range where he can change of rooms
-	 * 
+	 *
 	 * @return - 0 : if the player isn't inside a change room range
 	 *		   - 1 : if the player is inside the cellar change room range
 	 *		   - 2 : if the player is inside the living room change room range
 	 */
-	int isPlayerInsideChangeRoomRange();
+	const int isPlayerInsideChangeRoomRange();
 
 	/**
 	 * Do a linear interpolation with a tiny bounce at the end to the new camera's position
-	 * 
+	 *
 	 * @param changeToCellar : true if the player is entering the cellar room, false otherwise
 	 */
-	void changeRoom(bool changeToCellar);
+	void changeRoom(const bool changeToCellar);
 
-	/**
-	 * Make the camera follow the player
-	 */
-	void follow_player();
+	// Make the camera follow the player (to the right or to the left)
+	void follow_player(const Direction direction);
 
-	/* PROPERTIES */
 
-	godot::Vector2 m_cellarCamPosition;
-	/**
-	 * Set the camera's position when the player is in the cellar
-	 * 
-	 * @param newPosition, the new position for the cellar
-	 */
-	void setCellarCamPosition(godot::Vector2 newPosition);
-
-	/**
-	 * Get the camera's position when the player is in the cellar
-	 */
-	godot::Vector2 getCellarCamPosition();
-
-	godot::Vector2 m_livingRoomCamPosition;
-	/**
-	 * Set the camera's position when the player is in the living room
-	 *
-	 * @param newPosition, the new position for the living room
-	 */
-	void setLivingRoomCamPosition(godot::Vector2 newPosition);
-
-	/**
-	 * Get the camera's position when the player is in the living room
-	 */
-	godot::Vector2 getLivingRoomCamPosition();
-
-	//Represents the duration in s of change room transition
-	double m_interpolationDuration;
-
-	/**
-	 * Set the duration of the change room transition
-	 * 
-	 * @param newDuration the new transition's duration
-	 */
-	void setInterpolationDuration(double newDuration);
-
-	/**
-	 * Get the duration of the change room transition
-	 * 
-	 * @return the transition's duration
-	 */
-	double getInterpolationDuration();
-
-	/*Represents the x position from where the camera starts to follow the player
-		on the left side of the room*/
-	int m_startFollowPlayerLeft;
-
-	/**
-	 * Set the position from where the camera starts to follow the player
-	 *		on the left side of the room
-	 * 
-	 * @param newPosition, the new position that will be set
-	 */
-	void setStartFollowPlayerLeft(int newPosition);
-
-	/**
-	 * Get the position from where the camera starts to follow the player
-	 *		on the left side of the room
-	 * 
-	 * @return this actual x position
-	 */
-	int getStartFollowPlayerLeft();
-
-	/*Represents the x position from where the camera starts to follow the player
-		on the right side of the room*/
-	int m_startFollowPlayerRight;
-
-	/**
-	 * Set the position from where the camera starts to follow the player
-	 *		on the right side of the room
-	 *
-	 * @param newPosition, the new position that will be set
-	 */
-	void setStartFollowPlayerRight(int newPosition);
-
-	/**
-	 * Get the position from where the camera starts to follow the player
-	 *		on the right side of the room
-	 *
-	 * @return this actual x position
-	 */
-	int getStartFollowPlayerRight();
-
-	/* ACCESSORS & MUTATORS */
-
-	/**
-	 * Set the player position
-	 * 
-	 * @param playerPosition : the new player's position
-	 */
-	void setPlayerPosition(godot::Vector2 playerPosition);
-
-	/**
-	 * Set the player direction
-	 *
-	 * @param playerPosition : the new player's direction
-	 */
-	void setPlayerDirection(Direction newDirection);
-
-private:
-	//Child nodes
+	/* MEMBER VARIABLES */
+	// Child nodes
 	godot::Tween* m_tween;
 
 	godot::Vector2 m_playerPosition;
 	Direction m_playerDirection;
-	bool m_playerIsInCellar;	//True if the player is in the cellar, false if he is not
+	bool m_playerIsInCellar;	//True if the player is in the cellar, false otherwise
+	bool m_enableChangeRoom;
+
+	// Properties
+	godot::Vector2 m_cellarCamPosition;
+	godot::Vector2 m_livingRoomCamPosition;
+	double m_interpolationDuration;	// Represents the duration in s of the change room transition
+	int m_startFollowPlayerLeft;	// Represents the x position from where the camera starts to follow the player on the left side of the room
+	int m_startFollowPlayerRight;	// Represents the x position from where the camera starts to follow the player on the right side of the room
 };
