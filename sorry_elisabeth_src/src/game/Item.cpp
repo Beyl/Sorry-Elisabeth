@@ -41,7 +41,7 @@ void Item::_process(float delta)
 	const Vector2 itemMarginSize = Vector2(m_objectSize.x + 2 * Cell::HIDE_INTERACT_BUTTON_MARGIN_X,
 		m_objectSize.y + real_t(Cell::HIDE_INTERACT_BUTTON_MARGIN_Y * 1.5));
 
-	if (Utils::isInsideObject(mousePosition, itemMarginPosition, itemMarginSize)) {
+	if (Utils::isInsideArea(mousePosition, itemMarginPosition, itemMarginSize)) {
 		if (m_interactButton->isHided() && m_interactionTable->isHided() && !m_isPlayerInteracting)
 			displayInteractButton();
 	}

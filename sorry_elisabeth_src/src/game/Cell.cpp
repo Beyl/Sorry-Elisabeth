@@ -27,7 +27,7 @@ void Cell::_process(float delta)
 
 		const Vector2 mousePosition = get_global_mouse_position();
 
-		if (Utils::isInsideObject(mousePosition, get_global_position(), get_size())) {
+		if (Utils::isInsideArea(mousePosition, get_global_position(), get_size())) {
 			if (m_itemInteractButton->isHided() && m_itemInteractionTable->isHided())
 				m_item->displayInteractButton();
 		}
@@ -36,11 +36,11 @@ void Cell::_process(float delta)
 				Vector2(get_global_position().x - HIDE_INTERACT_BUTTON_MARGIN_X, get_global_position().y - HIDE_INTERACT_BUTTON_MARGIN_Y);
 			const Vector2 cellMarginSize = Vector2(get_size().x + 2 * HIDE_INTERACT_BUTTON_MARGIN_X, get_size().y + HIDE_INTERACT_BUTTON_MARGIN_Y);
 
-			if (!Utils::isInsideObject(mousePosition, cellMarginPosition, cellMarginSize)) {
+			if (!Utils::isInsideArea(mousePosition, cellMarginPosition, cellMarginSize)) {
 				if (m_itemInteractButton->isDisplayed())
 					m_itemInteractButton->hide();
 
-				if (!Utils::isInsideObject(mousePosition, m_itemInteractionTable->get_global_position(), m_itemInteractionTable->get_size())) {
+				if (!Utils::isInsideArea(mousePosition, m_itemInteractionTable->get_global_position(), m_itemInteractionTable->get_size())) {
 					if (m_itemInteractionTable->isDisplayed())
 						m_itemInteractionTable->hide();
 				}

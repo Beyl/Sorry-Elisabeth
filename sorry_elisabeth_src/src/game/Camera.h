@@ -31,6 +31,9 @@ public:
 	// Called every frame, manage the camera position
 	void _process();
 
+	// Make a subtle camera movement on the Y axis
+	void on_heightMovement_completed();
+
 
 	/* PROPERTIES */
 	void setCellarCamPosition(const godot::Vector2 newPosition);
@@ -64,6 +67,8 @@ public:
 	static const int START_FOLLOW_PLAYER_RIGHT_1 = 260;
 	static const int START_FOLLOW_PLAYER_RIGHT_2 = 580;
 	static const int CHANGE_ROOM_RANGE = 20; //The range in wich the player is considered in the other room
+	static const int SUBTLE_MOOVING_RANGE = 3;
+	const real_t SUBTLE_MOOVING_DURATION = 0.75;
 
 protected:
 
@@ -93,6 +98,7 @@ protected:
 	/* MEMBER VARIABLES */
 	// Child nodes
 	godot::Tween* m_tween;
+	godot::Tween* m_immersiveTween;
 
 	godot::Vector2 m_playerPosition;
 	Direction m_playerDirection;

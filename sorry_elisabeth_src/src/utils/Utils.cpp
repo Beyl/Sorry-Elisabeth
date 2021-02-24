@@ -3,7 +3,7 @@
 
 using namespace godot;
 
-bool const Utils::isInsideObject(const godot::Vector2 eltPosition, const godot::Vector2 objectPosition, const godot::Vector2 objectSize)
+bool const Utils::isInsideArea(const godot::Vector2 eltPosition, const godot::Vector2 objectPosition, const godot::Vector2 objectSize)
 {
     return isInsideObjectX(eltPosition.x, objectPosition.x, objectSize.x) && isInsideObjectY(eltPosition.y, objectPosition.y, objectSize.y);
 }

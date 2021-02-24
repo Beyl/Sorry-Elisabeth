@@ -50,14 +50,10 @@ public:
 	const godot::Color NO_OPACITY = godot::Color(1, 1, 1, 0);
 	const godot::Color FULL_OPACITY = godot::Color(1, 1, 1, 1);
 
-	const godot::Vector2 NORMAL_SCALE = godot::Vector2(1, 1);
-	const godot::Vector2 INVERT_SCALE = godot::Vector2(-1, 1);
-
 protected:
 
 	// Children nodes
 	godot::Tween* m_tween;
-	godot::AnimationPlayer* m_animationPlayer;
 
 	// Properties
 	godot::Vector2 m_hidePosition;

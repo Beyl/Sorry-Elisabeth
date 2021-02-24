@@ -5,6 +5,7 @@ using namespace godot;
 void InteractionTable::_register_methods()
 {
 	register_method("_ready", &InteractionTable::_ready);
+	register_method("on_displayAnimation_completed", &InteractionTable::on_displayAnimation_completed);
 
 	register_property<InteractionTable, Array>("Interactions", &InteractionTable::setInteractions,
 		&InteractionTable::getInteractions, Array());
@@ -29,6 +30,10 @@ void InteractionTable::_ready()
 	m_full_scale = Vector2(1 / parentScale.x, 1 / parentScale.y);
 	set_pivot_offset(Vector2(get_size().x / 2, get_size().y / 2));
 	set_scale(NO_SCALE);
+
+	// Signals initialisation
+	add_user_signal("displayAnimation_completed");
+	m_tween->connect("tween_all_completed", this, "on_displayAnimation_completed");
 }
 
 void InteractionTable::display()
@@ -91,6 +96,12 @@ void InteractionTable::setTableSize()
 	m_vBox->set_size(Vector2(m_vBox->get_size().x, MIN_VBOX_SIZE * getInteractionsNumber()));
 	set_size(Vector2(get_size().x, (MIN_VBOX_SIZE * getInteractionsNumber() + VBOX_MARGIN * 2)));
 	m_vBox->set_position(Vector2(VBOX_MARGIN, VBOX_MARGIN));
+}
+
+void InteractionTable::on_displayAnimation_completed()
+{
+	if (isDisplayed())
+		emit_signal("displayAnimation_completed");
 }
 
 void InteractionTable::setInteractions(const godot::Array newInteractions)

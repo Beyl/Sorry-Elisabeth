@@ -6,6 +6,7 @@ void InteractiveObject::_register_methods()
 {
 	register_method("_ready", &InteractiveObject::_ready);
 	register_method("on_interactButton_released", &InteractiveObject::on_interactButton_released);
+	register_method("on_interaction_table_displayed", &InteractiveObject::on_interaction_table_displayed);
 	register_method("on_increaseTypeInteraction_finished", &InteractiveObject::on_increaseTypeInteraction_finished);
 	register_method("on_interaction_just_played", &InteractiveObject::on_interaction_just_played);
 	register_method("on_interaction_finished", &InteractiveObject::on_interaction_finished);
@@ -35,7 +36,9 @@ void InteractiveObject::_ready()
 	// Signals initialisation
 	add_user_signal("interaction_just_played");
 	add_user_signal("interaction_finished");
+	add_user_signal("interactionTable_just_displayed");
 	m_interactButton->connect("button_up", this, "on_interactButton_released");
+	m_interactionTable->connect("displayAnimation_completed", this, "on_interaction_table_displayed");
 }
 
 void InteractiveObject::setInteractionTablePosition()
@@ -72,6 +75,11 @@ void InteractiveObject::on_interactButton_released()
 	m_interactionTable->setTableSize();
 	setInteractionTablePosition();
 	m_interactionTable->display();
+}
+
+void InteractiveObject::on_interaction_table_displayed()
+{
+	emit_signal("interactionTable_just_displayed");
 }
 
 bool InteractiveObject::offerInteractions() const

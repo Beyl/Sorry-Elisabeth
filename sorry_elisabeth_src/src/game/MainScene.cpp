@@ -12,7 +12,7 @@ void MainScene::_register_methods()
 {
 	register_method("_ready", &MainScene::_ready);
 	register_method("_physics_process", &MainScene::_physics_process);
-	register_method("on_inventory_item_added", &MainScene::on_inventory_item_added);
+	register_method("on_mouse_wont_exit", &MainScene::on_mouse_wont_exit);
 	register_method("on_room1_door_opened", &MainScene::on_room1_door_opened);
 	register_method("on_room_interaction_just_played", &MainScene::on_room_interaction_just_played);
 	register_method("on_room_interaction_finished", &MainScene::on_room_interaction_finished);
@@ -56,7 +56,7 @@ void MainScene::_ready()
 
 	// Signals initialisation
 	connectNeededSignals(this);
-	m_inventory->connect("item_added", this, "on_inventory_item_added");
+	m_inventory->connect("item_added", this, "on_mouse_wont_exit");
 	m_camera->connect("room_changed", this, "on_camera_changed_room");
 	m_room1->connect("door_opened", this, "on_room1_door_opened");
 	m_room1->connect("interaction_just_played", this, "on_room_interaction_just_played");
@@ -84,7 +84,7 @@ void MainScene::_physics_process()
 		m_inventory->manageInteractions();
 }
 
-void MainScene::on_inventory_item_added()
+void MainScene::on_mouse_wont_exit()
 {
 	m_mouseIsInButton = false;
 }
@@ -161,6 +161,11 @@ void MainScene::connectNeededSignals(Node* currentNode)
 			}
 
 			continueConnecting = false;
+		}
+		else if (currentNode->get_name().find(INTERACT_BUTTON_NODE_NAME) != -1) {
+			
+			if (!currentNode->get_parent()->is_connected("interactionTable_just_displayed", this, "on_mouse_wont_exit"))
+				currentNode->get_parent()->connect("interactionTable_just_displayed", this, "on_mouse_wont_exit");
 		}
 	}
 	else if (currentNode->get_name() == DIALOGBOX_NODE_NAME) {

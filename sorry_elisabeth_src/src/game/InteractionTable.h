@@ -44,6 +44,10 @@ public:
 	void setTableSize();
 
 
+	/* SIGNALS */
+	void on_displayAnimation_completed();
+
+
 	/* PROPERTIES */
 	void setInteractions(const godot::Array newInteractions);
 	godot::Array getInteractions() const;
