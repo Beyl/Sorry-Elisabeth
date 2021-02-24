@@ -31,8 +31,9 @@ public:
 	// Called every frame, manage the camera position
 	void _process();
 
-	// Make a subtle camera movement on the Y axis
-	void on_heightMovement_completed();
+
+	/* SIGNALS */
+	void on_room_changed();
 
 
 	/* PROPERTIES */
@@ -63,12 +64,9 @@ public:
 	/* CONSTANTS */
 	static const int CELLAR_POSITION_X = 0;
 	static const int LIVING_ROOM_POSITION_X = 320;
-	static const int START_FOLLOW_PLAYER_LEFT = 60;
-	static const int START_FOLLOW_PLAYER_RIGHT_1 = 260;
-	static const int START_FOLLOW_PLAYER_RIGHT_2 = 580;
+	static const int START_FOLLOW_PLAYER_LEFT = 120;
+	static const int START_FOLLOW_PLAYER_RIGHT = 490;
 	static const int CHANGE_ROOM_RANGE = 20; //The range in wich the player is considered in the other room
-	static const int SUBTLE_MOOVING_RANGE = 3;
-	const real_t SUBTLE_MOOVING_DURATION = 0.75;
 
 protected:
 
@@ -94,16 +92,20 @@ protected:
 	// Make the camera follow the player (to the right or to the left)
 	void follow_player(const Direction direction);
 
+	// Return the current camera position on the x axis depending on wich room is active
+	int getCurrentXCamPosition();
+
 
 	/* MEMBER VARIABLES */
 	// Child nodes
-	godot::Tween* m_tween;
-	godot::Tween* m_immersiveTween;
+	godot::Tween* m_changeRoomTween;
+	godot::Tween* m_followPlayerTween;
 
 	godot::Vector2 m_playerPosition;
 	Direction m_playerDirection;
 	bool m_playerIsInCellar;	//True if the player is in the cellar, false otherwise
 	bool m_enableChangeRoom;
+	bool m_isChangingRoom;
 
 	// Properties
 	godot::Vector2 m_cellarCamPosition;

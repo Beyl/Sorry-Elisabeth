@@ -7,7 +7,7 @@ void Camera::_register_methods()
 	// Methods
 	register_method("_ready", &Camera::_ready);
 	register_method("_process", &Camera::_process);
-	register_method("on_heightMovement_completed", &Camera::on_heightMovement_completed);
+	register_method("on_room_changed", &Camera::on_room_changed);
 
 	// Porperties
 	register_property<Camera, Vector2>("Cellar position",
@@ -21,19 +21,18 @@ void Camera::_register_methods()
 void Camera::_ready()
 {
 	// Get children
-	m_tween = get_node("Tween")->cast_to<Tween>(get_node("Tween"));
-	m_immersiveTween = get_node("ImmersiveTween")->cast_to<Tween>(get_node("ImmersiveTween"));
+	m_changeRoomTween = get_node("ChangeRoomTween")->cast_to<Tween>(get_node("ChangeRoomTween"));
+	m_followPlayerTween = get_node("FollowPlayerTween")->cast_to<Tween>(get_node("FollowPlayerTween"));
 
 	// Scene initialisation
 	m_playerIsInCellar = true;
 	m_enableChangeRoom = false;
 	setStartFollowPlayerLeft(Camera::START_FOLLOW_PLAYER_LEFT);
-	set_offset(Vector2(0, -Camera::SUBTLE_MOOVING_RANGE));
+	setStartFollowPlayerRight(Camera::START_FOLLOW_PLAYER_RIGHT);
 
 	// Signal initialisation
 	add_user_signal("room_changed");
-	m_immersiveTween->connect("tween_all_completed", this, "on_heightMovement_completed");
-	on_heightMovement_completed();
+	m_changeRoomTween->connect("tween_all_completed", this, "on_room_changed");
 }
 
 void Camera::_process()
@@ -45,46 +44,23 @@ void Camera::_process()
 			changeRoom(true);	// True mean : change to the cellar
 	}
 
-	// Make the camera follow the player when he is in the extreme of the rooms
-	if (m_playerPosition.x < m_startFollowPlayerLeft && m_playerPosition.x > Camera::CELLAR_POSITION_X) 
-		follow_player(Direction::LEFT);
-	else if	(m_playerPosition.x > m_startFollowPlayerRight &&
-		m_playerPosition.x < m_startFollowPlayerRight + Camera::CHANGE_ROOM_RANGE * 2)
-		follow_player(Direction::RIGHT);
+	// Make the camera follow the player when he is not in the middle of the room
+	if (!m_isChangingRoom) {
+		if (m_playerPosition.x < m_startFollowPlayerLeft && m_playerPosition.x > getCurrentXCamPosition())
+			follow_player(Direction::LEFT);
+		else if (m_playerPosition.x > m_startFollowPlayerRight &&
+			m_playerPosition.x < m_startFollowPlayerRight + Camera::CHANGE_ROOM_RANGE * 2)
+			follow_player(Direction::RIGHT);
+	}
 }
 
-void Camera::on_heightMovement_completed()
+void Camera::on_room_changed()
 {
-	real_t nextYPosition;
-	real_t nextXPosition;
-
-	if (get_offset().x == 0) {
-		nextYPosition = 0;
-		if (get_offset().y == Camera::SUBTLE_MOOVING_RANGE)
-			nextXPosition = -Camera::SUBTLE_MOOVING_RANGE;
-		else
-			nextXPosition = Camera::SUBTLE_MOOVING_RANGE;
-	}
-	else {
-		nextXPosition = 0;
-		if (get_offset().x == -Camera::SUBTLE_MOOVING_RANGE)
-			nextYPosition = -Camera::SUBTLE_MOOVING_RANGE;
-		else
-			nextYPosition = Camera::SUBTLE_MOOVING_RANGE;
-	}
-
-	m_immersiveTween->interpolate_property(this, "offset", get_offset(), Vector2(nextXPosition, nextYPosition),
-		SUBTLE_MOOVING_DURATION, Tween::TRANS_LINEAR, Tween::EASE_IN_OUT);
-	m_immersiveTween->start();
+	m_isChangingRoom = false;
 }
 
 void Camera::setEnableChangeRoom(const bool allow)
 {
-	if (allow)
-		setStartFollowPlayerRight(Camera::START_FOLLOW_PLAYER_RIGHT_2);
-	else
-		setStartFollowPlayerRight(Camera::START_FOLLOW_PLAYER_RIGHT_1);
-
 	m_enableChangeRoom = allow;
 }
 
@@ -129,40 +105,43 @@ void Camera::changeRoom(const bool changeToCellar)
 
 	// Do a linear interpolation with a tiny bounce at the end between to the new camera's position
 	if (changeToCellar) {
-		m_tween->interpolate_property(this, "position", get_position(), m_cellarCamPosition,
+		m_changeRoomTween->interpolate_property(this, "position", get_position(), m_cellarCamPosition,
 			real_t(m_interpolationDuration), Tween::TRANS_BACK, Tween::EASE_OUT);
-		m_tween->start();
+		m_changeRoomTween->start();
 	}
 	else {
-		m_tween->interpolate_property(this, "position", get_position(), m_livingRoomCamPosition,
-			real_t(m_interpolationDuration), 10, 1);
-		m_tween->start();
+		m_changeRoomTween->interpolate_property(this, "position", get_position(), m_livingRoomCamPosition,
+			real_t(m_interpolationDuration), Tween::TRANS_BACK, Tween::EASE_OUT);
+		m_changeRoomTween->start();
 	}
 
 	emit_signal("room_changed");
+	m_isChangingRoom = true;
 }
 
 void Camera::follow_player(const Direction direction)
 {
 	if (direction == Direction::LEFT) {
-		m_tween->interpolate_property(this, "position", get_position(),
-			Vector2(m_cellarCamPosition.x - (m_startFollowPlayerLeft - m_playerPosition.x), 0),
-			1, 10, 1);
+		m_followPlayerTween->interpolate_property(this, "position", get_position(),
+			Vector2(getCurrentXCamPosition() - (m_startFollowPlayerLeft - m_playerPosition.x), 0),
+			2, 10, 1);
 	}
 	else {
-		real_t xCamPosition;
-		if (m_playerIsInCellar)
-			xCamPosition = m_cellarCamPosition.x;
-		else
-			xCamPosition = m_livingRoomCamPosition.x;
-
-		m_tween->interpolate_property(this, "position", get_position(),
-			Vector2(xCamPosition + (m_playerPosition.x - m_startFollowPlayerRight), 0),
-			1, 10, 1);
+		m_followPlayerTween->interpolate_property(this, "position", get_position(),
+			Vector2(getCurrentXCamPosition() + (m_playerPosition.x - m_startFollowPlayerRight), 0),
+			2, 10, 1);
 	}
-	m_tween->start();
+	m_followPlayerTween->start();
 
 	align();	// Align the camera position with the player position (more fluid)
+}
+
+int Camera::getCurrentXCamPosition()
+{
+	if (m_playerIsInCellar)
+		return Camera::CELLAR_POSITION_X;
+	else
+		return Camera::LIVING_ROOM_POSITION_X;
 }
 
 void Camera::setCellarCamPosition(const godot::Vector2 newPosition)
@@ -241,12 +220,13 @@ Camera::Camera()
 	m_playerPosition = Vector2(0, 0);
 	m_playerDirection = Direction::RIGHT;
 	m_enableChangeRoom = false;
+	m_isChangingRoom = false;
 
 	m_cellarCamPosition = Vector2(0, 0);
 	m_livingRoomCamPosition = Vector2(0, 0);
 
-	m_tween = nullptr;
-	m_immersiveTween = nullptr;
+	m_changeRoomTween = nullptr;
+	m_followPlayerTween = nullptr;
 }
 
 Camera::~Camera()
