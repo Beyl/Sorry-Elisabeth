@@ -122,7 +122,7 @@ bool Room::isInInteractionZone(InteractiveObject* object) const
 		object->getObjectSize().x + Room::CAN_INTERACT_RANGE * 2,
 		object->getObjectSize().y + Room::CAN_INTERACT_RANGE * 2);
 
-	return Utils::isInsideObject(m_player->get_global_position(), objectRangePosition, objectRangeSize);
+	return Utils::isInsideArea(m_player->get_global_position(), objectRangePosition, objectRangeSize);
 }
 
 bool Room::canInteract(InteractiveObject* object) const

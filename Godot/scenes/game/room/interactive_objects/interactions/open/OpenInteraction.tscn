@@ -15,6 +15,7 @@ script = ExtResource( 1 )
 margin_right = -3.8147e-06
 
 [node name="SearchPlaceLayer" type="CanvasLayer" parent="." index="4"]
+layer = 3
 
 [node name="FadeBackground" parent="SearchPlaceLayer" index="0" instance=ExtResource( 4 )]
 "Display opacity" = 0.5

@@ -39,7 +39,7 @@ void InventoryButton::_process(float delta)
 	if (m_fadeBackground->isDisplayed()) {
 		Vector2 mousePosition = get_global_mouse_position();
 
-		if (Utils::isInsideObject(mousePosition, get_global_position(), get_size()))
+		if (Utils::isInsideArea(mousePosition, get_global_position(), get_size()))
 			m_fadeBackground->set_mouse_filter(Control::MOUSE_FILTER_IGNORE);
 		else
 			m_fadeBackground->set_mouse_filter(Control::MOUSE_FILTER_STOP);

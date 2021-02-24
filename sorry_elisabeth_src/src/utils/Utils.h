@@ -17,7 +17,7 @@ public:
 	 * @param objectSize, the size of the object
 	 * @return true if the position is contained inside the object and false otherwise
 	 */
-	static bool const isInsideObject(const godot::Vector2 eltPosition, const godot::Vector2 objectPosition, const godot::Vector2 objectSize);
+	static bool const isInsideArea(const godot::Vector2 eltPosition, const godot::Vector2 objectPosition, const godot::Vector2 objectSize);
 
 	/**
 	 * Define if the position of the element is contained inside an object on the X axis

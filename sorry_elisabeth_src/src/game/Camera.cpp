@@ -7,6 +7,7 @@ void Camera::_register_methods()
 	// Methods
 	register_method("_ready", &Camera::_ready);
 	register_method("_process", &Camera::_process);
+	register_method("on_heightMovement_completed", &Camera::on_heightMovement_completed);
 
 	// Porperties
 	register_property<Camera, Vector2>("Cellar position",
@@ -21,14 +22,18 @@ void Camera::_ready()
 {
 	// Get children
 	m_tween = get_node("Tween")->cast_to<Tween>(get_node("Tween"));
+	m_immersiveTween = get_node("ImmersiveTween")->cast_to<Tween>(get_node("ImmersiveTween"));
 
 	// Scene initialisation
 	m_playerIsInCellar = true;
 	m_enableChangeRoom = false;
 	setStartFollowPlayerLeft(Camera::START_FOLLOW_PLAYER_LEFT);
+	set_offset(Vector2(0, -Camera::SUBTLE_MOOVING_RANGE));
 
 	// Signal initialisation
 	add_user_signal("room_changed");
+	m_immersiveTween->connect("tween_all_completed", this, "on_heightMovement_completed");
+	on_heightMovement_completed();
 }
 
 void Camera::_process()
@@ -46,6 +51,31 @@ void Camera::_process()
 	else if	(m_playerPosition.x > m_startFollowPlayerRight &&
 		m_playerPosition.x < m_startFollowPlayerRight + Camera::CHANGE_ROOM_RANGE * 2)
 		follow_player(Direction::RIGHT);
+}
+
+void Camera::on_heightMovement_completed()
+{
+	real_t nextYPosition;
+	real_t nextXPosition;
+
+	if (get_offset().x == 0) {
+		nextYPosition = 0;
+		if (get_offset().y == Camera::SUBTLE_MOOVING_RANGE)
+			nextXPosition = -Camera::SUBTLE_MOOVING_RANGE;
+		else
+			nextXPosition = Camera::SUBTLE_MOOVING_RANGE;
+	}
+	else {
+		nextXPosition = 0;
+		if (get_offset().x == -Camera::SUBTLE_MOOVING_RANGE)
+			nextYPosition = -Camera::SUBTLE_MOOVING_RANGE;
+		else
+			nextYPosition = Camera::SUBTLE_MOOVING_RANGE;
+	}
+
+	m_immersiveTween->interpolate_property(this, "offset", get_offset(), Vector2(nextXPosition, nextYPosition),
+		SUBTLE_MOOVING_DURATION, Tween::TRANS_LINEAR, Tween::EASE_IN_OUT);
+	m_immersiveTween->start();
 }
 
 void Camera::setEnableChangeRoom(const bool allow)
@@ -216,6 +246,7 @@ Camera::Camera()
 	m_livingRoomCamPosition = Vector2(0, 0);
 
 	m_tween = nullptr;
+	m_immersiveTween = nullptr;
 }
 
 Camera::~Camera()

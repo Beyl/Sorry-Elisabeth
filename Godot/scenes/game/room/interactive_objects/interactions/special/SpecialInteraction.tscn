@@ -10,7 +10,7 @@ script = ExtResource( 3 )
 "Examine text" = "Insert texte here"
 
 [node name="FadeBackgroundLayer" type="CanvasLayer" parent="." index="3"]
-layer = 2
+layer = 3
 
 [node name="FadeBackground" parent="FadeBackgroundLayer" index="0" instance=ExtResource( 2 )]
 "Display opacity" = 1.0
