@@ -12,7 +12,6 @@ void MainScene::_register_methods()
 {
 	register_method("_ready", &MainScene::_ready);
 	register_method("_physics_process", &MainScene::_physics_process);
-	register_method("on_mouse_wont_exit", &MainScene::on_mouse_wont_exit);
 	register_method("on_room1_door_opened", &MainScene::on_room1_door_opened);
 	register_method("on_room_interaction_just_played", &MainScene::on_room_interaction_just_played);
 	register_method("on_room_interaction_finished", &MainScene::on_room_interaction_finished);
@@ -82,11 +81,6 @@ void MainScene::_physics_process()
 	}
 	else
 		m_inventory->manageInteractions();
-}
-
-void MainScene::on_mouse_wont_exit()
-{
-	m_mouseIsInButton = false;
 }
 
 void MainScene::on_room1_door_opened()
@@ -164,8 +158,12 @@ void MainScene::connectNeededSignals(Node* currentNode)
 		}
 		else if (currentNode->get_name().find(INTERACT_BUTTON_NODE_NAME) != -1) {
 			
-			if (!currentNode->get_parent()->is_connected("interactionTable_just_displayed", this, "on_mouse_wont_exit"))
-				currentNode->get_parent()->connect("interactionTable_just_displayed", this, "on_mouse_wont_exit");
+			if (!currentNode->get_parent()->is_connected("interactionTable_just_displayed", this, "on_mouse_exited_button"))
+				currentNode->get_parent()->connect("interactionTable_just_displayed", this, "on_mouse_exited_button");
+		}
+		else if (currentNode->get_name().find(TAKE_HANDBAG_INTERACTION_NODE_NAME) != -1) {
+			if (!currentNode->is_connected("parent_removed", this, "on_mouse_exited_button"))
+				currentNode->connect("parent_removed", this, "on_mouse_exited_button");
 		}
 	}
 	else if (currentNode->get_name() == DIALOGBOX_NODE_NAME) {

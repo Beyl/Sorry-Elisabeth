@@ -19,6 +19,7 @@ void TakeHandbagInteraction::play()
 void TakeHandbagInteraction::on_examineInteraction_finished()
 {
 	get_node(PARENT_INTERACTIVE_OBJECT_PATH)->cast_to<Node2D>(get_node(PARENT_INTERACTIVE_OBJECT_PATH))->queue_free();
+	emit_signal("parent_removed");
 }
 
 void TakeHandbagInteraction::setPlayer(Player* newPlayer)
@@ -43,4 +44,5 @@ TakeHandbagInteraction::~TakeHandbagInteraction()
 
 void TakeHandbagInteraction::_init()
 {
+	add_user_signal("parent_removed");
 }

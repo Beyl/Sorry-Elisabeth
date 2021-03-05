@@ -101,6 +101,7 @@ const int Camera::isPlayerInsideChangeRoomRange()
 
 void Camera::changeRoom(const bool changeToCellar)
 {
+	Godot::print("test2");
 	m_playerIsInCellar = changeToCellar;
 
 	// Do a linear interpolation with a tiny bounce at the end between to the new camera's position

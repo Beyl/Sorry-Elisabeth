@@ -35,10 +35,6 @@ public:
 
 
 	/* SIGNALS */
-	// Connect the needed signals with the new item added
-	void on_mouse_wont_exit();
-
-
 	void on_room1_door_opened();
 	void on_room_interaction_just_played();
 	void on_room_interaction_finished();
@@ -59,7 +55,7 @@ public:
 
 	/* CONSTANTS */
 	static const int PLAYER_START_X = 40;
-	static const int PLAYER_START_Y = 120;
+	static const int PLAYER_START_Y = 112;
 	const godot::String TAKE_HANDBAG_INTERACTION_NODE_NAME = "TakeHandbagInteraction";
 	const godot::String TAKE_INTERACTION_NODE_NAME = "TakeInteraction";
 	const godot::String USE_INTERACTION_NODE_NAME = "UseInteraction";

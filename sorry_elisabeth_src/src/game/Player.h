@@ -52,7 +52,7 @@ public:
 
 
 	/* CONSTANTS */
-	static const int SPRITE_WIDTH = 32;
+	static const int SPRITE_WIDTH = 16;
 	static const int MIN_SPEED = 5;
 	static const int MAX_SPEED = 500;
 	static const int NO_DESTINATION = -500;	// Set when the player doesn't need to move

@@ -27,6 +27,7 @@ void InventoryButton::_ready()
 	// Scene initialisation
 	m_isAnimated = false;
 	m_isDisplaying = false;
+	set_position(m_displayPosition);
 
 	// Signal initialisation
 	connect("button_up", this, "on_button_released");
@@ -67,6 +68,7 @@ void InventoryButton::on_Inventory_interact()
 void InventoryButton::hideButton()
 {
 	if (get_position() == m_displayPosition) {
+
 		m_tween->interpolate_property(this, "rect_position", m_displayPosition, m_hidePosition,
 			real_t(TWEEN_ANIMATION_DURATION / 1.5), Tween::TRANS_BACK, Tween::EASE_IN_OUT);
 		m_tween->start();
