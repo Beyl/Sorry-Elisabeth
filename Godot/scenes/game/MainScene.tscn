@@ -29,15 +29,16 @@ color = Color( 0, 0, 0, 1 )
 
 [node name="Light" parent="Room1" instance=ExtResource( 7 )]
 visible = false
-position = Vector2( 152, 241 )
+position = Vector2( 36, 226 )
 scale = Vector2( 0.5, 1 )
 
 [node name="Light2" parent="Room1" instance=ExtResource( 7 )]
 visible = false
-position = Vector2( 37, 227 )
+position = Vector2( 185, 213 )
 scale = Vector2( 0.75, 1 )
 
 [node name="IO" parent="Room1" instance=ExtResource( 6 )]
+visible = false
 position = Vector2( 136, 117 )
 scale = Vector2( 0.15, 0.15 )
 

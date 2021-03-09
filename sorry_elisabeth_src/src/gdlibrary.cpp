@@ -4,6 +4,8 @@
 
 #include "game/MainScene.h"
 #include "game/InventoryButton.h"
+#include "game/SettingsButton.h"
+#include "game/QuitGameButton.h"
 #include "game/OpenInteraction.h"
 #include "game/SpecialInteraction.h"
 #include "game/TakeHangbagInteraction.h"
@@ -32,6 +34,10 @@ extern "C" void GDN_EXPORT godot_nativescript_init(void* handle) {
 	register_class<Light>();
 	register_class<Player>();
 	register_class<Camera>();
+	register_class<Panel>();
+	register_class<SettingsButton>();
+	register_class<SettingsTable>();
+	register_class<QuitGameButton>();
 	register_class<InventoryButton>();
 	register_class<Inventory>();
 	register_class<Cell>();
