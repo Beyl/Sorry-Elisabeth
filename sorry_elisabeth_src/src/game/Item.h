@@ -3,7 +3,8 @@
 #include "InteractiveObject.h"
 
 /**
- * Represents inventory's items wich the player will be able to interact with
+ * Represents inventory's items wich the player will be able to interact with.
+ * @version 0.0
  */
 class Item : public InteractiveObject {
 

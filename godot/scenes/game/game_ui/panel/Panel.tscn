@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scenes/game/game_ui/panel/Panel.gdns" type="Script" id=1]
+[ext_resource path="res://assets/textures/game/room/interactive_objects/interactions/intercation.png" type="Texture" id=2]
+[ext_resource path="res://assets/textures/game/game_ui/close_button/closeButton.png" type="Texture" id=3]
+
+[node name="Panel" type="TextureRect"]
+margin_left = 105.0
+margin_top = 15.0
+margin_right = 215.0
+margin_bottom = 135.0
+mouse_filter = 0
+texture = ExtResource( 2 )
+expand = true
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="CloseButton" type="TextureButton" parent="."]
+margin_left = 100.0
+margin_top = -10.0
+margin_right = 120.0
+margin_bottom = 10.0
+texture_normal = ExtResource( 3 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}

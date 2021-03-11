@@ -11,8 +11,9 @@
 
 /**
  * Mother class (abstract) of all the interactions.
-		It's a button that make the interaction table disapear when clicked.
-		The extensions of this class will define specific actions depending on the interaction type.
+ *		It's a button that make the interaction table disapear when clicked.
+ *		The extensions of this class will define specific actions depending on the interaction type.
+ * version 0.0
  */
 class Interaction : public godot::TextureButton {
 

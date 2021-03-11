@@ -8,8 +8,8 @@
 #include <Node2D.hpp>
 
 /**
- * Contain 1 to 3 interactions wich the player can interact with.
- 		The size of the table fits with the number of interactions inside.
+ * Contain 1 to 3 interactions wich the player can interact with. The size of the table fits with the number of interactions inside.
+ * @version 0.0
  */
 class InteractionTable : public godot::TextureRect {
 

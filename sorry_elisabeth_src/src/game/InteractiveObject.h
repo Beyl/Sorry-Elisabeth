@@ -5,7 +5,8 @@
 #include "Interaction.h"
 
 /**
- * Represents the objects wich the player will be able to interact with
+ * Represents a room object wich the player will be able to interact with.
+ * @version 0.0
  */
 class InteractiveObject : public godot::AnimatedSprite {
 

@@ -7,6 +7,10 @@
 #include <AnimationPlayer.hpp>
 #include <AnimatedSprite.hpp>
 
+/**
+ * Represents the button on wich the player has to click to interact with an item or an object.
+ * @version beta
+ */
 class InteractButton : public godot::TextureButton {
 
 	GODOT_CLASS(InteractButton, godot::TextureButton);	// Needed by godot to be able to use this class

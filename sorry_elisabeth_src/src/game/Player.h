@@ -11,6 +11,7 @@
  * 
  * Can moove according to a direction and a destination on the X axis
  * Animated when standing and mooving
+ * @version 0.0
  */
 class Player : public godot::KinematicBody2D {
 
@@ -58,7 +59,7 @@ public:
 	static const int NO_DESTINATION = -500;	// Set when the player doesn't need to move
 	static const int NOT_MOOVING_RANGE = 10;	// The range around the player where he does not moove
 
-protected:
+private:
 
 	void changeDirection(const Direction newDirection);
 	void stopMooving();

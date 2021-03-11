@@ -8,9 +8,8 @@
 #include "Direction.h"
 
 /**
- * Represent the player in the game.
-		Can moove according to a direction and a destination on the X axis.
-		Animated when standing and mooving.
+ * Represent the game's camera. Follow the player when he is in the extreme of the screen and do smooth transition when changing room.
+ * @version beta
  */
 class Camera : public godot::Camera2D {
 
@@ -68,10 +67,10 @@ public:
 	static const int START_FOLLOW_PLAYER_RIGHT = 490;
 	static const int CHANGE_ROOM_RANGE = 20; //The range in wich the player is considered in the other room
 
-protected:
+private:
 
 	// Determine if the player is curently entering a new room
-	const bool isPlayerEnteringNewRoom();
+	bool isPlayerEnteringNewRoom() const;
 
 	/**
 	 * Determine if the player is inside the range where he can change of rooms
@@ -80,7 +79,7 @@ protected:
 	 *		   - 1 : if the player is inside the cellar change room range
 	 *		   - 2 : if the player is inside the living room change room range
 	 */
-	const int isPlayerInsideChangeRoomRange();
+	const int isPlayerInsideChangeRoomRange() const;
 
 	/**
 	 * Do a linear interpolation with a tiny bounce at the end to the new camera's position
@@ -93,7 +92,7 @@ protected:
 	void follow_player(const Direction direction);
 
 	// Return the current camera position on the x axis depending on wich room is active
-	int getCurrentXCamPosition();
+	int getCurrentXCamPosition() const;
 
 
 	/* MEMBER VARIABLES */

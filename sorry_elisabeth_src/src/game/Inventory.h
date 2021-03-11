@@ -10,8 +10,8 @@ class UseInteraction;
 class CombineInteraction;
 
 /**
- * Represents the player's inventory.
-		Contain 15 cells to keep and interact with diferent items.
+ * Represents the player's inventory. Contain 5 to 15 cells.
+ * @version 0.0
  */
 class Inventory : public godot::Container {
 

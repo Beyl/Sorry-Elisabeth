@@ -3,8 +3,8 @@
 #include "Item.h"
 
 /**
- *	Represents a cell in the inventory.
-		Can contain an item.
+ *	Represents a cell in the inventory. Can contain an item.
+ * @version 0.0
  */
 class Cell : public godot::TextureButton {
 

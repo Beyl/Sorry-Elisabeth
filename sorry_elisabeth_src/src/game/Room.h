@@ -3,17 +3,21 @@
 #include "InteractiveObject.h"
 #include "Player.h"
 
+/**
+ * Represents a room which contain a background and several interactive objects and lights.
+ * Gather them together to handle interctions with player.
+ */
 class Room : public godot::Node2D {
 
-	GODOT_CLASS(Room, godot::Node2D);
+	GODOT_CLASS(Room, godot::Node2D); // Needed by godot to be able to use this class
 
 public:
 
 	Room();
 	~Room();
 
-	static void _register_methods();
-	void _init();	// Needed by godot;
+	static void _register_methods();	// Register all methods and signals that godot is directly going to call
+	void _init();	// Needed by godot
 
 	void _ready();
 	void clearAndGetInteractiveObjects();

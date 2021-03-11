@@ -7,7 +7,8 @@
 #include <Timer.hpp>
 
 /**
- * Represents a bunch of specific interactions that makes the interactive objects associated increase its state
+ * Represents a bunch of specific interactions that makes the interactive objects associated increase its state.
+ * @version 0.0
  */
 class SpecialInteraction : public ExamineInteraction {
 

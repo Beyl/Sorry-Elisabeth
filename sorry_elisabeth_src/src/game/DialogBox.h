@@ -10,6 +10,7 @@
 
 /**
  * Represents a box that displays text on the screen.
+ * @version 0.0
  */
 class DialogBox : public godot::TextureRect {
 

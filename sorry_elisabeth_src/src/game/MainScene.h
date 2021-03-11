@@ -8,8 +8,8 @@
 #include "InventoryButton.h"
 
 /**
- * Represent the main scene in the game.
-		 Gather the player, the camera, the rooms and the GUI to connect them
+ * Represent the main scene in the game. Gather the player, the camera, the rooms and the GUI to connect them.
+ * @version beta
  */
 class MainScene : public godot::Node2D {
 

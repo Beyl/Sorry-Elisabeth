@@ -4,8 +4,8 @@
 #include "ExamineInteraction.h"
 
 /**
- * Represents a unique interaction in the game, when the player takes up the handbag.
-		It makes the inventory grow up, and change the player's sprite animation.
+ * Active the lights of a specific room.
+ * @version 0.0
  */
 class ActiveLightInteraction : public ExamineInteraction {
 

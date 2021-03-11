@@ -4,8 +4,9 @@
 
 /**
  * Define methods and constants usefull in all parts of this project
+ * @version beta
  */
-class Utils {
+static class Utils {
 
 public:
 
@@ -17,7 +18,7 @@ public:
 	 * @param objectSize, the size of the object
 	 * @return true if the position is contained inside the object and false otherwise
 	 */
-	static bool const isInsideArea(const godot::Vector2 eltPosition, const godot::Vector2 objectPosition, const godot::Vector2 objectSize);
+	static bool isInsideArea(const godot::Vector2 eltPosition, const godot::Vector2 objectPosition, const godot::Vector2 objectSize);
 
 	/**
 	 * Define if the position of the element is contained inside an object on the X axis
@@ -27,7 +28,7 @@ public:
 	 * @param objectSize, the height of the object
 	 * @return true if the position is contained inside the object on the X axis and false otherwise
 	 */
-	static bool const isInsideObjectX(const real_t eltPositionX, const real_t objectPositionX, const real_t objectSizeX);
+	static bool isInsideObjectX(const real_t eltPositionX, const real_t objectPositionX, const real_t objectSizeX);
 
 	/**
 	 * Define if the position of the element is contained inside an object on the Y axis
@@ -37,7 +38,7 @@ public:
 	 * @param objectSize, the height of the object
 	 * @return true if the position is contained inside the object on the Y axis and false otherwise
 	 */
-	static bool const isInsideObjectY(const real_t eltPositionY, const real_t objectPositionY, const real_t objectSizeY);
+	static bool isInsideObjectY(const real_t eltPositionY, const real_t objectPositionY, const real_t objectSizeY);
 
 	/**
 	 * Define if the position of the element is contained inside the room range
@@ -45,7 +46,7 @@ public:
 	 * @param eltPosition, a vector in 2 demensions representing the position of the element
 	 * @return true if it's contained inside the room range and false otherwise
 	 */
-	static bool const isInsideRoom(const godot::Vector2 eltPosition);
+	static bool isInsideRoom(const godot::Vector2 eltPosition);
 
 	/**
 	 * Define if the X position of the element is contained inside X the room
@@ -53,7 +54,7 @@ public:
 	 * @param eltPosition, the X position of the element
 	 * @return true if it's contained inside thre room X range and false otherwise
 	 */
-	static bool const isInsideRoomX(const real_t eltXPosition);
+	static bool isInsideRoomX(const real_t eltXPosition);
 
 	/**
 	 * Define if the Y position of the element is contained inside Y the room
@@ -61,7 +62,7 @@ public:
 	 * @param eltPosition, the Y position of the element
 	 * @return true if it's contained inside thre room Y range and false otherwise
 	 */
-	static bool const isInsideRoomY(const real_t eltYPosition);
+	static bool isInsideRoomY(const real_t eltYPosition);
 
 	/**
 	 * Define the screen centered position of an object

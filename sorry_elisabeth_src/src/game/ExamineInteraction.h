@@ -7,8 +7,8 @@
 #include <Ref.hpp>
 
 /**
- * The interaction type : "Examine"
- 		Display a dialog box and play the sound (voice) associated with it
+ * Display a dialog box and play the sound (voice) associated with it.
+ * @version 0.0
  */
 class ExamineInteraction : public Interaction {
 

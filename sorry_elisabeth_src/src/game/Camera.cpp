@@ -64,7 +64,7 @@ void Camera::setEnableChangeRoom(const bool allow)
 	m_enableChangeRoom = allow;
 }
 
-const bool Camera::isPlayerEnteringNewRoom()
+bool Camera::isPlayerEnteringNewRoom() const
 {
 	bool hasChanged = false;
 	const int isInsideRoomRange = isPlayerInsideChangeRoomRange();
@@ -81,7 +81,7 @@ const bool Camera::isPlayerEnteringNewRoom()
 	return hasChanged;
 }
 
-const int Camera::isPlayerInsideChangeRoomRange()
+const int Camera::isPlayerInsideChangeRoomRange() const
 {
 	int isInside = 0;
 
@@ -137,7 +137,7 @@ void Camera::follow_player(const Direction direction)
 	align();	// Align the camera position with the player position (more fluid)
 }
 
-int Camera::getCurrentXCamPosition()
+int Camera::getCurrentXCamPosition() const
 {
 	if (m_playerIsInCellar)
 		return Camera::CELLAR_POSITION_X;

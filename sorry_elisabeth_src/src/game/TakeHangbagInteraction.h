@@ -5,8 +5,9 @@
 #include "Inventory.h"
 
 /**
- * Represents a unique interaction in the game, when the player takes up the handbag.
-		It makes the inventory grow up, and change the player's sprite animation.
+ * Represents a unique interaction in the game, when the player takes up the handbag,
+ *			it makes the inventory grow up, and change the player's sprite animation.
+ * @version 0.0
  */
 class TakeHandbagInteraction : public ExamineInteraction {
 

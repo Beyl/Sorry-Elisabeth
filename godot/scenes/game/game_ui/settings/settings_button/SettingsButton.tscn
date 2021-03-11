@@ -1,0 +1,25 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/textures/game/game_ui/cell_selected.png" type="Texture" id=1]
+[ext_resource path="res://assets/textures/game/game_ui/cell.png" type="Texture" id=2]
+[ext_resource path="res://scenes/game/game_ui/settings/settings_table/SettingsTable.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/game/game_ui/settings/settings_button/SettingsButton.gdns" type="Script" id=4]
+[ext_resource path="res://scenes/game/game_ui/fade_background/FadeBackground.tscn" type="PackedScene" id=5]
+
+[node name="SettingsButton" type="TextureButton"]
+margin_right = 20.0
+margin_bottom = 20.0
+texture_normal = ExtResource( 2 )
+texture_pressed = ExtResource( 1 )
+texture_hover = ExtResource( 1 )
+expand = true
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FadeBackground" parent="." instance=ExtResource( 5 )]
+show_behind_parent = true
+"Display opacity" = 0.5
+
+[node name="SettingsTable" parent="." instance=ExtResource( 3 )]

@@ -5,6 +5,7 @@
 
 /**
  * Offers the possibility to take an interactive object that is present in the room and add it to the inventory.
+ * @version 0.0
  */
 class TakeInteraction : public ExamineInteraction {
 

@@ -3,8 +3,8 @@
 #include "Panel.h"
 
 /**
- * Represents the content of an open interaction.
- 		Contain OR NOT a list of inventory items
+ * Represents the content of an open interaction. Contain or not a list of inventory items
+ * @version 0.0
  */
 class SearchPlace : public Panel {
 

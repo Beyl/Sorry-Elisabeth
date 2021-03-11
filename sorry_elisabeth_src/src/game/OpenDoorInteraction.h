@@ -4,8 +4,8 @@
 #include "SpecialInteraction.h"
 
 /**
- * Represents a unique interaction in the game, when the player takes up the handbag.
-		It makes the inventory grow up, and change the player's sprite animation.
+ * Represents a unique interaction in the game, when the player open the door between the rooms.
+ * @version 0.0
  */
 class OpenDoorInteraction : public ExamineInteraction {
 

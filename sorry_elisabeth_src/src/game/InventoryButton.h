@@ -9,6 +9,7 @@ class Inventory;
 
 /**
  * Represents the button that display or hide the player's inventory.
+ * @version 0.0
  */
 class InventoryButton : public godot::TextureButton
 {

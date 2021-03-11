@@ -152,7 +152,7 @@ Cell::Cell()
 Cell::~Cell()
 {
 	if (m_item != nullptr)
-		m_item->queue_free();
+		m_item->queue_free();	// normaly it is done by godot, but try to improve memory managment with the inventory
 }
 
 void Cell::_init()

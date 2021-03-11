@@ -8,8 +8,8 @@
 #include <PackedScene.hpp>
 
 /**
- * The interaction type : "Examine"
- 		Display a dialog box and play the sound (voice) associated with it
+ * An examine interaction that dispays a search place.
+ * @version 0.0
  */
 class OpenInteraction : public ExamineInteraction {
 

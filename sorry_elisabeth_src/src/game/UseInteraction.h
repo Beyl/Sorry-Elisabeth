@@ -6,7 +6,8 @@
 class Inventory;
 
 /**
- * Offers the possibility to use an item coming from the inventory over an interactive object
+ * Offers the possibility to use an item coming from the inventory over an interactive object.
+ * @version 0.0
  */
 class UseInteraction : public ExamineInteraction {
 

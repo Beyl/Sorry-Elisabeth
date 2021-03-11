@@ -172,7 +172,7 @@ void Inventory::setCellsInSpecialMode()
 
 		currentCell = getCellWithNumber(i);
 
-		if (currentCell->getItem() != nullptr) {
+		if (currentCell->getItem() != nullptr) {	// Get cells that contains an item
 			currentCell->enableSpecialMode();
 			currentCell->connect("clicked", this, "on_cellsButtonInSpecialMode_clicked");
 		}

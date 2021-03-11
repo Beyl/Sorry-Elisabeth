@@ -7,6 +7,7 @@ class Inventory;
 
 /**
  * Offers the possiblity to combine two items together to create a new one.
+ * @version 0.0
  */
 class CombineInteraction : public ExamineInteraction {
 
