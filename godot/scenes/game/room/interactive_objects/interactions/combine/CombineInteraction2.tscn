@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scenes/game/room/interactive_objects/interactions/examine/ExamineInteraction.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/game/room/interactive_objects/item/Item3.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/game/room/interactive_objects/interactions/combine/CombineInteraction.gdns" type="Script" id=3]
+
+[node name="CombineInteraction2" instance=ExtResource( 1 )]
+script = ExtResource( 3 )
+"Combined items" = {
+"Item": ExtResource( 2 )
+}
+"Interaction name" = "Combine"
+"Examine text" = "Insert texte here"
