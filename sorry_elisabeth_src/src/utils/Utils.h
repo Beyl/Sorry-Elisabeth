@@ -6,7 +6,7 @@
  * Define methods and constants usefull in all parts of this project
  * @version beta
  */
-static class Utils {
+class Utils {
 
 public:
 

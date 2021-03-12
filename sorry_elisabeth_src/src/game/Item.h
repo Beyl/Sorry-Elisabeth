@@ -40,6 +40,8 @@ public:
 	// Display the interaction table
 	void on_interactButton_released();
 
+	void on_interaction_table_displayed();
+
 	void on_interaction_just_played();
 	void on_interaction_finished();
 

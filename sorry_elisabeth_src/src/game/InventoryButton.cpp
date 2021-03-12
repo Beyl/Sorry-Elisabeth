@@ -33,6 +33,8 @@ void InventoryButton::_ready()
 	connect("button_up", this, "on_button_released");
 	m_inventory->connect("interact", this, "on_Inventory_interact");
 	m_tween->connect("tween_all_completed", this, "on_tween_all_completed");
+
+	m_inventory->addItem(get_node("Item")->cast_to<Item>(get_node("Item")));
 }
 
 void InventoryButton::_process(float delta)

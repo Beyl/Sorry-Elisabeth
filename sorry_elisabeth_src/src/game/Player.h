@@ -59,7 +59,7 @@ public:
 	static const int NO_DESTINATION = -500;	// Set when the player doesn't need to move
 	static const int NOT_MOOVING_RANGE = 10;	// The range around the player where he does not moove
 
-private:
+protected:	//The test class will inherits form it
 
 	void changeDirection(const Direction newDirection);
 	void stopMooving();

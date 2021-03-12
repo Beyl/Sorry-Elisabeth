@@ -67,7 +67,7 @@ public:
 	static const int START_FOLLOW_PLAYER_RIGHT = 490;
 	static const int CHANGE_ROOM_RANGE = 20; //The range in wich the player is considered in the other room
 
-private:
+protected: //The test class will inherits form it
 
 	// Determine if the player is curently entering a new room
 	bool isPlayerEnteringNewRoom() const;

@@ -8,6 +8,7 @@ void Item::_register_methods()
 	register_method("_ready", &Item::_ready);
 	register_method("_process", &Item::_process);
 	register_method("on_interactButton_released", &Item::on_interactButton_released);
+	register_method("on_interaction_table_displayed", &Item::on_interaction_table_displayed);
 	register_method("on_interaction_just_played", &Item::on_interaction_just_played);
 	register_method("on_interaction_finished", &Item::on_interaction_finished);
 
@@ -88,6 +89,11 @@ void Item::on_interactButton_released()
 	m_interactionTable->setTableSize();
 	setInteractionTablePosition();
 	m_interactionTable->display();
+}
+
+void Item::on_interaction_table_displayed()
+{
+	emit_signal("interactionTable_just_displayed");
 }
 
 void Item::on_interaction_just_played()

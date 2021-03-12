@@ -1,11 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scenes/game/MainScene.gdns" type="Script" id=1]
 [ext_resource path="res://scenes/game/camera/Camera.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/game/player/player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/game/game_ui/Inventory/InventoryButton/InventoryButton.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/game/room/Room.tscn" type="PackedScene" id=5]
-[ext_resource path="res://scenes/game/room/interactive_objects/interactive_object/InteractiveObject.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/game/room/light/Light.tscn" type="PackedScene" id=7]
 
 [node name="MainScene" type="Node2D"]
@@ -16,7 +15,7 @@ margin_left = -118.0
 margin_top = -95.0
 margin_right = 782.0
 margin_bottom = 265.0
-color = Color( 0.768627, 0.721569, 0.686275, 1 )
+color = Color( 0.0705882, 0.0588235, 0.133333, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -24,23 +23,17 @@ __meta__ = {
 [node name="Room1" parent="." instance=ExtResource( 5 )]
 
 [node name="CanvasModulate" type="CanvasModulate" parent="Room1"]
-visible = false
 color = Color( 0, 0, 0, 1 )
 
 [node name="Light" parent="Room1" instance=ExtResource( 7 )]
-visible = false
-position = Vector2( 36, 226 )
+position = Vector2( 122, 223 )
 scale = Vector2( 0.5, 1 )
+color = Color( 0.945098, 0.788235, 1, 1 )
 
 [node name="Light2" parent="Room1" instance=ExtResource( 7 )]
-visible = false
-position = Vector2( 185, 213 )
+position = Vector2( 274, 209 )
 scale = Vector2( 0.75, 1 )
-
-[node name="IO" parent="Room1" instance=ExtResource( 6 )]
-visible = false
-position = Vector2( 136, 117 )
-scale = Vector2( 0.15, 0.15 )
+color = Color( 0.756863, 0.772549, 1, 1 )
 
 [node name="Room2" parent="." instance=ExtResource( 5 )]
 visible = false
