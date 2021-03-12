@@ -1,8 +1,0 @@
-[gd_scene load_steps=3 format=2]
-
-[ext_resource path="res://scenes/game/room/interactive_objects/interaction_table/InteractionTable.tscn" type="PackedScene" id=1]
-[ext_resource path="res://test/game/interaction_table_test/InteractionTableTest.gdns" type="Script" id=2]
-
-[node name="InteractionTableTest" instance=ExtResource( 1 )]
-script = ExtResource( 2 )
-Interactions = [  ]
